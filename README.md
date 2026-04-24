@@ -14,11 +14,28 @@ Responsive Next.js website for Ogya Ntom Prayer Army, an online ministry and com
 ## Run Locally
 
 ```bash
-bun install
-bun run dev
+npm install
+npm run dev
 ```
 
 Open `http://localhost:3000`.
+
+## Environment
+
+Use local `.env.local` files for anything environment-specific and keep production values in Vercel or Sanity-hosted deployment settings.
+
+```bash
+cp .env.example .env.local
+cp studio-ogya-ntom-prayer-army/.env.example studio-ogya-ntom-prayer-army/.env.local
+```
+
+For Vercel-managed local env sync:
+
+```bash
+vercel env pull .env.local --yes
+```
+
+The Studio only exposes `SANITY_STUDIO_*` variables to the browser bundle. Keep deploy-only values such as hostnames, app ids, and tokens on non-`SANITY_STUDIO_*` names.
 
 ## Assets
 
