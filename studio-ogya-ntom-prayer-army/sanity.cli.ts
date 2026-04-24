@@ -6,4 +6,7 @@ export default defineCliConfig({
     dataset: "production",
   },
   studioHost: "ogya-ntom-prayer-army",
+  deployment: {
+    appId: "ujmoyuvnhald7lpgieffd2ht",
+  },
 });
