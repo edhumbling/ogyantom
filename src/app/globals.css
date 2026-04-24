@@ -1,0 +1,240 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Amazon Ember";
+  src: url("/fonts/AmazonEmber-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Amazon Ember";
+  src: url("/fonts/AmazonEmber-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Amazon Ember";
+  src: url("/fonts/AmazonEmber-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Amazon Ember Display";
+  src: url("/fonts/AmazonEmberDisplay-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Amazon Ember Display";
+  src: url("/fonts/AmazonEmberDisplay-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #e6ebe7;
+  --foreground: #07120d;
+  --gold: #cfb45f;
+  --green: #0d3a27;
+  --silver: #dfe5e1;
+  --dark: #030604;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Amazon Ember", Arial, Helvetica, sans-serif;
+  --font-display: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Amazon Ember", Arial, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--dark);
+}
+
+.font-display {
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+}
+
+.architectural-band {
+  clip-path: polygon(0 10%, 86% 0, 100% 84%, 14% 100%);
+}
+
+.glass-panel {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.84), rgba(206, 216, 209, 0.58));
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.7), inset 0 0 0 1px rgba(7, 18, 13, 0.06), 0 24px 70px rgba(8, 20, 15, 0.12);
+  backdrop-filter: blur(22px);
+}
+
+.glass-panel-dark {
+  background: linear-gradient(145deg, rgba(10, 44, 30, 0.98), rgba(3, 6, 4, 0.96));
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 28px 80px rgba(3, 6, 4, 0.24);
+  backdrop-filter: blur(24px);
+}
+
+.glass-chip {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(216, 224, 218, 0.66));
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8), inset 0 0 0 1px rgba(207, 180, 95, 0.45), 0 12px 36px rgba(13, 58, 39, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.footer-contact {
+  display: flex;
+  min-height: 3.5rem;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 999px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  padding: 0 1rem;
+  backdrop-filter: blur(18px);
+}
+
+.army-marquee {
+  overflow: hidden;
+}
+
+.army-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: army-marquee 120s linear infinite;
+}
+
+.army-marquee:hover .army-marquee-track {
+  animation-play-state: paused;
+}
+
+.army-marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-right: 1.25rem;
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  white-space: nowrap;
+  color: #f8faf7;
+}
+
+.contact-row {
+  display: flex;
+  min-height: 5rem;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 1.5rem;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(223, 229, 225, 0.42));
+  padding: 1rem;
+  color: #07120d;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.9), inset 0 0 0 1px rgba(255, 255, 255, 0.6), 0 18px 48px rgba(12, 36, 24, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.contact-row > svg {
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+.contact-row span {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.contact-row strong {
+  font-size: 1rem;
+}
+
+.contact-row span span {
+  color: #53635a;
+  line-height: 1.5;
+}
+
+.prose-prayer {
+  color: #21372c;
+  font-size: 1.125rem;
+  line-height: 1.9;
+}
+
+.prose-prayer > * + * {
+  margin-top: 1.35rem;
+}
+
+.prose-prayer h2 {
+  color: #07120d;
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1;
+  margin-top: 2.5rem;
+}
+
+.prose-prayer blockquote {
+  border-left: 0.28rem solid var(--gold);
+  color: #0d3a27;
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.45;
+  padding-left: 1.25rem;
+}
+
+.prose-prayer a {
+  color: #0d3a27;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(207, 180, 95, 0.85);
+  text-underline-offset: 0.22em;
+}
+
+.prose-prayer ul,
+.prose-prayer ol {
+  padding-left: 1.4rem;
+}
+
+.prose-prayer li + li {
+  margin-top: 0.55rem;
+}
+
+@media (min-width: 768px) {
+  .army-marquee-item {
+    font-size: 3rem;
+  }
+}
+
+@keyframes army-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .army-marquee-track {
+    animation: none;
+  }
+}

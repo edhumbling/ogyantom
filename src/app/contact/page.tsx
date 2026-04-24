@@ -1,0 +1,92 @@
+import Image from "next/image";
+import {
+  EnvelopeSimple,
+  HandsPraying,
+  Phone,
+} from "@phosphor-icons/react/dist/ssr";
+import { contactDetails, ministryType, onlinePlatforms } from "@/lib/site";
+
+export default function ContactPage() {
+  return (
+    <main className="bg-[#e6ebe7] pt-36 lg:pt-48 text-[#07120d]">
+      <section className="px-5 pb-20 lg:pb-32 sm:px-8 lg:px-10 ">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
+              Contact
+            </p>
+            <h1 className="font-display tracking-tighter mt-4 max-w-4xl text-6xl font-light leading-none sm:text-7xl">
+              Send the request. Join the watch.
+            </h1>
+            <p className="mt-7 max-w-2xl text-xl leading-8 text-[#4f5d55]">
+              {ministryType}. We connect the world through prayers via
+              WhatsApp, Telegram, and Google Meet.
+            </p>
+          </div>
+
+          <div className="glass-panel rounded-[2.5rem] p-7">
+            <div className="grid gap-4">
+              <a className="contact-row" href={`mailto:${contactDetails.email}`}>
+                <EnvelopeSimple size={27} weight="bold" />
+                <span>
+                  <strong>Email</strong>
+                  <span>{contactDetails.email}</span>
+                </span>
+              </a>
+              {contactDetails.phones.map((phone) => (
+                <a className="contact-row" href={`tel:${phone}`} key={phone}>
+                  <Phone size={27} weight="bold" />
+                  <span>
+                    <strong>Tel</strong>
+                    <span>{phone}</span>
+                  </span>
+                </a>
+              ))}
+              <div className="contact-row">
+                <HandsPraying size={27} weight="bold" />
+                <span>
+                  <strong>Type of ministry</strong>
+                  <span>{ministryType}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 pb-20 lg:pb-32 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 max-w-3xl">
+            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
+              Online prayer channels
+            </p>
+            <h2 className="font-display tracking-tighter mt-3 text-5xl font-light leading-none sm:text-6xl">
+              Connected through prayer, wherever people are.
+            </h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {onlinePlatforms.map((platform) => (
+              <a
+                key={platform.name}
+                href={platform.href}
+                className="glass-panel rounded-[2rem] p-6 transition duration-[400ms] ease-out hover:-translate-y-1"
+              >
+                <Image
+                  src={platform.logo}
+                  alt={`${platform.name} logo`}
+                  width={54}
+                  height={54}
+                  className="h-14 w-14"
+                />
+                <h3 className="mt-8 text-2xl font-bold">{platform.name}</h3>
+                <p className="mt-3 text-base leading-7 text-[#53635a]">
+                  {platform.text}
+                </p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
