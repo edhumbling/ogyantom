@@ -57,7 +57,7 @@ export default function TestimoniesPage() {
 
         <div className="relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div className="max-w-4xl">
-            <p className="inline-flex rounded-full border border-[#d4af5d]/55 bg-white/78 px-4 py-2 text-sm font-bold uppercase tracking-[0.24em] text-[#6d1237] shadow-[0_10px_30px_rgba(109,18,55,0.08)] backdrop-blur-xl">
+            <p className="inline-flex border border-[#d4af5d]/55 bg-white/78 px-4 py-2 text-sm font-bold uppercase tracking-[0.24em] text-[#6d1237] shadow-[0_10px_30px_rgba(109,18,55,0.08)]">
               Member love & testimonies
             </p>
             <h1 className="font-display mt-6 text-6xl font-light leading-[0.92] tracking-tight text-white sm:text-7xl lg:text-8xl">
@@ -70,7 +70,7 @@ export default function TestimoniesPage() {
             </p>
           </div>
 
-          <div className="rounded-[2.25rem] border border-white/30 bg-white/14 p-6 text-white shadow-[0_24px_70px_rgba(8,20,15,0.22)] backdrop-blur-2xl lg:p-8">
+          <div className="border border-white/30 bg-white/14 p-6 text-white shadow-[0_24px_70px_rgba(8,20,15,0.22)] lg:p-8">
             <div className="flex items-center gap-3">
               <div className="flex h-14 w-14 items-center justify-center rounded-[1.2rem] bg-[#d4af5d] text-[#6d1237]">
                 <HandsPraying size={28} weight="fill" />
@@ -89,7 +89,7 @@ export default function TestimoniesPage() {
               {testimonyPillars.map((item) => (
                 <div
                   key={item}
-                  className="rounded-[1.4rem] border border-white/18 bg-white/10 px-4 py-4 text-sm leading-7 text-white/88"
+                  className="border border-white/18 bg-white/10 px-4 py-4 text-sm leading-7 text-white/88"
                 >
                   {item}
                 </div>
@@ -104,7 +104,7 @@ export default function TestimoniesPage() {
           {testimonies.map((item, index) => (
             <article
               key={item.name}
-              className={`relative overflow-hidden rounded-[2.4rem] border p-7 shadow-[0_24px_80px_rgba(14,34,25,0.08)] lg:p-9 ${
+              className={`relative overflow-hidden border p-7 shadow-[0_24px_80px_rgba(14,34,25,0.08)] lg:p-9 ${
                 index % 2 === 0
                   ? "border-[#eadfc8] bg-[linear-gradient(180deg,#ffffff_0%,#fcf8f0_100%)]"
                   : "border-[#d1dbc9] bg-[linear-gradient(180deg,#ffffff_0%,#f1f7f2_100%)]"
@@ -125,13 +125,13 @@ export default function TestimoniesPage() {
                       {item.title}
                     </h2>
                   </div>
-                  <div className="rounded-full border border-[#d4af5d]/70 bg-[#fff8e8] px-4 py-2 text-xs font-bold uppercase tracking-[0.24em] text-[#8c6a18]">
+                  <div className="border border-[#d4af5d]/70 bg-[#fff8e8] px-4 py-2 text-xs font-bold uppercase tracking-[0.24em] text-[#8c6a18]">
                     Member testimony
                   </div>
                 </div>
 
                 <div className="mt-8 flex items-center gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[linear-gradient(135deg,#d4af5d,#f4e7bf)] text-lg font-bold text-[#6d1237]">
+                  <div className="flex h-14 w-14 items-center justify-center border border-[#d4af5d]/50 bg-[linear-gradient(135deg,#d4af5d,#f4e7bf)] text-lg font-bold text-[#6d1237]">
                     {item.name
                       .split(" ")
                       .map((word) => word[0])
@@ -158,8 +158,8 @@ export default function TestimoniesPage() {
       </section>
 
       <section className="px-5 pb-20 sm:px-8 lg:px-10 lg:pb-32">
-        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.6rem] bg-[linear-gradient(135deg,#5f0f31_0%,#7a1842_26%,#d4af5d_26%,#d4af5d_29%,#0f5c46_29%,#0a3a2d_100%)] p-[1px] shadow-[0_30px_100px_rgba(27,47,36,0.16)]">
-          <div className="grid gap-8 rounded-[2.55rem] bg-[#fffdf8] px-6 py-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-10 lg:py-10">
+        <div className="mx-auto max-w-7xl overflow-hidden bg-[linear-gradient(135deg,#5f0f31_0%,#7a1842_26%,#d4af5d_26%,#d4af5d_29%,#0f5c46_29%,#0a3a2d_100%)] p-[1px] shadow-[0_30px_100px_rgba(27,47,36,0.16)]">
+          <div className="grid gap-8 bg-[#fffdf8] px-6 py-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-10 lg:py-10">
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#6d1237]">
                 Share your own
@@ -177,7 +177,7 @@ export default function TestimoniesPage() {
               </p>
               <Link
                 href="/contact"
-                className="inline-flex h-16 items-center gap-2 rounded-[40px_10px_40px_10px] bg-[#6d1237] px-8 text-base font-bold text-white transition duration-[400ms] ease-out hover:bg-[#541028] active:scale-[0.98]"
+                className="inline-flex min-h-14 items-center gap-2 border border-[#6d1237] bg-[#6d1237] px-8 text-base font-bold uppercase tracking-[0.16em] text-white transition duration-[180ms] ease-out hover:bg-[#541028] active:scale-[0.98]"
               >
                 Send your testimony
                 <ArrowRight size={20} weight="bold" />

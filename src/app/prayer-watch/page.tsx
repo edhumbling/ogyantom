@@ -22,12 +22,12 @@ export default function PrayerWatchPage() {
         </div>
       </section>
 
-      <section className="px-5 pb-20 lg:pb-32 sm:px-8 lg:px-10 ">
+      <section className="section-rule px-5 pb-20 lg:pb-24 sm:px-8 lg:px-10 ">
         <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-3">
           {prayerWatches.map((watch, index) => (
             <article
               key={watch.title}
-              className={`min-h-96 rounded-[2.5rem] border p-7 ${
+              className={`min-h-96 border p-7 ${
                 index === 1
                   ? "glass-panel-dark text-white"
                   : "glass-panel text-[#07120d]"
@@ -58,14 +58,14 @@ export default function PrayerWatchPage() {
         </div>
       </section>
 
-      <section className="bg-[#07120d] px-5 py-16 lg:py-32 text-white sm:px-8 lg:px-10 ">
+      <section className="section-rule bg-[#07120d] px-5 py-16 lg:py-24 text-white sm:px-8 lg:px-10 ">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-6 md:flex-row md:items-center">
           <h2 className="font-display tracking-tighter max-w-2xl text-5xl font-light leading-none">
             Bring your request into the watch.
           </h2>
           <Link
             href="/contact"
-            className="inline-flex h-16 w-fit items-center gap-2 rounded-[40px_8px_40px_8px] bg-[#cfb45f] px-10 font-bold text-[#07120d]"
+            className="site-button-primary w-fit text-sm uppercase tracking-[0.16em] sm:text-base"
           >
             Send Prayer Request
             <ArrowRight size={20} weight="bold" />

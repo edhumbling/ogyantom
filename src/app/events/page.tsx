@@ -54,7 +54,7 @@ export default async function EventsPage() {
               Online watches for the prayer army.
             </h1>
           </div>
-          <p className="glass-panel-dark rounded-[2rem] p-7 text-xl leading-9 text-[#edf1ee]">
+          <p className="glass-panel-dark p-7 text-xl leading-9 text-[#edf1ee]">
             Publish vigils, special prayer meetings, Google Meet sessions, and
             ministry announcements in Sanity. The site will keep this page fresh.
           </p>
@@ -64,7 +64,7 @@ export default async function EventsPage() {
       <section className="px-5 pb-20 sm:px-8 lg:px-10 lg:pb-32">
         <div className="mx-auto max-w-7xl">
           {events.length === 0 ? (
-            <div className="glass-panel rounded-[2.25rem] p-8 lg:p-12">
+            <div className="glass-panel p-8 lg:p-12">
               <CalendarBlank size={42} weight="bold" className="text-[#0d3a27]" />
               <h2 className="font-display mt-8 text-5xl font-light leading-none tracking-tighter">
                 Events are ready for Sanity.
@@ -83,7 +83,7 @@ export default async function EventsPage() {
                 return (
                   <article
                     key={event._id}
-                    className="glass-panel grid overflow-hidden rounded-[2.25rem] lg:grid-cols-[0.82fr_1.18fr]"
+                    className="glass-panel grid overflow-hidden lg:grid-cols-[0.82fr_1.18fr]"
                   >
                     <div className="relative min-h-[22rem] overflow-hidden bg-[#07120d]">
                       <SanityImage
@@ -96,11 +96,11 @@ export default async function EventsPage() {
 
                     <div className="p-7 lg:p-10">
                       <div className="flex flex-wrap gap-3">
-                        <span className="inline-flex items-center gap-2 rounded-full bg-[#0d3a27] px-4 py-2 text-sm font-bold text-white">
+                        <span className="inline-flex items-center gap-2 border border-[#0d3a27] bg-[#0d3a27] px-4 py-2 text-sm font-bold text-white">
                           <CalendarBlank size={18} weight="bold" />
                           {formatDate(event.startDate)}
                         </span>
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-sm font-bold text-[#0d3a27]">
+                        <span className="inline-flex items-center gap-2 border border-[rgba(7,18,13,0.12)] bg-white/70 px-4 py-2 text-sm font-bold text-[#0d3a27]">
                           <PlatformIcon size={18} weight="bold" />
                           {event.platform || "Online"}
                         </span>
@@ -115,17 +115,17 @@ export default async function EventsPage() {
                         </p>
                       ) : null}
                       <div className="mt-7 grid gap-3 text-base font-bold text-[#21372c] sm:grid-cols-2">
-                        <span className="rounded-2xl bg-white/62 px-4 py-3">
+                        <span className="border border-[rgba(7,18,13,0.12)] bg-white/62 px-4 py-3">
                           {event.location || "Online ministry gathering"}
                         </span>
-                        <span className="rounded-2xl bg-white/62 px-4 py-3">
+                        <span className="border border-[rgba(7,18,13,0.12)] bg-white/62 px-4 py-3">
                           {event.status || "upcoming"}
                         </span>
                       </div>
                       {event.meetingLink ? (
                         <Link
                           href={event.meetingLink}
-                          className="mt-8 inline-flex h-14 items-center justify-center gap-2 rounded-[40px_8px_40px_8px] bg-[#cfb45f] px-7 text-sm font-bold text-[#07120d] transition duration-[400ms] ease-out hover:bg-[#e2ca78]"
+                          className="site-button-primary mt-8 text-sm uppercase tracking-[0.16em]"
                         >
                           Join event
                           <LinkSimple size={18} weight="bold" />

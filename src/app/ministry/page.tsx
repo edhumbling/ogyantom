@@ -40,7 +40,7 @@ export default function MinistryPage() {
         </div>
       </section>
 
-      <section className="bg-[#06100c] px-5 py-16 text-white lg:py-32 sm:px-8 lg:px-10">
+      <section className="section-rule bg-[#06100c] px-5 py-16 text-white lg:py-24 sm:px-8 lg:px-10">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
           <div className="architectural-band relative min-h-[420px] overflow-hidden bg-[#07120d]">
             <Image
@@ -66,9 +66,9 @@ export default function MinistryPage() {
         </div>
       </section>
 
-      <section className="px-5 pb-20 lg:pb-32 sm:px-8 lg:px-10">
+      <section className="section-rule px-5 pb-20 lg:pb-24 sm:px-8 lg:px-10">
         <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-[0.82fr_1.18fr]">
-          <div className="glass-panel rounded-[2.25rem] p-8">
+          <div className="glass-panel p-8">
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
               Vision
             </p>
@@ -76,7 +76,7 @@ export default function MinistryPage() {
               {visionStatement}
             </h2>
           </div>
-          <div className="glass-panel-dark rounded-[2.25rem] p-8 text-white">
+          <div className="glass-panel-dark p-8 text-white">
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
               Mission
             </p>
@@ -87,9 +87,9 @@ export default function MinistryPage() {
         </div>
       </section>
 
-      <section className="px-5 pb-20 lg:pb-32 sm:px-8 lg:px-10 ">
+      <section className="section-rule px-5 pb-20 lg:pb-24 sm:px-8 lg:px-10 ">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2">
-          <article className="glass-panel rounded-[2.25rem] p-8">
+          <article className="glass-panel p-8">
             <ShieldCheck size={36} weight="bold" className="text-[#0d3a27]" />
             <h2 className="mt-10 text-3xl font-bold">Covering</h2>
             <p className="mt-4 max-w-xl text-lg leading-8 text-[#53635a]">
@@ -97,7 +97,7 @@ export default function MinistryPage() {
               pastoral sensitivity.
             </p>
           </article>
-          <article className="glass-panel-dark rounded-[2.25rem] p-8 text-white">
+          <article className="glass-panel-dark p-8 text-white">
             <UsersThree size={36} weight="bold" className="text-[#cfb45f]" />
             <h2 className="mt-10 text-3xl font-bold">Formation</h2>
             <p className="mt-4 max-w-xl text-lg leading-8 text-[#dfe6e1]">
@@ -108,7 +108,7 @@ export default function MinistryPage() {
         </div>
       </section>
 
-      <section className="px-5 pb-20 lg:pb-32 sm:px-8 lg:px-10">
+      <section className="section-rule px-5 pb-20 lg:pb-24 sm:px-8 lg:px-10">
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 max-w-3xl">
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
@@ -122,7 +122,7 @@ export default function MinistryPage() {
             {coreValues.map((value) => (
               <article
                 key={value.title}
-                className="glass-panel min-h-72 rounded-[2rem] p-6"
+                className="glass-panel min-h-72 p-6"
               >
                 <h3 className="text-xl font-bold">{value.title}</h3>
                 <p className="mt-5 text-base leading-7 text-[#53635a]">

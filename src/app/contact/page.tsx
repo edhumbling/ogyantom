@@ -24,7 +24,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="glass-panel rounded-[2.5rem] p-7">
+          <div className="glass-panel p-7">
             <div className="grid gap-4">
               <a className="contact-row" href={`mailto:${contactDetails.email}`}>
                 <EnvelopeSimple size={27} weight="bold" />
@@ -69,7 +69,7 @@ export default function ContactPage() {
               <a
                 key={platform.name}
                 href={platform.href}
-                className="glass-panel rounded-[2rem] p-6 transition duration-[400ms] ease-out hover:-translate-y-1"
+                className="glass-panel p-6 transition duration-[180ms] ease-out hover:-translate-y-1"
               >
                 <Image
                   src={platform.logo}

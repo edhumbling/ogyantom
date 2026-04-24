@@ -31,7 +31,7 @@ export default async function BlogPage() {
         <div className="absolute inset-x-0 top-0 h-96 bg-[linear-gradient(135deg,#dfe5e1,#ffffff_40%,#0d3a27_40%,#030604)]" />
         <div className="relative mx-auto max-w-7xl">
           <div className="max-w-4xl">
-            <p className="glass-chip inline-flex rounded-full px-4 py-2 text-sm font-bold uppercase tracking-[0.2em] text-[#0d3a27]">
+            <p className="glass-chip inline-flex px-4 py-2 text-sm font-bold uppercase tracking-[0.2em] text-[#0d3a27]">
               Prayer Blog
             </p>
             <h1 className="font-display mt-7 max-w-4xl text-6xl font-light leading-none tracking-tighter sm:text-7xl lg:text-8xl">
@@ -48,7 +48,7 @@ export default async function BlogPage() {
       <section className="px-5 pb-20 sm:px-8 lg:px-10 lg:pb-32">
         <div className="mx-auto max-w-7xl">
           {posts.length === 0 ? (
-            <div className="glass-panel-dark rounded-[2.25rem] p-8 text-white lg:p-12">
+            <div className="glass-panel-dark p-8 text-white lg:p-12">
               <BookOpenText size={40} weight="bold" className="text-[#cfb45f]" />
               <h2 className="font-display mt-8 text-5xl font-light leading-none tracking-tighter">
                 Blog content is ready for Sanity.
@@ -65,11 +65,11 @@ export default async function BlogPage() {
                   key={post._id}
                   href={`/blog/${post.slug}`}
                   className={
-                    "glass-panel group overflow-hidden rounded-[2rem] transition duration-[400ms] ease-out hover:-translate-y-1 hover:border-[#cfb45f] " +
+                    "glass-panel group overflow-hidden transition duration-[180ms] ease-out hover:-translate-y-1 hover:border-[#cfb45f] " +
                     (index === 0 ? "lg:col-span-2" : "")
                   }
                 >
-                  <div className="relative min-h-[20rem] overflow-hidden rounded-[2rem] bg-[#07120d]">
+                  <div className="relative min-h-[20rem] overflow-hidden bg-[#07120d]">
                     <SanityImage
                       image={post.mainImage}
                       altFallback={post.title}

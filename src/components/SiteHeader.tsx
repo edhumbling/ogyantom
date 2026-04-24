@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { List, X } from "@phosphor-icons/react";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { contactDetails, navItems } from "@/lib/site";
 import { LogoMark } from "./LogoMark";
 
@@ -12,105 +12,127 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
       document.body.style.overflow = "";
-    }
+    };
   }, [open]);
 
   return (
     <>
-      <header className="fixed left-0 right-0 top-0 z-[60] px-4 pt-4 sm:px-6 lg:px-8">
-        <div className="glass-panel mx-auto max-w-7xl rounded-[2rem] px-4 py-3 text-[#08140f] transition-all duration-[400ms] ease-out">
-          <div className="flex items-center justify-between gap-4">
+      <header className="fixed inset-x-0 top-0 z-[60] border-b border-white/10 bg-[#07120d]/96 text-white backdrop-blur-xl">
+        <div className="mx-auto flex h-15 max-w-7xl items-center justify-between gap-3 px-4 sm:h-16 sm:px-6 lg:px-10">
+          <div className="min-w-0">
             <LogoMark />
+          </div>
 
-            <nav className="hidden items-center gap-1 lg:flex">
-              {navItems.map((item) => {
-                const active = pathname === item.href;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={"rounded-full px-4 py-3 text-sm font-bold transition duration-[400ms] ease-out " + (
-                      active
-                        ? "border border-[#0b2b1c] bg-[#0b2b1c] text-white shadow-[0_14px_30px_rgba(7,18,13,0.18)]"
-                        : "text-[#21372c] hover:bg-white/[0.52]"
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </nav>
+          <nav className="hidden items-center gap-6 lg:flex">
+            {navItems.map((item) => {
+              const active = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={
+                    "border-b px-0 py-3 text-sm font-bold uppercase tracking-[0.16em] transition duration-[180ms] ease-out " +
+                    (active
+                      ? "border-[#cfb45f] text-white"
+                      : "border-transparent text-white/72 hover:border-white/24 hover:text-white")
+                  }
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
 
-            <Link
-              href="/contact"
-              className="hidden h-12 items-center rounded-full bg-[#cfb45f] px-5 text-sm font-bold text-[#07120d] transition duration-[400ms] ease-out hover:bg-[#e2ca78] active:scale-[0.98] sm:inline-flex"
-            >
+          <div className="hidden items-center gap-3 lg:flex">
+            <Link href="/contact" className="site-button-primary text-sm uppercase tracking-[0.16em]">
               Send Prayer Request
             </Link>
-
-            <button
-              type="button"
-              aria-label="Open menu"
-              onClick={() => setOpen(true)}
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0d3a27] text-[#cfb45f] transition duration-[400ms] ease-out active:scale-[0.97] lg:hidden relative z-[70] shadow-lg"
-            >
-              <List size={26} weight="bold" />
-            </button>
           </div>
+
+          <button
+            type="button"
+            aria-label="Open menu"
+            onClick={() => setOpen(true)}
+            className="flex h-10 w-10 shrink-0 items-center justify-center border border-white/14 bg-white/5 text-[#cfb45f] transition duration-[150ms] ease-out active:scale-[0.97] lg:hidden"
+          >
+            <List size={22} weight="bold" />
+          </button>
         </div>
       </header>
 
-      {/* Full Screen Overlay Menu */}
       <div
-        className={"fixed inset-0 z-[80] flex flex-col bg-[#07120d] text-[#f8faf7] transition-transform duration-[500ms] ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden " + (
-          open ? "translate-y-0" : "-translate-y-full"
-        )}
+        className={
+          "fixed inset-0 z-[80] lg:hidden " + (open ? "pointer-events-auto" : "pointer-events-none")
+        }
       >
-        <div className="flex items-center justify-between px-8 pt-7 sm:px-10">
-          <div className="text-white">
-            <LogoMark />
-          </div>
-          <button
-            type="button"
-            aria-label="Close menu"
-            onClick={() => setOpen(false)}
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition duration-[400ms] ease-out hover:bg-white/20 active:scale-[0.97]"
-          >
-            <X size={24} weight="bold" />
-          </button>
-        </div>
+        <button
+          type="button"
+          aria-label="Close menu backdrop"
+          onClick={() => setOpen(false)}
+          className={
+            "absolute inset-0 bg-[#030604]/70 transition-opacity duration-[220ms] ease-out " +
+            (open ? "opacity-100" : "opacity-0")
+          }
+        />
 
-        <div className="flex-1 flex flex-col items-center justify-center px-6 sm:px-8 pb-32 overflow-y-auto">
-          <nav className="flex flex-col items-center gap-10">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="text-5xl lg:text-7xl font-display font-light text-white hover:text-[var(--gold)] transition duration-[400ms] ease-out"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          
-          <div className="mt-20 flex flex-col items-center justify-center gap-4">
-            <Link 
-              href="/contact" 
-              onClick={() => setOpen(false)} 
-              className="flex h-14 items-center justify-center rounded-full bg-[var(--gold)] px-8 text-sm font-bold text-[#07120d] transition duration-[400ms] ease-out hover:bg-white active:scale-95"
+        <aside
+          className={
+            "absolute inset-x-0 top-[3.75rem] bottom-0 flex flex-col border-t border-white/10 bg-[#07120d] text-white transition-transform duration-[220ms] ease-out sm:top-16 " +
+            (open ? "translate-y-0" : "-translate-y-3")
+          }
+        >
+          <div className="flex items-center justify-between border-b border-white/10 px-4 py-4 sm:px-6">
+            <LogoMark compact />
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={() => setOpen(false)}
+              className="flex h-10 w-10 shrink-0 items-center justify-center border border-white/14 bg-white/5 text-white transition duration-[150ms] ease-out active:scale-[0.97]"
             >
-              Send Prayer Request
-            </Link>
-            <a href={`mailto:${contactDetails.email}`} className="text-white/60 hover:text-white transition duration-[300ms]">
-              {contactDetails.email}
-            </a>
+              <X size={22} weight="bold" />
+            </button>
           </div>
-        </div>
+
+          <nav className="flex flex-1 flex-col overflow-y-auto px-4 py-4 sm:px-6">
+            {navItems.map((item) => {
+              const active = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className={
+                    "border-b border-white/8 px-1 py-4 text-[0.95rem] font-bold uppercase tracking-[0.16em] transition duration-[150ms] ease-out sm:text-lg " +
+                    (active
+                      ? "border-[#cfb45f] text-[#cfb45f]"
+                      : "text-white/82 hover:text-white")
+                  }
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+
+            <div className="mt-auto grid gap-3 pt-6">
+              <Link
+                href="/contact"
+                onClick={() => setOpen(false)}
+                className="site-button-primary w-full text-sm uppercase tracking-[0.16em]"
+              >
+                Send Prayer Request
+              </Link>
+              <a
+                href={`mailto:${contactDetails.email}`}
+                className="border border-white/10 px-4 py-4 text-sm text-white/72 transition duration-[150ms] ease-out hover:text-white break-all"
+              >
+                {contactDetails.email}
+              </a>
+            </div>
+          </nav>
+        </aside>
       </div>
     </>
   );
