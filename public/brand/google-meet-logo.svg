@@ -1,8 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Google Meet logo">
-  <rect x="8" y="14" width="36" height="36" rx="8" fill="#fff"/>
-  <path fill="#34A853" d="M44 26v12l10 8c1.3 1 2 .4 2-1.2V19.2c0-1.6-.7-2.2-2-1.2l-10 8Z"/>
-  <path fill="#00832D" d="M8 38v4a8 8 0 0 0 8 8h8V38H8Z"/>
-  <path fill="#F9AB00" d="M24 14H16a8 8 0 0 0-8 8v4h16V14Z"/>
-  <path fill="#E94235" d="M8 26h16v12H8V26Z"/>
-  <path fill="#2684FC" d="M24 14h12a8 8 0 0 1 8 8v4H24V14Zm0 24h20v4a8 8 0 0 1-8 8H24V38Z"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" aria-label="Google Meet logo" role="img" viewBox="0 0 64 64"><rect width="36" height="36" x="8" y="14" fill="#fff" rx="8"/><path fill="#34A853" d="M44 26v12l10 8c1.3 1 2 .4 2-1.2V19.2c0-1.6-.7-2.2-2-1.2l-10 8Z"/><path fill="#00832D" d="M8 38v4a8 8 0 0 0 8 8h8V38H8Z"/><path fill="#F9AB00" d="M24 14H16a8 8 0 0 0-8 8v4h16V14Z"/><path fill="#E94235" d="M8 26h16v12H8V26Z"/><path fill="#2684FC" d="M24 14h12a8 8 0 0 1 8 8v4H24V14Zm0 24h20v4a8 8 0 0 1-8 8H24V38Z"/></svg>
