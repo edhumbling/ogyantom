@@ -10,33 +10,32 @@ import {
 
 export default function MinistryPage() {
   return (
-    <main className="bg-[#e6ebe7] pt-36 lg:pt-48 text-[#07120d]">
-      <section className="px-5 pb-20 lg:pb-32 sm:px-8 lg:px-10 ">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+    <main className="bg-[#e6ebe7] text-[#07120d]">
+      <section className="hero-shell hero-start hero-wine-accent overflow-hidden border-b border-white/10">
+        <div className="hero-media">
+          <Image
+            src="/brand/watchman-opanin-thomas.png"
+            alt="Watchman Opanin Thomas"
+            fill
+            sizes="100vw"
+            className="object-cover object-[52%_top] lg:object-contain lg:object-right lg:scale-[0.94]"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_85%_8%,rgba(207,180,95,0.26),transparent_36%),linear-gradient(140deg,rgba(7,18,13,0.36),rgba(13,58,39,0.38),rgba(3,6,4,0.84))]" />
+        </div>
+        <div className="hero-content mx-auto grid max-w-7xl gap-8 px-5 py-16 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end lg:px-10 lg:py-20">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
+            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
               Ministry
             </p>
-            <h1 className="font-display tracking-tighter mt-4 text-6xl font-light leading-none sm:text-7xl">
+            <p className="hero-script mt-4">Formation and covering</p>
+            <h1 className="font-display tracking-tighter mt-4 max-w-4xl text-6xl font-light leading-none text-white sm:text-7xl">
               Formation under watchful covering.
             </h1>
-            <p className="mt-7 max-w-2xl text-xl leading-8 text-[#4f5d55]">
-              {ministryType}. Ogya Ntom Prayer Army is shaped around
-              discipline, care, testimony, spiritual growth, and leadership that
-              keeps the watch clear.
-            </p>
           </div>
-
-          <div className="architectural-band relative -my-10 lg:-my-20 z-10 min-h-[560px] overflow-hidden bg-[#07120d]">
-            <Image
-              src="/brand/watchman-opanin-thomas.png"
-              alt="Watchman Opanin Thomas"
-              fill
-              sizes="(min-width: 1024px) 620px, 100vw"
-              className="object-cover object-top"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(7,18,13,0.86))]" />
-          </div>
+          <p className="max-w-2xl text-xl leading-8 text-[#dce7e1]">
+            {ministryType}. Ogya Ntom Prayer Army is shaped around discipline,
+            care, testimony, spiritual growth, and leadership that keeps the watch clear.
+          </p>
         </div>
       </section>
 

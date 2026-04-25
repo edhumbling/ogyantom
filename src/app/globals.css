@@ -44,6 +44,7 @@
   --background: #e6ebe7;
   --foreground: #07120d;
   --gold: #cfb45f;
+  --wine: #6d1237;
   --green: #0d3a27;
   --silver: #dfe5e1;
   --dark: #030604;
@@ -336,6 +337,54 @@ html {
   transform: scaleX(1);
 }
 
+.hero-shell {
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.hero-start {
+  padding-top: 3.5rem;
+}
+
+@media (min-width: 640px) {
+  .hero-start {
+    padding-top: 4rem;
+  }
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-media::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(3, 6, 4, 0.12) 0%, rgba(3, 6, 4, 0.58) 56%, rgba(3, 6, 4, 0.92) 100%);
+  content: "";
+}
+
+.hero-wine-accent::before {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(100% 70% at 85% 4%, rgba(109, 18, 55, 0.38), transparent 44%);
+  content: "";
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-script {
+  font-family: var(--font-great-vibes), "Times New Roman", serif;
+  font-size: clamp(1.7rem, 4.2vw, 3.1rem);
+  line-height: 1;
+  color: #f0d68b;
+  letter-spacing: 0.01em;
+}
+
 .site-button-primary {
   display: inline-flex;
   min-height: 3.5rem;
@@ -355,6 +404,26 @@ html {
   border-color: #e2ca78;
   transform: translateY(-1px);
   box-shadow: 0 10px 22px rgba(114, 91, 21, 0.22);
+}
+
+.nav-prayer-button {
+  box-shadow: 0 0 0 rgba(207, 180, 95, 0);
+}
+
+@media (min-width: 1024px) {
+  .nav-prayer-button {
+    min-height: 1.9rem;
+    padding: 0 0.7rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    gap: 0.35rem;
+    box-shadow: 0 0 0 1px rgba(207, 180, 95, 0.12), 0 0 18px rgba(207, 180, 95, 0.28);
+  }
+
+  .nav-prayer-button:hover {
+    box-shadow: 0 0 0 1px rgba(207, 180, 95, 0.25), 0 0 24px rgba(207, 180, 95, 0.4);
+  }
 }
 
 .site-button-secondary {

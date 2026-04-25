@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BookOpenText } from "@phosphor-icons/react/dist/ssr";
 import { SanityImage } from "@/components/SanityImage";
@@ -26,22 +27,32 @@ export default async function BlogPage() {
   const posts = await sanityFetch<Post[]>(postsQuery, {}, []);
 
   return (
-    <main className="bg-[#e6ebe7] pt-36 text-[#07120d] lg:pt-48">
-      <section className="relative overflow-hidden px-5 pb-16 sm:px-8 lg:px-10 lg:pb-28">
-        <div className="absolute inset-x-0 top-0 h-96 bg-[linear-gradient(135deg,#dfe5e1,#ffffff_40%,#0d3a27_40%,#030604)]" />
-        <div className="relative mx-auto max-w-7xl">
-          <div className="max-w-4xl">
+    <main className="bg-[#e6ebe7] text-[#07120d]">
+      <section className="hero-shell hero-start hero-wine-accent px-5 pb-16 sm:px-8 lg:px-10 lg:pb-28">
+        <div className="hero-media">
+          <Image
+            src="/brand/watchman-opanin-thomas.png"
+            alt="Watchman Opanin Thomas"
+            fill
+            sizes="100vw"
+            className="object-cover object-[52%_top] lg:object-contain lg:object-right lg:scale-[0.94]"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_12%_8%,rgba(109,18,55,0.34),rgba(109,18,55,0.08)_30%,transparent_56%),linear-gradient(135deg,rgba(7,18,13,0.32),rgba(13,58,39,0.34)_58%,rgba(3,6,4,0.62))]" />
+        </div>
+        <div className="hero-content mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <div>
             <p className="glass-chip inline-flex px-4 py-2 text-sm font-bold uppercase tracking-[0.2em] text-[#0d3a27]">
               Prayer Blog
             </p>
-            <h1 className="font-display mt-7 max-w-4xl text-6xl font-light leading-none tracking-tighter sm:text-7xl lg:text-8xl">
+            <p className="hero-script mt-5">Words from the prayer watch</p>
+            <h1 className="font-display mt-7 max-w-4xl text-6xl font-light leading-none tracking-tighter sm:text-7xl">
               Teachings from the watch.
             </h1>
-            <p className="mt-7 max-w-2xl text-xl leading-8 text-[#405247]">
-              Devotionals, ministry letters, and practical encouragement for a
-              life of intimacy, persistence, and bold prayer.
-            </p>
           </div>
+          <p className="max-w-2xl text-xl leading-8 text-white/88">
+            Devotionals, ministry letters, and practical encouragement for a
+            life of intimacy, persistence, and bold prayer.
+          </p>
         </div>
       </section>
 

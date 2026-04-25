@@ -32,3 +32,16 @@ export const eventsQuery = `*[_type == "event"] | order(startDate asc) {
   status,
   image
 }`;
+
+export const philanthropyQuery = `*[_type == "philanthropy"] | order(publishedAt desc) {
+  _id,
+  title,
+  "slug": slug.current,
+  summary,
+  publishedAt,
+  beneficiary,
+  location,
+  donationValue,
+  impact,
+  image
+}`;

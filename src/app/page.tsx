@@ -5,6 +5,7 @@ import {
   BookOpenText,
   Broadcast,
   CalendarBlank,
+  HandHeart,
   HandsPraying,
   Megaphone,
   ShieldCheck,
@@ -27,6 +28,7 @@ const facetIcons = [
   HandsPraying,
   BookOpenText,
   CalendarBlank,
+  HandHeart,
 ];
 
 const heroStats = [
@@ -38,16 +40,25 @@ const heroStats = [
 export default function Home() {
   return (
     <main className="bg-[#e6ebe7] text-[#07120d]">
-      <section className="relative overflow-hidden border-b border-white/10 pt-20 text-white sm:pt-24">
-        <div className="absolute inset-0 bg-[radial-gradient(130%_85%_at_12%_6%,rgba(207,180,95,0.34)_0%,rgba(207,180,95,0.08)_26%,rgba(7,18,13,0)_56%),radial-gradient(90%_70%_at_88%_22%,rgba(13,58,39,0.95)_0%,rgba(13,58,39,0.42)_42%,rgba(13,58,39,0)_78%),linear-gradient(135deg,#07120d_0%,#0d3a27_46%,#07120d_100%)]" />
-        <div className="absolute -left-28 top-20 h-72 w-72 rounded-full bg-[rgba(207,180,95,0.18)] blur-3xl" />
-        <div className="absolute -right-24 bottom-4 h-80 w-80 rounded-full bg-[rgba(13,58,39,0.45)] blur-3xl" />
+      <section className="hero-shell hero-start hero-wine-accent border-b border-white/10">
+        <div className="hero-media">
+          <Image
+            src="/brand/watchman-opanin-thomas.png"
+            alt="Chief Prayer Warrior Watchman Opanin Thomas"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[52%_top] lg:object-contain lg:object-right lg:scale-[0.94]"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_10%_14%,rgba(207,180,95,0.3),rgba(207,180,95,0.06)_30%,transparent_62%),linear-gradient(135deg,rgba(7,18,13,0.3),rgba(13,58,39,0.34)_56%,rgba(3,6,4,0.42))]" />
+        </div>
 
-        <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-4 pb-14 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:pb-20">
-          <div className="motion-rise">
+        <div className="hero-content mx-auto w-full max-w-7xl px-4 pb-14 sm:px-8 lg:px-10 lg:pb-20">
+          <div className="motion-rise max-w-3xl">
             <p className="inline-flex border border-[rgba(207,180,95,0.5)] bg-[#07120d]/55 px-3 py-2 text-[0.7rem] font-bold tracking-[0.16em] text-[#f4e7b5]">
               Prayer here, Prayer there
             </p>
+            <p className="hero-script mt-5">Watch and pray without ceasing</p>
             <h1 className="font-display mt-5 max-w-[10ch] text-5xl font-light leading-[0.9] text-white sm:text-7xl">
               Ogya Ntom Prayer Army
             </h1>
@@ -55,39 +66,25 @@ export default function Home() {
               A disciplined online prayer community for daily intercession,
               spiritual covering, testimony, and formation under watchful leadership.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-row flex-wrap gap-2 sm:gap-3">
               <Link
                 href="/prayer-watch"
-                className="site-button-primary w-full rounded-md text-xs uppercase tracking-[0.16em] sm:w-auto sm:text-sm"
+                className="site-button-primary min-h-10 rounded-md px-4 text-[0.68rem] tracking-[0.12em] sm:min-h-11 sm:px-5 sm:text-xs"
               >
                 Join Prayer Watch
                 <ArrowRight size={18} weight="bold" />
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex min-h-14 w-full items-center justify-center rounded-md border border-white/24 bg-white/8 px-6 text-xs font-bold uppercase tracking-[0.16em] text-white transition duration-[180ms] ease-out hover:-translate-y-[1px] hover:bg-white/14 sm:w-auto sm:text-sm"
+                className="inline-flex min-h-10 items-center justify-center rounded-md border border-white/24 bg-white/8 px-4 text-[0.68rem] font-bold tracking-[0.12em] text-white transition duration-[180ms] ease-out hover:-translate-y-[1px] hover:bg-white/14 sm:min-h-11 sm:px-5 sm:text-xs"
               >
                 Send Prayer Request
               </Link>
             </div>
           </div>
-
-          <div className="motion-rise overflow-hidden rounded-md border border-white/20 bg-white/6 p-2 shadow-[0_24px_80px_rgba(3,6,4,0.38)]">
-            <div className="relative h-[22rem] w-full overflow-hidden rounded-[0.2rem] sm:h-[30rem]">
-              <Image
-                src="/brand/watchman-opanin-thomas.png"
-                alt="Chief Prayer Warrior Watchman Opanin Thomas"
-                fill
-                priority
-                sizes="(min-width: 1024px) 40vw, 100vw"
-                className="object-cover object-top"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,18,13,0.04)_0%,rgba(7,18,13,0.48)_100%)]" />
-            </div>
-          </div>
         </div>
 
-        <div className="mx-auto grid max-w-7xl gap-3 px-4 pb-10 sm:grid-cols-3 sm:px-8 lg:px-10">
+        <div className="hero-content mx-auto grid max-w-7xl gap-3 px-4 pb-10 sm:grid-cols-3 sm:px-8 lg:px-10">
           {heroStats.map((item) => (
             <div key={item.label} className="border border-white/18 bg-[#07120d]/46 px-5 py-4 backdrop-blur-sm">
               <p className="font-display text-3xl font-light text-[#f5e6b2]">{item.value}</p>

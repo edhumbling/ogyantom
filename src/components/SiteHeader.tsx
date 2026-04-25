@@ -26,28 +26,27 @@ export function SiteHeader() {
             <LogoMark shortTitle showSlogan={false} />
           </div>
 
-          <nav className="hidden items-center gap-1 lg:flex">
-            {navItems.map((item) => {
-              const active = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={
-                    "rounded-md px-3 py-2 text-[0.92rem] font-semibold transition duration-[180ms] ease-out xl:px-4 " +
-                    (active
-                      ? "bg-white/10 text-[var(--gold)]"
-                      : "text-white/74 hover:bg-white/6 hover:text-white")
-                  }
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="hidden items-center gap-2 lg:flex">
-            <Link href="/contact" className="site-button-primary min-h-10 rounded-md px-5 text-[0.82rem]">
+          <div className="ml-auto hidden items-center gap-2 lg:flex">
+            <nav className="hidden items-center gap-2 lg:flex">
+              {navItems.map((item) => {
+                const active = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={
+                      "font-sans rounded-md px-3 py-2 text-[0.78rem] font-semibold tracking-[0.01em] transition duration-[180ms] ease-out xl:px-3.5 " +
+                      (active
+                        ? "bg-white/10 text-[var(--gold)]"
+                        : "text-white/74 hover:bg-white/6 hover:text-white")
+                    }
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+            <Link href="/contact" className="site-button-primary nav-prayer-button rounded-md">
               Send Prayer Request
             </Link>
           </div>

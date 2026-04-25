@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   CalendarBlank,
@@ -42,19 +43,29 @@ export default async function EventsPage() {
   const events = await sanityFetch<Event[]>(eventsQuery, {}, []);
 
   return (
-    <main className="bg-[#e6ebe7] pt-36 text-[#07120d] lg:pt-48">
-      <section className="relative overflow-hidden px-5 pb-16 sm:px-8 lg:px-10 lg:pb-28">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_0%,rgba(207,180,95,0.28),transparent_30%),linear-gradient(135deg,#07120d,#0d3a27_58%,#030604)]" />
-        <div className="relative mx-auto grid max-w-7xl gap-8 text-white lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+    <main className="bg-[#e6ebe7] text-[#07120d]">
+      <section className="hero-shell hero-start hero-wine-accent px-5 pb-16 sm:px-8 lg:px-10 lg:pb-28">
+        <div className="hero-media">
+          <Image
+            src="/brand/watchman-opanin-thomas.png"
+            alt="Watchman Opanin Thomas"
+            fill
+            sizes="100vw"
+            className="object-cover object-[52%_top] lg:object-contain lg:object-right lg:scale-[0.94]"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_0%,rgba(207,180,95,0.28),transparent_30%),linear-gradient(135deg,rgba(7,18,13,0.34),rgba(13,58,39,0.38)_58%,rgba(3,6,4,0.7))]" />
+        </div>
+        <div className="hero-content mx-auto grid max-w-7xl gap-8 text-white lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
               Upcoming Events
             </p>
+            <p className="hero-script mt-4">Gatherings for intercession</p>
             <h1 className="font-display mt-5 text-6xl font-light leading-none tracking-tighter sm:text-7xl lg:text-8xl">
               Online watches for the prayer army.
             </h1>
           </div>
-          <p className="glass-panel-dark p-7 text-xl leading-9 text-[#edf1ee]">
+          <p className="max-w-2xl text-xl leading-8 text-[#edf1ee]">
             Publish vigils, special prayer meetings, Google Meet sessions, and
             ministry announcements in Sanity. The site will keep this page fresh.
           </p>

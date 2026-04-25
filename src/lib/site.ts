@@ -3,6 +3,7 @@ export const navItems = [
   { href: "/prayer-watch", label: "Prayer Watch" },
   { href: "/testimonies", label: "Testimonies" },
   { href: "/ministry", label: "Ministry" },
+  { href: "/philanthropy", label: "Philanthropy" },
   { href: "/blog", label: "Blog" },
   { href: "/events", label: "Upcoming Events" },
   { href: "/contact", label: "Contact" },
@@ -51,6 +52,11 @@ export const ministryFacets = [
     href: "/blog",
     title: "Prayer Teachings",
     text: "Written exhortations, devotionals, and ministry notes from the prayer watch.",
+  },
+  {
+    href: "/philanthropy",
+    title: "Philanthropy",
+    text: "Updates on compassionate giving to widows, orphans, and vulnerable families.",
   },
   {
     href: "/events",

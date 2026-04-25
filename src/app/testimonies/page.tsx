@@ -1,5 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, HandsPraying } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 const testimonies = [
   {
@@ -40,62 +41,35 @@ const testimonies = [
   },
 ];
 
-const testimonyPillars = [
-  "White for peace, sincerity, and fresh grace.",
-  "Wine for depth, sacrifice, and covenant beauty.",
-  "Gold for honor, value, and the evidence of answered prayer.",
-  "Emerald green for life, restoration, and spiritual growth.",
-];
-
 export default function TestimoniesPage() {
   return (
     <main className="bg-[#f7f4ee] text-[#0b1d16]">
-      <section className="relative overflow-hidden px-5 pb-16 pt-36 sm:px-8 lg:px-10 lg:pb-24 lg:pt-48">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.96),rgba(255,255,255,0.72)_28%,transparent_60%),linear-gradient(135deg,#f8f5ee_0%,#f3ead8_34%,#6d1237_62%,#0f5c46_100%)]" />
-        <div className="absolute right-[-8%] top-16 h-72 w-72 rounded-full bg-[#d4af5d]/20 blur-3xl sm:h-96 sm:w-96" />
-        <div className="absolute bottom-[-4rem] left-[-2rem] h-56 w-56 rounded-full bg-[#0f5c46]/20 blur-3xl sm:h-72 sm:w-72" />
-
-        <div className="relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
-          <div className="max-w-4xl">
+      <section className="hero-shell hero-start hero-wine-accent px-5 pb-16 sm:px-8 lg:px-10 lg:pb-24">
+        <div className="hero-media">
+          <Image
+            src="/brand/watchman-opanin-thomas.png"
+            alt="Watchman Opanin Thomas"
+            fill
+            sizes="100vw"
+            className="object-cover object-[52%_top] lg:object-contain lg:object-right lg:scale-[0.94]"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_12%_8%,rgba(109,18,55,0.42),rgba(109,18,55,0.08)_32%,transparent_58%),linear-gradient(140deg,rgba(7,18,13,0.34),rgba(15,92,70,0.34)_56%,rgba(3,6,4,0.74))]" />
+        </div>
+        <div className="hero-content mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <div>
             <p className="inline-flex border border-[#d4af5d]/55 bg-white/78 px-4 py-2 text-sm font-bold uppercase tracking-[0.24em] text-[#6d1237] shadow-[0_10px_30px_rgba(109,18,55,0.08)]">
               Member love & testimonies
             </p>
-            <h1 className="font-display mt-6 text-6xl font-light leading-[0.92] tracking-tight text-white sm:text-7xl lg:text-8xl">
+            <p className="hero-script mt-4">Every testimony carries light</p>
+            <h1 className="font-display mt-6 max-w-4xl text-6xl font-light leading-[0.92] tracking-tight text-white sm:text-7xl">
               Stories of answered prayer, restoration, and divine covering.
             </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-white/86 sm:text-xl">
+          </div>
+          <p className="max-w-2xl text-xl leading-8 text-white/86">
               These are not slogans. They are lived encounters from members who
               found God’s help, healing, depth, and preservation through this
               prayer community.
-            </p>
-          </div>
-
-          <div className="border border-white/30 bg-white/14 p-6 text-white shadow-[0_24px_70px_rgba(8,20,15,0.22)] lg:p-8">
-            <div className="flex items-center gap-3">
-              <div className="flex h-14 w-14 items-center justify-center rounded-[1.2rem] bg-[#d4af5d] text-[#6d1237]">
-                <HandsPraying size={28} weight="fill" />
-              </div>
-              <div>
-                <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#f0dca1]">
-                  Designed around
-                </p>
-                <p className="font-display text-3xl font-light leading-none">
-                  White • Wine • Gold • Emerald Green
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-6 grid gap-3">
-              {testimonyPillars.map((item) => (
-                <div
-                  key={item}
-                  className="border border-white/18 bg-white/10 px-4 py-4 text-sm leading-7 text-white/88"
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
+          </p>
         </div>
       </section>
 

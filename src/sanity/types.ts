@@ -32,3 +32,16 @@ export type Event = {
   status?: "upcoming" | "featured" | "completed";
   image?: SanityImage;
 };
+
+export type PhilanthropyUpdate = {
+  _id: string;
+  title: string;
+  slug?: string;
+  summary?: string;
+  publishedAt?: string;
+  beneficiary?: "Widows" | "Orphans" | "Families" | "Elderly" | "Community";
+  location?: string;
+  donationValue?: string;
+  impact?: string;
+  image?: SanityImage;
+};

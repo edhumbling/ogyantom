@@ -1,28 +1,40 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CalendarBlank } from "@phosphor-icons/react/dist/ssr";
 import { prayerWatches } from "@/lib/site";
 
 export default function PrayerWatchPage() {
   return (
-    <main className="bg-[#e6ebe7] pt-36 lg:pt-48 text-[#07120d]">
-      <section className="px-5 pb-16 lg:pb-32 sm:px-8 lg:px-10 ">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+    <main className="bg-[#e6ebe7] text-[#07120d]">
+      <section className="hero-shell hero-start hero-wine-accent overflow-hidden border-b border-white/10">
+        <div className="hero-media">
+          <Image
+            src="/brand/watchman-opanin-thomas.png"
+            alt="Watchman Opanin Thomas"
+            fill
+            sizes="100vw"
+            className="object-cover object-[52%_top] lg:object-contain lg:object-right lg:scale-[0.94]"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(140deg,rgba(7,18,13,0.38),rgba(13,58,39,0.4),rgba(3,6,4,0.75))]" />
+        </div>
+        <div className="hero-content mx-auto grid max-w-7xl gap-8 px-5 py-16 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end lg:px-10 lg:py-20">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
+            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
               Prayer Watch
             </p>
-            <h1 className="font-display tracking-tighter mt-4 max-w-4xl text-6xl font-light leading-none sm:text-7xl">
+            <p className="hero-script mt-4">Stand in the gap</p>
+            <h1 className="font-display tracking-tighter mt-4 max-w-4xl text-6xl font-light leading-none text-white sm:text-7xl">
               A clear rhythm for the prayer army.
             </h1>
           </div>
-          <p className="max-w-2xl text-xl leading-8 text-[#4f5d55]">
+          <p className="max-w-2xl text-xl leading-8 text-[#dfe7e2]">
             The watch is structured so people know when to gather, what to carry,
             and how to stay spiritually alert through the day.
           </p>
         </div>
       </section>
 
-      <section className="section-rule px-5 pb-20 lg:pb-24 sm:px-8 lg:px-10 ">
+      <section className="section-rule px-5 pb-20 pt-16 lg:pb-24 lg:pt-20 sm:px-8 lg:px-10 ">
         <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-3">
           {prayerWatches.map((watch, index) => (
             <article
