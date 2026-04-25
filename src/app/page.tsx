@@ -38,125 +38,76 @@ const heroStats = [
 export default function Home() {
   return (
     <main className="bg-[#e6ebe7] text-[#07120d]">
-      <section className="relative overflow-hidden border-b border-white/10 bg-[#05110c] px-5 pb-12 pt-28 sm:px-8 sm:pt-32 lg:px-10 lg:pb-16 lg:pt-36">
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,#08140f_0%,#0d3a27_42%,#07120d_72%,#030604_100%)]" />
-        <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.35),transparent)]" />
+      <section className="relative overflow-hidden border-b border-white/10 pt-20 text-white sm:pt-24">
+        <div className="absolute inset-0 bg-[radial-gradient(130%_85%_at_12%_6%,rgba(207,180,95,0.34)_0%,rgba(207,180,95,0.08)_26%,rgba(7,18,13,0)_56%),radial-gradient(90%_70%_at_88%_22%,rgba(13,58,39,0.95)_0%,rgba(13,58,39,0.42)_42%,rgba(13,58,39,0)_78%),linear-gradient(135deg,#07120d_0%,#0d3a27_46%,#07120d_100%)]" />
+        <div className="absolute -left-28 top-20 h-72 w-72 rounded-full bg-[rgba(207,180,95,0.18)] blur-3xl" />
+        <div className="absolute -right-24 bottom-4 h-80 w-80 rounded-full bg-[rgba(13,58,39,0.45)] blur-3xl" />
 
-        <div className="relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-stretch">
-          <div className="flex flex-col justify-between py-2 lg:py-6">
-            <div>
-            <p className="inline-flex border border-white/15 bg-white/5 px-3 py-2 text-[0.68rem] font-bold uppercase tracking-[0.26em] text-[#f5e7b6]">
-              Chief Prayer Warrior Watchman Opanin Thomas
+        <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-4 pb-14 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:pb-20">
+          <div className="motion-rise">
+            <p className="inline-flex border border-[rgba(207,180,95,0.5)] bg-[#07120d]/55 px-3 py-2 text-[0.7rem] font-bold tracking-[0.16em] text-[#f4e7b5]">
+              Prayer here, Prayer there
             </p>
-            <h1 className="font-display mt-6 max-w-[10ch] text-5xl font-light leading-[0.9] tracking-tight text-white sm:text-7xl lg:text-[5.5rem]">
-              A disciplined prayer army for people who stand watch.
+            <h1 className="font-display mt-5 max-w-[10ch] text-5xl font-light leading-[0.9] text-white sm:text-7xl">
+              Ogya Ntom Prayer Army
             </h1>
-            <p className="mt-6 max-w-[34rem] text-lg leading-8 text-[#d6e1db] sm:text-xl">
-              Ogya Ntom Prayer Army gathers believers for daily intercession,
-              spiritual covering, testimonies, and formation in a structured
-              online prayer community.
+            <p className="mt-6 max-w-2xl text-base leading-8 text-[#deebe4] sm:text-xl">
+              A disciplined online prayer community for daily intercession,
+              spiritual covering, testimony, and formation under watchful leadership.
             </p>
-            </div>
-
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/prayer-watch"
-                className="site-button-primary text-sm uppercase tracking-[0.16em] sm:text-base"
+                className="site-button-primary w-full rounded-md text-xs uppercase tracking-[0.16em] sm:w-auto sm:text-sm"
               >
                 Join Prayer Watch
-                <ArrowRight size={20} weight="bold" />
+                <ArrowRight size={18} weight="bold" />
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex min-h-14 items-center justify-center border border-white/18 bg-white/5 px-6 text-sm font-bold uppercase tracking-[0.16em] text-white transition duration-[180ms] ease-out hover:bg-white/10 active:scale-[0.98] sm:text-base"
+                className="inline-flex min-h-14 w-full items-center justify-center rounded-md border border-white/24 bg-white/8 px-6 text-xs font-bold uppercase tracking-[0.16em] text-white transition duration-[180ms] ease-out hover:-translate-y-[1px] hover:bg-white/14 sm:w-auto sm:text-sm"
               >
                 Send Prayer Request
               </Link>
             </div>
-
-            <div className="mt-10 grid gap-4 border-t border-white/12 pt-5 sm:grid-cols-3 sm:gap-6">
-              {heroStats.map((item) => (
-                <div key={item.label} className="min-h-[4.75rem] border-l border-white/12 pl-4 first:border-l-0 first:pl-0">
-                  <p className="font-display text-2xl font-bold leading-none text-[#f3e1a6] sm:text-3xl">
-                    {item.value}
-                  </p>
-                  <p className="mt-2 max-w-[16ch] text-sm leading-6 text-[#d0dbd5]">
-                    {item.label}
-                  </p>
-                </div>
-              ))}
-            </div>
           </div>
 
-          <div className="relative">
-            <div className="relative border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-2 shadow-[0_30px_90px_rgba(0,0,0,0.24)] sm:p-3">
-              <div className="relative min-h-[26rem] overflow-hidden bg-[#09160f] sm:min-h-[40rem]">
-                <Image
-                  src="/brand/watchman-opanin-thomas.png"
-                  alt="Chief Prayer Warrior Watchman Opanin Thomas"
-                  fill
-                  priority
-                  sizes="(min-width: 1024px) 46vw, 100vw"
-                  className="object-cover object-top"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,10,8,0.08)_0%,rgba(4,10,8,0.28)_40%,rgba(4,10,8,0.88)_100%),linear-gradient(90deg,rgba(3,6,4,0.38),rgba(3,6,4,0.02)_42%,rgba(3,6,4,0.5))]" />
-
-                <div className="absolute left-4 top-4 border border-white/15 bg-[#07120d]/72 px-3 py-2 text-[0.68rem] font-bold uppercase tracking-[0.24em] text-white sm:left-6 sm:top-6">
-                  Watchful leadership
-                </div>
-
-                <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6">
-                  <div className="border border-white/12 bg-[#07120d]/82 p-4 text-white shadow-[0_20px_60px_rgba(0,0,0,0.18)] sm:p-5">
-                    <div className="mb-5">
-                      <p className="text-[0.72rem] font-bold uppercase tracking-[0.24em] text-[#cfb45f]">
-                        Watchman Opanin Thomas
-                      </p>
-                      <p className="mt-2 max-w-[26rem] text-sm leading-6 text-[#d6e1db] sm:text-base">
-                        Guiding a prayer culture built on consistency,
-                        agreement, and spiritual discipline.
-                      </p>
-                    </div>
-
-                    <div className="grid gap-4 border-t border-white/12 pt-4 sm:grid-cols-3 sm:gap-0 sm:pt-5">
-                      {prayerWatches.map((watch, index) => (
-                        <div
-                          key={watch.title}
-                          className={
-                            "sm:px-4 " +
-                            (index === 0
-                              ? "sm:pl-0"
-                              : "sm:border-l sm:border-white/12")
-                          }
-                        >
-                          <p className="text-[0.68rem] font-bold uppercase tracking-[0.22em] text-[#cfb45f]">
-                            {watch.kicker}
-                          </p>
-                          <h2 className="mt-2 text-lg font-bold leading-tight text-white">
-                            {watch.title}
-                          </h2>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div className="motion-rise overflow-hidden rounded-md border border-white/20 bg-white/6 p-2 shadow-[0_24px_80px_rgba(3,6,4,0.38)]">
+            <div className="relative h-[22rem] w-full overflow-hidden rounded-[0.2rem] sm:h-[30rem]">
+              <Image
+                src="/brand/watchman-opanin-thomas.png"
+                alt="Chief Prayer Warrior Watchman Opanin Thomas"
+                fill
+                priority
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="object-cover object-top"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,18,13,0.04)_0%,rgba(7,18,13,0.48)_100%)]" />
             </div>
           </div>
         </div>
+
+        <div className="mx-auto grid max-w-7xl gap-3 px-4 pb-10 sm:grid-cols-3 sm:px-8 lg:px-10">
+          {heroStats.map((item) => (
+            <div key={item.label} className="border border-white/18 bg-[#07120d]/46 px-5 py-4 backdrop-blur-sm">
+              <p className="font-display text-3xl font-light text-[#f5e6b2]">{item.value}</p>
+              <p className="mt-2 text-xs font-bold uppercase tracking-[0.14em] text-[#d3dfd8]">{item.label}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
-      <section className="relative overflow-hidden border-b border-white/10 bg-[#06100c] px-5 py-16 text-white lg:py-24 sm:px-8 lg:px-10">
-        <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(6,16,12,0.98),rgba(13,58,39,0.78)),url('/brand/watchman-opanin-thomas.png')] bg-[length:auto,520px] bg-[position:center,right_10%_top_10%] bg-no-repeat opacity-100" />
-        <div className="relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
+      <section className="border-b border-white/10 bg-[#07120d] px-5 py-16 text-white lg:py-24 sm:px-8 lg:px-10">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
               Thomas Bio
             </p>
-            <h2 className="font-display tracking-tighter mt-4 text-5xl font-light leading-none sm:text-6xl">
+            <h2 className="font-display mt-4 text-5xl font-light leading-none sm:text-6xl">
               Prayer changes things. Prayer changes us.
             </h2>
           </div>
-          <div className="glass-panel-dark p-7 lg:p-10">
+          <div className="border border-white/14 bg-[#0a1a13] p-7 lg:p-10">
             <p className="text-xl leading-9 text-[#f3f6f3]">{thomasBio}</p>
           </div>
         </div>
@@ -168,7 +119,7 @@ export default function Home() {
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
               {ministryType}
             </p>
-            <h2 className="font-display tracking-tighter mt-3 text-5xl font-light leading-none sm:text-6xl">
+            <h2 className="font-display mt-3 text-5xl font-light leading-none sm:text-6xl">
               We connect the world through prayers online.
             </h2>
           </div>
@@ -184,7 +135,7 @@ export default function Home() {
                   alt={`${platform.name} logo`}
                   width={52}
                   height={52}
-                  className="h-14 w-14"
+                  className="h-12 w-12"
                 />
                 <h3 className="mt-8 text-2xl font-bold">{platform.name}</h3>
                 <p className="mt-3 text-base leading-7 text-[#53635a]">
@@ -203,7 +154,7 @@ export default function Home() {
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
               Vision
             </p>
-            <h2 className="font-display tracking-tighter mt-5 text-4xl font-light leading-none sm:text-5xl">
+            <h2 className="font-display mt-5 text-4xl font-light leading-none sm:text-5xl">
               {visionStatement}
             </h2>
           </div>
@@ -225,7 +176,7 @@ export default function Home() {
               <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
                 Ministry facets
               </p>
-              <h2 className="font-display tracking-tighter mt-3 max-w-3xl text-5xl font-light leading-none sm:text-6xl">
+            <h2 className="font-display mt-3 max-w-3xl text-5xl font-light leading-none sm:text-6xl">
                 Built like a system. Moving like a family.
               </h2>
             </div>
@@ -253,11 +204,7 @@ export default function Home() {
                   </p>
                   <span className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-[#0d3a27]">
                     Open facet
-                    <ArrowRight
-                      size={18}
-                      weight="bold"
-                      className="transition group-hover:translate-x-1"
-                    />
+                    <ArrowRight size={18} weight="bold" className="transition group-hover:translate-x-1" />
                   </span>
                 </Link>
               );
@@ -272,7 +219,7 @@ export default function Home() {
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
               Prayer Watch
             </p>
-            <h2 className="font-display tracking-tighter mt-3 text-5xl font-light leading-none sm:text-6xl">
+            <h2 className="font-display mt-3 text-5xl font-light leading-none sm:text-6xl">
               Three watches. One disciplined covering.
             </h2>
           </div>
@@ -308,7 +255,7 @@ export default function Home() {
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
               Core Values
             </p>
-            <h2 className="font-display tracking-tighter mt-3 text-5xl font-light leading-none sm:text-6xl">
+            <h2 className="font-display mt-3 text-5xl font-light leading-none sm:text-6xl">
               The culture behind the prayer army.
             </h2>
           </div>

@@ -1,0 +1,37 @@
+import Image from "next/image";
+import Link from "next/link";
+import {
+  ArrowRight,
+  BookOpenText,
+  Broadcast,
+  CalendarBlank,
+  HandsPraying,
+  Megaphone,
+  ShieldCheck,
+} from "@phosphor-icons/react/dist/ssr";
+import {
+  coreValues,
+  ministryFacets,
+  missionStatement,
+  ministryType,
+  onlinePlatforms,
+  prayerWatches,
+  thomasBio,
+  visionStatement,
+} from "@/lib/site";
+
+const facetIcons = [
+  Broadcast,
+  Megaphone,
+  ShieldCheck,
+  HandsPraying,
+  BookOpenText,
+  CalendarBlank,
+];
+
+const heroStats = [
+  { value: "3", label: "daily prayer watches" },
+  { value: "Online", label: "community across platforms" },
+  { value: "Faithful", label: "covering for urgent needs" },
+];
+
