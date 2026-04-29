@@ -3,6 +3,15 @@ import { hasSanityConfig, sanityConfig } from "./env";
 
 export const client = hasSanityConfig ? createClient(sanityConfig) : null;
 
+export const writeClient =
+  hasSanityConfig && process.env.SANITY_API_WRITE_TOKEN
+    ? createClient({
+        ...sanityConfig,
+        token: process.env.SANITY_API_WRITE_TOKEN,
+        useCdn: false,
+      })
+    : null;
+
 export async function sanityFetch<T>(
   query: string,
   params: Record<string, string> = {},

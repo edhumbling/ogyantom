@@ -1,8 +1,15 @@
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import {
+  ArrowDown,
+  Play,
+} from "@phosphor-icons/react/dist/ssr";
+import { TestimonyBrowser, type TestimonyEntry } from "@/components/TestimonyBrowser";
+import { TestimonyForm } from "@/components/TestimonyForm";
+import { sanityFetch } from "@/sanity/client";
+import { publishedTestimoniesQuery } from "@/sanity/queries";
+import type { Testimony } from "@/sanity/types";
 
-const testimonies = [
+const baselineTestimonies: TestimonyEntry[] = [
   {
     name: "Elizabeth Nkansah",
     title: "Finding Faith and Financial Freedom",
@@ -41,122 +48,90 @@ const testimonies = [
   },
 ];
 
-export default function TestimoniesPage() {
+export const revalidate = 60;
+
+export default async function TestimoniesPage() {
+  const sanityTestimonies = await sanityFetch<Testimony[]>(
+    publishedTestimoniesQuery,
+    {},
+    [],
+  );
+  const testimonies = [
+    ...baselineTestimonies,
+    ...sanityTestimonies.map((item) => ({
+      name: item.name,
+      title: item.title,
+      highlight: item.highlight || "Member testimony",
+      content: item.content
+        .split(/\n{2,}/)
+        .map((paragraph) => paragraph.trim())
+        .filter(Boolean),
+    })),
+  ];
   return (
-    <main className="bg-[#f7f4ee] text-[#0b1d16]">
-      <section className="hero-shell hero-start hero-wine-accent px-5 pb-16 sm:px-8 lg:px-10 lg:pb-24">
-        <div className="hero-media">
+    <main className="testimony-page">
+      <section className="testimony-hero">
+        <div className="testimony-hero-media">
           <Image
             src="/brand/watchman-opanin-thomas.png"
             alt="Watchman Opanin Thomas"
             fill
             sizes="100vw"
-            className="object-cover object-[52%_top] lg:object-contain lg:object-right lg:scale-[0.94]"
+            className="object-cover object-[50%_top] lg:object-contain lg:object-right"
+            priority
           />
-          <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_12%_8%,rgba(109,18,55,0.42),rgba(109,18,55,0.08)_32%,transparent_58%),linear-gradient(140deg,rgba(7,18,13,0.34),rgba(15,92,70,0.34)_56%,rgba(3,6,4,0.74))]" />
         </div>
-        <div className="hero-content mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-          <div>
-            <p className="inline-flex border border-[#d4af5d]/55 bg-white/78 px-4 py-2 text-sm font-bold uppercase tracking-[0.24em] text-[#6d1237] shadow-[0_10px_30px_rgba(109,18,55,0.08)]">
-              Member love & testimonies
+        <div className="testimony-hero-inner">
+          <div className="testimony-hero-copy">
+            <p className="testimony-kicker">Member testimony wall</p>
+            <h1>Proof of prayer, told by the people who lived it.</h1>
+            <p>
+              Stories from members who found God’s help, healing, depth, and
+              preservation through this prayer community.
             </p>
-            <p className="hero-script mt-4">Every testimony carries light</p>
-            <h1 className="font-display mt-6 max-w-4xl text-6xl font-light leading-[0.92] tracking-tight text-white sm:text-7xl">
-              Stories of answered prayer, restoration, and divine covering.
-            </h1>
+            <div className="testimony-hero-actions">
+              <a href="#share-testimony" className="testimony-glow-cta">
+                <span className="relative z-10 flex items-center gap-2">
+                  <Play size={16} weight="fill" />
+                  Share testimony
+                </span>
+              </a>
+              <a href="#testimony-ledger" className="testimony-secondary-cta">
+                Browse testimonies
+                <ArrowDown size={17} weight="bold" />
+              </a>
+            </div>
           </div>
-          <p className="max-w-2xl text-xl leading-8 text-white/86">
-              These are not slogans. They are lived encounters from members who
-              found God’s help, healing, depth, and preservation through this
-              prayer community.
+        </div>
+      </section>
+
+      <section id="testimony-ledger" className="testimony-ledger-section">
+        <div className="testimony-section-head">
+          <div>
+            <p className="testimony-kicker testimony-kicker-dark">Testimonies</p>
+            <h2>Read the testimony ledger.</h2>
+          </div>
+          <p>
+            Stories from the prayer family, shared for faith and encouragement.
           </p>
         </div>
+
+        <TestimonyBrowser testimonies={testimonies} />
       </section>
 
-      <section className="px-5 pb-20 sm:px-8 lg:px-10 lg:pb-32">
-        <div className="mx-auto grid max-w-7xl gap-6 xl:grid-cols-2">
-          {testimonies.map((item, index) => (
-            <article
-              key={item.name}
-              className={`relative overflow-hidden border p-7 shadow-[0_24px_80px_rgba(14,34,25,0.08)] lg:p-9 ${
-                index % 2 === 0
-                  ? "border-[#eadfc8] bg-[linear-gradient(180deg,#ffffff_0%,#fcf8f0_100%)]"
-                  : "border-[#d1dbc9] bg-[linear-gradient(180deg,#ffffff_0%,#f1f7f2_100%)]"
-              }`}
-            >
-              <div
-                className={`absolute right-0 top-0 h-28 w-28 rounded-bl-[2rem] ${
-                  index % 2 === 0 ? "bg-[#6d1237]" : "bg-[#0f5c46]"
-                }`}
-              />
-              <div className="relative">
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#6d1237]">
-                      {item.highlight}
-                    </p>
-                    <h2 className="font-display mt-4 max-w-2xl text-4xl font-light leading-none tracking-tight text-[#10251d] sm:text-5xl">
-                      {item.title}
-                    </h2>
-                  </div>
-                  <div className="border border-[#d4af5d]/70 bg-[#fff8e8] px-4 py-2 text-xs font-bold uppercase tracking-[0.24em] text-[#8c6a18]">
-                    Member testimony
-                  </div>
-                </div>
+      <section id="share-testimony" className="testimony-submit-section">
+        <div className="testimony-submit-shell">
+          <div className="testimony-submit-copy">
+            <p className="testimony-kicker">Share testimony</p>
+            <h2>If God has done it, let the house hear it.</h2>
+            <p>
+              Share your testimony with the ministry. Contact details are kept
+              private and are not shown on the public page.
+            </p>
+          </div>
 
-                <div className="mt-8 flex items-center gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center border border-[#d4af5d]/50 bg-[linear-gradient(135deg,#d4af5d,#f4e7bf)] text-lg font-bold text-[#6d1237]">
-                    {item.name
-                      .split(" ")
-                      .map((word) => word[0])
-                      .join("")
-                      .slice(0, 2)}
-                  </div>
-                  <div>
-                    <p className="text-xl font-bold text-[#10251d]">{item.name}</p>
-                    <p className="text-sm uppercase tracking-[0.22em] text-[#4f665c]">
-                      Loved by grace. Held by prayer.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-8 space-y-5 text-[1.05rem] leading-8 text-[#31453c]">
-                  {item.content.map((paragraph) => (
-                    <p key={paragraph}>&quot;{paragraph}&quot;</p>
-                  ))}
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="px-5 pb-20 sm:px-8 lg:px-10 lg:pb-32">
-        <div className="mx-auto max-w-7xl overflow-hidden bg-[linear-gradient(135deg,#5f0f31_0%,#7a1842_26%,#d4af5d_26%,#d4af5d_29%,#0f5c46_29%,#0a3a2d_100%)] p-[1px] shadow-[0_30px_100px_rgba(27,47,36,0.16)]">
-          <div className="grid gap-8 bg-[#fffdf8] px-6 py-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-10 lg:py-10">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#6d1237]">
-                Share your own
-              </p>
-              <h2 className="font-display mt-4 text-5xl font-light leading-none tracking-tight text-[#10251d] sm:text-6xl">
-                If God has done it, let the house hear it.
-              </h2>
-            </div>
-
-            <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
-              <p className="max-w-2xl text-lg leading-8 text-[#41574d]">
-                Your testimony can strengthen someone else’s faith, encourage
-                someone in waiting, and remind the next person that God still
-                answers prayer.
-              </p>
-              <Link
-                href="/contact"
-                className="inline-flex min-h-14 items-center gap-2 border border-[#6d1237] bg-[#6d1237] px-8 text-base font-bold uppercase tracking-[0.16em] text-white transition duration-[180ms] ease-out hover:bg-[#541028] active:scale-[0.98]"
-              >
-                Send your testimony
-                <ArrowRight size={20} weight="bold" />
-              </Link>
-            </div>
+          <div className="testimony-form-panel">
+            <TestimonyForm />
           </div>
         </div>
       </section>

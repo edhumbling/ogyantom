@@ -116,3 +116,13 @@ export const philanthropyBySlugQuery = `*[_type == "philanthropy" && slug.curren
     }
   }
 }`;
+
+export const publishedTestimoniesQuery = `*[_type == "testimony" && reviewStatus == "published"] | order(coalesce(publishedAt, submittedAt) desc) {
+  _id,
+  title,
+  highlight,
+  name,
+  content,
+  publishedAt,
+  submittedAt
+}`;

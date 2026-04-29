@@ -75,3 +75,13 @@ export type PhilanthropyUpdate = {
   image?: SanityImage;
   body?: RichContentBlock[];
 };
+
+export type Testimony = {
+  _id: string;
+  title: string;
+  highlight?: string;
+  name: string;
+  content: string;
+  publishedAt?: string;
+  submittedAt?: string;
+};
