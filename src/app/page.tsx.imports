@@ -16,7 +16,7 @@ import {
   ministryType,
   onlinePlatforms,
   prayerWatches,
-  thomasBio,
+  opaninBio,
   visionStatement,
 } from "@/lib/site";
 

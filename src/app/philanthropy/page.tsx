@@ -1,13 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, HandHeart, MapPin } from "@phosphor-icons/react/dist/ssr";
-import { SanityImage } from "@/components/SanityImage";
+import { HandHeart } from "@phosphor-icons/react/dist/ssr";
+import { SanityCardGrid, type SanityCardGridItem } from "@/components/SanityCardGrid";
 import { sanityFetch } from "@/sanity/client";
 import { philanthropyQuery } from "@/sanity/queries";
 import type { PhilanthropyUpdate } from "@/sanity/types";
 
 export const metadata = {
-  title: "Philanthropy | Ogya Ntom Prayer Army",
+  title: "Philanthropy",
   description:
     "Giving updates from Ogya Ntom Prayer Army highlighting support to widows, orphans, and vulnerable families.",
 };
@@ -25,34 +24,41 @@ function formatDate(value?: string) {
 
 export default async function PhilanthropyPage() {
   const updates = await sanityFetch<PhilanthropyUpdate[]>(philanthropyQuery, {}, []);
+  const cards: SanityCardGridItem[] = updates.map((item) => ({
+    id: item._id,
+    href: item.slug ? `/philanthropy/${item.slug}` : undefined,
+    title: item.title || "Untitled Philanthropy Update",
+    eyebrow: item.beneficiary || "Community",
+    summary: item.summary,
+    meta: [formatDate(item.publishedAt), item.location, item.donationValue]
+      .filter(Boolean)
+      .join(" / "),
+    actionLabel: "Read Update",
+    cover: item.image,
+  }));
 
   return (
-    <main className="bg-[#e6ebe7] text-[#07120d]">
-      <section className="hero-shell hero-start hero-wine-accent border-b border-white/10 px-5 pb-16 sm:px-8 lg:px-10 lg:pb-28">
-        <div className="hero-media">
+    <main className="testimony-page">
+      <section className="testimony-hero">
+        <div className="testimony-hero-media">
           <Image
             src="/brand/watchman-opanin-thomas.png"
             alt="Watchman Opanin Thomas"
             fill
             sizes="100vw"
-            className="object-cover object-[52%_top] lg:object-contain lg:object-right lg:scale-[0.94]"
+            className="object-cover object-[50%_top] lg:object-contain lg:object-right"
+            priority
           />
-          <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_14%_10%,rgba(109,18,55,0.38),rgba(109,18,55,0.08)_30%,transparent_58%),linear-gradient(138deg,rgba(7,18,13,0.34),rgba(13,58,39,0.36)_56%,rgba(3,6,4,0.72))]" />
         </div>
-        <div className="hero-content mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-          <div>
-            <p className="inline-flex border border-[rgba(207,180,95,0.58)] bg-[#07120d]/55 px-3 py-2 text-[0.7rem] font-bold tracking-[0.16em] text-[#f4e7b5]">
-              Philanthropy
+        <div className="testimony-hero-inner">
+          <div className="testimony-hero-copy">
+            <p className="testimony-kicker">Philanthropy</p>
+            <h1>Giving updates for widows, orphans, and families.</h1>
+            <p>
+              Practical compassion through food support, care packages, medical
+              help, school needs, and community outreach.
             </p>
-            <p className="hero-script mt-5">Love in action beyond the altar</p>
-            <h1 className="font-display mt-5 max-w-[12ch] text-5xl font-light leading-[0.9] text-white sm:text-7xl">
-              Giving updates for widows, orphans, and families.
-            </h1>
           </div>
-          <p className="max-w-2xl text-xl leading-8 text-[#deebe4]">
-            This is where Thomas and the prayer family document practical compassion:
-            food support, care packages, medical help, school needs, and outreach.
-          </p>
         </div>
       </section>
 
@@ -62,80 +68,15 @@ export default async function PhilanthropyPage() {
             <div className="glass-panel-dark p-8 text-white lg:p-12">
               <HandHeart size={42} weight="fill" className="text-[var(--gold)]" />
               <h2 className="font-display mt-8 text-5xl font-light leading-none tracking-tighter">
-                Philanthropy updates are ready for Sanity.
+                Giving updates are being prepared.
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-8 text-[#dfe6e1]">
-                Publish a Philanthropy Update in Sanity Studio to show each act of giving
-                and community impact here.
+                Stories of support, care, and community impact will be shared
+                here as ministry outreach continues.
               </p>
             </div>
           ) : (
-            <div className="grid gap-5">
-              {updates.map((item, index) => (
-                <article key={item._id} className="glass-panel grid overflow-hidden lg:grid-cols-[0.86fr_1.14fr]">
-                  <div className="relative min-h-[22rem] overflow-hidden bg-[#07120d]">
-                    <SanityImage
-                      image={item.image}
-                      altFallback={item.title || "Philanthropy update"}
-                      priority={index === 0}
-                    />
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(3,6,4,0.72))]" />
-                  </div>
-
-                  <div className="p-7 lg:p-10">
-                    <div className="flex flex-wrap gap-3">
-                      <span className="inline-flex items-center gap-2 border border-[rgba(7,18,13,0.14)] bg-white/70 px-4 py-2 text-sm font-bold text-[#0d3a27]">
-                        <HandHeart size={18} weight="fill" />
-                        {item.beneficiary || "Community"}
-                      </span>
-                      <span className="inline-flex items-center gap-2 border border-[rgba(7,18,13,0.14)] bg-white/70 px-4 py-2 text-sm font-bold text-[#0d3a27]">
-                        {formatDate(item.publishedAt)}
-                      </span>
-                    </div>
-
-                    <h2 className="font-display mt-7 text-5xl font-light leading-none tracking-tighter">
-                      {item.title || "Untitled philanthropy update"}
-                    </h2>
-
-                    {item.summary ? (
-                      <p className="mt-5 max-w-2xl text-lg leading-8 text-[#53635a]">
-                        {item.summary}
-                      </p>
-                    ) : null}
-
-                    <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                      <span className="inline-flex items-center gap-2 border border-[rgba(7,18,13,0.14)] bg-white/72 px-4 py-3 text-sm font-semibold text-[#1e352b]">
-                        <MapPin size={18} weight="bold" />
-                        {item.location || "Community outreach location"}
-                      </span>
-                      <span className="inline-flex items-center gap-2 border border-[rgba(7,18,13,0.14)] bg-white/72 px-4 py-3 text-sm font-semibold text-[#1e352b]">
-                        {item.donationValue || "Donation details published by ministry"}
-                      </span>
-                    </div>
-
-                    {item.impact ? (
-                      <p className="mt-6 border-l-2 border-[var(--wine)] pl-4 text-base leading-8 text-[#31473d]">
-                        {item.impact}
-                      </p>
-                    ) : null}
-
-                    {item.slug ? (
-                      <Link
-                        href={`/philanthropy/${item.slug}`}
-                        className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-[#0d3a27]"
-                      >
-                        Read full update
-                        <ArrowRight
-                          size={18}
-                          weight="bold"
-                          className="transition group-hover:translate-x-1"
-                        />
-                      </Link>
-                    ) : null}
-                  </div>
-                </article>
-              ))}
-            </div>
+            <SanityCardGrid items={cards} ariaLabel="philanthropy updates" />
           )}
         </div>
       </section>

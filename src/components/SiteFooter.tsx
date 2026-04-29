@@ -1,6 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import { EnvelopeSimple, Phone } from "@phosphor-icons/react/dist/ssr";
+import {
+  ArrowRight,
+  EnvelopeSimple,
+  FacebookLogo,
+  HandHeart,
+  Phone,
+  TiktokLogo,
+  WhatsappLogo,
+} from "@phosphor-icons/react/dist/ssr";
 import { contactDetails, navItems, onlinePlatforms } from "@/lib/site";
 import { ArmyMarquee } from "./ArmyMarquee";
 import { LogoMark } from "./LogoMark";
@@ -17,17 +25,31 @@ export function SiteFooter() {
             covering, and consistency.
           </p>
 
-          <div className="mt-8 grid gap-4 text-[0.95rem] text-[#dfe6e1]">
-            <a className="inline-flex items-center gap-3 text-[#dfe6e1] transition duration-[150ms] ease-out hover:text-[var(--gold)]" href={`mailto:${contactDetails.email}`}>
-              <EnvelopeSimple size={18} weight="bold" />
-              {contactDetails.email}
+          <div className="footer-contact-mesh mt-7" aria-label="Footer contact and social links">
+            <a className="footer-contact-primary" href={`mailto:${contactDetails.email}`}>
+              <EnvelopeSimple size={18} weight="bold" aria-hidden="true" />
+              <span>{contactDetails.email}</span>
             </a>
-            {contactDetails.phones.map((phone) => (
-              <a className="inline-flex items-center gap-3 text-[#dfe6e1] transition duration-[150ms] ease-out hover:text-[var(--gold)]" href={`tel:${phone}`} key={phone}>
-                <Phone size={18} weight="bold" />
-                {phone}
+            <div className="footer-contact-mini">
+              {contactDetails.phones.map((phone) => (
+                <a href={`tel:${phone}`} key={phone} aria-label={`Call ${phone}`}>
+                  <Phone size={16} weight="bold" aria-hidden="true" />
+                  <span>{phone}</span>
+                </a>
+              ))}
+              <a href={contactDetails.whatsapp} aria-label="Open WhatsApp">
+                <WhatsappLogo size={16} weight="bold" aria-hidden="true" />
+                <span>WhatsApp</span>
               </a>
-            ))}
+              <a href={contactDetails.tiktok} target="_blank" rel="noreferrer" aria-label="Open TikTok">
+                <TiktokLogo size={16} weight="bold" aria-hidden="true" />
+                <span>TikTok</span>
+              </a>
+              <a href={contactDetails.facebook} target="_blank" rel="noreferrer" aria-label="Open Facebook">
+                <FacebookLogo size={16} weight="bold" aria-hidden="true" />
+                <span>Facebook</span>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -48,13 +70,19 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h2 className="text-sm font-semibold tracking-[0.01em] text-[var(--gold)]">Prayer rhythm</h2>
+            <h2 className="text-sm font-semibold tracking-[0.01em] text-[var(--gold)]">Prayer Army</h2>
             <div className="mt-5 grid gap-3 text-[0.95rem] text-[#d2dbd6]">
-              <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/prayer-watch">
+              <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/prayer-army">
                 Morning Watch
               </Link>
-              <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/prayer-watch">
+              <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/prayer-army">
                 Evening Watch
+              </Link>
+              <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/prayer-request">
+                Prayer Request
+              </Link>
+              <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/support">
+                Give / Support
               </Link>
               <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/testimonies">
                 Answered Prayer
@@ -81,9 +109,27 @@ export function SiteFooter() {
 
       <ArmyMarquee />
 
+      <div className="footer-support-arc mx-auto max-w-7xl px-5 py-7 sm:px-8 lg:px-10">
+        <div className="footer-support-copy">
+          <p>Give / Support</p>
+          <span>Support the prayer army through cash, digital giving, or gifts in kind.</span>
+        </div>
+        <Link href="/support" className="footer-support-button">
+          <HandHeart size={18} weight="bold" aria-hidden="true" />
+          Support Ministry
+          <ArrowRight size={16} weight="bold" aria-hidden="true" />
+        </Link>
+      </div>
+
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-2 px-5 py-6 text-center text-sm text-[#8d9a93] sm:px-8 lg:px-10">
         <p>© 2026 Ogya Ntom Prayer Army</p>
-        <p className="text-[#a7b4ad]">Built for prayer, formation, and faithful covering.</p>
+        <div className="footer-utility-links">
+          <p className="text-[#a7b4ad]">Built for prayer, formation, and faithful covering.</p>
+          <Link href="/sitemap.xml" className="footer-sitemap-link">
+            Sitemap
+            <ArrowRight size={14} weight="bold" aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </footer>
   );

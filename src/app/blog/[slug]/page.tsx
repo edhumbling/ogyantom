@@ -1,7 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { RichPortableText } from "@/components/RichPortableText";
-import { SanityImage } from "@/components/SanityImage";
 import { sanityFetch } from "@/sanity/client";
 import { buildContentMetadata } from "@/sanity/metadata";
 import { postBySlugQuery } from "@/sanity/queries";
@@ -25,7 +25,7 @@ function formatDate(value?: string) {
 export async function generateMetadata({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const post = await sanityFetch<Post | null>(postBySlugQuery, { slug }, null);
-  const title = post ? `${post.title} | Ogya Ntom Prayer Army` : "Blog Post";
+  const title = post ? post.title : "Blog Post";
 
   return buildContentMetadata({
     title,
@@ -63,38 +63,33 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <main className="bg-[#e6ebe7] text-[#07120d]">
+    <main className="testimony-page">
       <article>
-        <section className="hero-shell hero-start hero-wine-accent overflow-hidden border-b border-white/10">
-          <div className="hero-media">
-            <div className="absolute inset-0 bg-[radial-gradient(120%_100%_at_90%_0%,rgba(207,180,95,0.22),transparent_32%),linear-gradient(135deg,#07120d_0%,#0d3a27_52%,#030604_100%)]" />
+        <section className="testimony-hero">
+          <div className="testimony-hero-media">
+            <Image
+              src="/brand/watchman-opanin-thomas.png"
+              alt="Watchman Opanin Thomas"
+              fill
+              sizes="100vw"
+              className="object-cover object-[50%_top] lg:object-contain lg:object-right"
+              priority
+            />
           </div>
-          <div className="hero-content mx-auto grid max-w-7xl gap-8 px-5 py-12 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-end lg:px-10">
-            <div>
+          <div className="testimony-hero-inner">
+            <div className="testimony-hero-copy">
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.18em] text-[#cfb45f]"
+                className="testimony-kicker"
               >
                 <ArrowLeft size={18} weight="bold" />
                 Blog
               </Link>
-              <p className="hero-script mt-5">Teaching from the watch</p>
-              <h1 className="font-display mt-6 text-6xl font-light leading-none tracking-tighter text-white sm:text-7xl">
-                {post.title}
-              </h1>
-              <p className="mt-6 text-base font-bold uppercase tracking-[0.18em] text-white/72">
-                {formatDate(post.publishedAt)}
-              </p>
+              <h1>{post.title}</h1>
               {post.excerpt ? (
-                <p className="mt-6 max-w-2xl text-xl leading-8 text-white/86">
-                  {post.excerpt}
-                </p>
+                <p>{post.excerpt}</p>
               ) : null}
-            </div>
-
-            <div className="architectural-band relative min-h-[34rem] overflow-hidden bg-[#07120d]">
-              <SanityImage image={post.mainImage} altFallback={post.title} priority />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(3,6,4,0.68))]" />
+              <p className="testimony-hero-meta">{formatDate(post.publishedAt)}</p>
             </div>
           </div>
         </section>

@@ -15,11 +15,13 @@ import {
   ministryFacets,
   missionStatement,
   ministryType,
+  opaninFullName,
   onlinePlatforms,
   prayerWatches,
-  thomasBio,
   visionStatement,
+  contactDetails,
 } from "@/lib/site";
+import { AutoScrollRail } from "@/components/AutoScrollRail";
 
 const facetIcons = [
   Broadcast,
@@ -33,95 +35,68 @@ const facetIcons = [
 
 export default function Home() {
   return (
-    <main className="bg-[#e6ebe7] text-[#07120d]">
-      <section className="hero-shell hero-start hero-wine-accent border-b border-white/10">
-        <div className="hero-content mx-auto grid w-full max-w-7xl gap-8 px-4 pb-10 pt-8 sm:px-8 lg:min-h-[calc(100svh-4.75rem)] lg:grid-cols-[minmax(0,0.95fr)_minmax(22rem,0.72fr)] lg:items-center lg:px-10 lg:pb-14 lg:pt-10">
-          <div className="motion-rise">
-            <div className="max-w-3xl">
-              <p className="inline-flex border border-[rgba(207,180,95,0.5)] bg-[#07120d]/55 px-3 py-2 text-[0.7rem] font-bold tracking-[0.16em] text-[#f4e7b5]">
-                Prayer here, Prayer there
-              </p>
-              <p className="hero-script mt-5">Watch and pray without ceasing</p>
-              <h1 className="font-display mt-5 max-w-[10ch] text-5xl font-light leading-[0.9] text-white sm:text-7xl">
-                Ogya Ntom Prayer Army
-              </h1>
-            </div>
-
-            <div className="hero-description-panel mt-8 max-w-2xl">
-              <p className="hero-description-label">Online Prayer Community</p>
-              <p className="mt-4 text-base leading-8 text-[#ecf4ef] sm:text-lg">
-                A disciplined online prayer community for Monday to Saturday
-                morning and evening intercession, spiritual covering,
-                testimony, and formation under watchful leadership.
-              </p>
-              <div className="mt-7 grid gap-2 sm:grid-cols-2">
-                <Link
-                  href="/prayer-watch"
-                  className="site-button-primary min-h-11 rounded-md px-4 text-[0.68rem] tracking-[0.12em] sm:px-5 sm:text-xs"
-                >
-                  Join Prayer Watch
-                  <ArrowRight size={18} weight="bold" />
-                </Link>
-                <Link
-                  href="/contact"
-                  className="inline-flex min-h-11 items-center justify-center rounded-md border border-white/24 bg-white/8 px-4 text-[0.68rem] font-bold tracking-[0.12em] text-white transition duration-[180ms] ease-out hover:-translate-y-[1px] hover:bg-white/14 sm:px-5 sm:text-xs"
-                >
-                  Send Prayer Request
-                </Link>
-              </div>
+    <main className="home-stage">
+      <section className="home-hero">
+        <div className="home-hero-backdrop" />
+        <div className="home-hero-grid">
+          <div className="home-hero-copy">
+            <p className="home-kicker">Prayer here, Prayer there</p>
+            <h1>Ogya Ntom Prayer Army</h1>
+            <p>
+              A disciplined online prayer community for morning and evening
+              intercession, spiritual covering, testimony, and formation under
+              watchful leadership.
+            </p>
+            <div className="home-hero-actions">
+              <Link
+                href={contactDetails.prayerArmyWhatsapp}
+                className="home-primary-action"
+              >
+                Join Prayer Army
+                <ArrowRight size={18} weight="bold" />
+              </Link>
+              <Link href="/prayer-request" className="home-secondary-action">
+                Send Prayer Request
+              </Link>
             </div>
           </div>
 
-          <div className="hero-portrait-panel motion-rise">
+          <div className="home-hero-portrait" aria-label={opaninFullName}>
             <Image
               src="/brand/watchman-opanin-thomas.png"
-              alt="Chief Prayer Warrior Watchman Opanin Thomas"
+              alt={`Chief Prayer Warrior ${opaninFullName}`}
               width={853}
               height={1280}
+              sizes="(min-width: 1024px) 42vw, 92vw"
+              className="home-hero-image"
               priority
-              sizes="(min-width: 1024px) 42vw, 100vw"
-              className="hero-portrait-image"
             />
-            <div className="hero-portrait-caption">
+            <div className="home-portrait-caption">
               <span>Chief Prayer Warrior</span>
-              <strong>Watchman Opanin Thomas</strong>
+              <strong>{opaninFullName}</strong>
             </div>
           </div>
+
         </div>
       </section>
 
-      <section className="border-b border-white/10 bg-[#07120d] px-5 py-16 text-white lg:py-24 sm:px-8 lg:px-10">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
+      <section className="home-section home-reveal">
+        <div className="home-section-grid">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
-              Thomas Bio
-            </p>
-            <h2 className="font-display mt-4 text-5xl font-light leading-none sm:text-6xl">
-              Prayer changes things. Prayer changes us.
-            </h2>
-          </div>
-          <div className="border border-white/14 bg-[#0a1a13] p-7 lg:p-10">
-            <p className="text-xl leading-9 text-[#f3f6f3]">{thomasBio}</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-rule px-5 py-16 lg:py-24 sm:px-8 lg:px-10">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
-              {ministryType}
-            </p>
-            <h2 className="font-display mt-3 text-5xl font-light leading-none sm:text-6xl">
+            <p className="home-kicker home-kicker-dark">{ministryType}</p>
+            <h2 className="home-section-title">
               We connect the world through prayers online.
             </h2>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
+          <AutoScrollRail
+            ariaLabel="online platforms"
+            className="home-platform-rail"
+          >
             {onlinePlatforms.map((platform) => (
               <Link
                 key={platform.name}
                 href={platform.href}
-                className="glass-panel p-6 transition duration-[180ms] ease-out hover:-translate-y-1"
+                className="home-platform-card"
               >
                 <Image
                   src={platform.logo}
@@ -130,114 +105,102 @@ export default function Home() {
                   height={52}
                   className="h-12 w-12"
                 />
-                <h3 className="mt-8 text-2xl font-bold">{platform.name}</h3>
-                <p className="mt-3 text-base leading-7 text-[#53635a]">
-                  {platform.text}
-                </p>
+                <h3>{platform.name}</h3>
+                <p>{platform.text}</p>
               </Link>
             ))}
-          </div>
+          </AutoScrollRail>
         </div>
       </section>
 
-      <section className="section-rule relative overflow-hidden px-5 py-16 lg:py-24 sm:px-8 lg:px-10">
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,#cdd8d0,#e6ebe7_45%,#bfcac3)]" />
-        <div className="relative mx-auto grid max-w-7xl gap-5 lg:grid-cols-[0.8fr_1.2fr]">
-          <div className="glass-panel p-7 lg:p-10">
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
-              Vision
-            </p>
-            <h2 className="font-display mt-5 text-4xl font-light leading-none sm:text-5xl">
+      <section className="home-section home-declaration-band">
+        <div className="home-declaration-shell">
+          <div className="home-declaration-rule" aria-hidden="true" />
+          <div className="home-vision-card">
+            <p className="home-kicker home-kicker-dark">Vision</p>
+            <h2>
               {visionStatement}
             </h2>
           </div>
-          <div className="glass-panel-dark p-7 text-white lg:p-10">
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
-              Mission
-            </p>
-            <p className="mt-5 max-w-4xl text-xl leading-9 text-[#edf1ee]">
+          <div className="home-mission-card">
+            <p className="home-kicker">Mission</p>
+            <h3>Equip. Intercede. Cultivate.</h3>
+            <p>
               {missionStatement}
             </p>
           </div>
         </div>
       </section>
 
-      <section className="section-rule px-5 py-16 lg:py-24 sm:px-8 lg:px-10 ">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+      <section className="home-section home-reveal">
+        <div className="home-section-shell">
+          <div className="home-section-head">
             <div>
-              <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
-                Ministry facets
-              </p>
-            <h2 className="font-display mt-3 max-w-3xl text-5xl font-light leading-none sm:text-6xl">
+              <p className="home-kicker home-kicker-dark">Ministry facets</p>
+              <h2 className="home-section-title">
                 Built like a system. Moving like a family.
               </h2>
             </div>
-            <p className="max-w-md text-lg leading-8 text-[#4f5d55]">
+            <p>
               Each facet has its own page so visitors can understand the rhythm,
               purpose, and next step without digging.
             </p>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <AutoScrollRail
+            ariaLabel="ministry facets"
+            className="home-facet-rail"
+          >
             {ministryFacets.map((facet, index) => {
               const Icon = facetIcons[index];
               return (
                 <Link
                   key={facet.href}
                   href={facet.href}
-                  className="glass-panel group min-h-80 p-6 transition duration-[180ms] ease-out hover:-translate-y-1 hover:border-[#cfb45f]"
+                  className="home-facet-card"
                 >
-                  <div className="flex h-14 w-14 items-center justify-center border border-[rgba(7,18,13,0.12)] bg-[#edf1ee] text-[#0d3a27]">
+                  <div>
                     <Icon size={28} weight="bold" />
                   </div>
-                  <h3 className="mt-10 text-2xl font-bold">{facet.title}</h3>
-                  <p className="mt-4 text-base leading-7 text-[#53635a]">
-                    {facet.text}
-                  </p>
-                  <span className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-[#0d3a27]">
+                  <h3>{facet.title}</h3>
+                  <p>{facet.text}</p>
+                  <span>
                     Open facet
-                    <ArrowRight size={18} weight="bold" className="transition group-hover:translate-x-1" />
+                    <ArrowRight size={18} weight="bold" />
                   </span>
                 </Link>
               );
             })}
-          </div>
+          </AutoScrollRail>
         </div>
       </section>
 
-      <section className="section-rule bg-[linear-gradient(135deg,#07120d,#0d3a27_58%,#030604)] px-5 py-16 lg:py-24 text-white sm:px-8 lg:px-10 ">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+      <section className="home-section home-watch-band home-reveal">
+        <div className="home-section-grid">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
-              Prayer Watch
-            </p>
-            <h2 className="font-display mt-3 text-5xl font-light leading-none sm:text-6xl">
-              Two watches. One disciplined covering.
+            <p className="home-kicker">Prayer Army</p>
+            <h2 className="home-section-title">
+              Two watches. One disciplined army.
             </h2>
-            <p className="mt-4 max-w-xl text-base leading-7 text-[#dfe6e1]">
+            <p className="home-watch-copy">
               Monday to Saturday at 6:30am and 8:00pm.
             </p>
           </div>
 
-          <div className="grid gap-3">
+          <div className="home-watch-list">
             {prayerWatches.map((watch) => (
               <Link
-                href="/prayer-watch"
+                href="/prayer-army"
                 key={watch.title}
-                className="glass-panel-dark grid gap-4 p-5 transition duration-[180ms] ease-out hover:bg-white/[0.08] sm:grid-cols-[12rem_1fr]"
+                className="home-watch-card"
               >
                 <div>
                   <CalendarBlank size={28} weight="bold" className="text-[#cfb45f]" />
-                  <p className="mt-4 text-sm font-bold uppercase tracking-[0.25em] text-[#cfd8d2]">
-                    {watch.kicker}
-                  </p>
+                  <p>{watch.kicker}</p>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold">{watch.title}</h3>
-                  <p className="mt-2 max-w-xl leading-7 text-[#dfe6e1]">
-                    {watch.text}
-                  </p>
+                  <h3>{watch.title}</h3>
+                  <p>{watch.text}</p>
                 </div>
               </Link>
             ))}
@@ -245,30 +208,54 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-rule px-5 py-16 lg:py-24 sm:px-8 lg:px-10">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-10 max-w-3xl">
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
-              Core Values
-            </p>
-            <h2 className="font-display mt-3 text-5xl font-light leading-none sm:text-6xl">
-              The culture behind the prayer army.
-            </h2>
+      <section className="home-section home-reveal">
+        <div className="home-section-shell">
+          <div className="home-section-head">
+            <div>
+              <p className="home-kicker home-kicker-dark">Core Values</p>
+              <h2 className="home-section-title">
+                The culture behind the prayer army.
+              </h2>
+            </div>
           </div>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+          <AutoScrollRail
+            ariaLabel="core values"
+            className="home-values-rail"
+          >
             {coreValues.map((value) => (
-              <article
+              <Link
                 key={value.title}
-                className="glass-panel min-h-72 p-6"
+                href={`/core-values/${value.slug}`}
+                className="home-value-card"
               >
-                <h3 className="text-xl font-bold text-[#07120d]">
-                  {value.title}
-                </h3>
-                <p className="mt-5 text-base leading-7 text-[#53635a]">
-                  {value.text}
-                </p>
-              </article>
+                <h3>{value.title}</h3>
+                <p>{value.text}</p>
+                <span>
+                  Read Value
+                  <ArrowRight size={17} weight="bold" aria-hidden="true" />
+                </span>
+              </Link>
             ))}
+          </AutoScrollRail>
+        </div>
+      </section>
+
+      <section className="home-cta-section">
+        <div className="home-cta-shell">
+          <p className="home-kicker">Stand in agreement</p>
+          <h2>Bring your request into the watch.</h2>
+          <p>
+            Join the prayer army rhythm or send a request for Watchman Opanin
+            Thomas and the ministry team to cover with care.
+          </p>
+          <div className="home-cta-actions">
+            <Link href="/prayer-army" className="home-primary-action">
+              Prayer Army
+              <ArrowRight size={18} weight="bold" />
+            </Link>
+            <Link href="/prayer-request" className="home-secondary-action">
+              Send Prayer Request
+            </Link>
           </div>
         </div>
       </section>

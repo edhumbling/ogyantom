@@ -1,6 +1,13 @@
 import type { Metadata, Viewport } from "next";
+import { GlobalStructuredData } from "@/components/GlobalStructuredData";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import {
+  SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/seo";
 import { Great_Vibes } from "next/font/google";
 import "./globals.css";
 
@@ -11,20 +18,39 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ogyantom.org"),
-  title: "Ogya Ntom Prayer Army",
-  description:
-    "Ogya Ntom Prayer Army is an online ministry connecting the world through prayers via WhatsApp, Telegram, and Google Meet.",
-  applicationName: "Ogya Ntom Prayer Army",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: SITE_KEYWORDS,
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   icons: {
     icon: "/icon.png",
     apple: "/apple-icon.png",
   },
   openGraph: {
-    title: "Ogya Ntom Prayer Army",
-    description:
-      "An online prayer ministry led by Watchman Opanin Thomas, connecting the world through prayers.",
-    siteName: "Ogya Ntom Prayer Army",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: "en_US",
+    type: "website",
     images: [
       {
         url: "/brand/ogya-ntom-prayer-logo.png",
@@ -33,6 +59,15 @@ export const metadata: Metadata = {
         alt: "Ogya Ntom Prayer Army logo",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: ["/brand/ogya-ntom-prayer-logo.png"],
+  },
+  other: {
+    "og:site_name": SITE_NAME,
   },
 };
 
@@ -53,6 +88,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full" suppressHydrationWarning>
+        <GlobalStructuredData />
         <SiteHeader />
         {children}
         <SiteFooter />

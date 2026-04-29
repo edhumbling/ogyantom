@@ -75,7 +75,7 @@ export const testimonyType = defineType({
       title: "Review notes",
       type: "text",
       rows: 3,
-      description: "Private notes for Thomas or the ministry team.",
+      description: "Private notes for Watchman Opanin or the ministry team.",
     }),
   ],
   preview: {

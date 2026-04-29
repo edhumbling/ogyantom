@@ -1,6 +1,6 @@
 # Ogya Ntom Prayer Army
 
-Responsive Next.js website for Ogya Ntom Prayer Army, an online ministry and community of prayer warriors led by Chief Prayer Warrior Watchman Opanin Thomas.
+Responsive Next.js website for Ogya Ntom Prayer Army, an online ministry and community of prayer warriors led by Chief Prayer Warrior Watchman Opanin.
 
 ## Stack
 

@@ -14,8 +14,8 @@ type TestimonyBrowserProps = {
   testimonies: TestimonyEntry[];
 };
 
-const desktopPageSize = 6;
-const mobilePageSize = 2;
+const desktopPageSize = 12;
+const mobilePageSize = 6;
 
 function initials(name: string) {
   return name

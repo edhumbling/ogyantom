@@ -11,6 +11,9 @@ const eslintConfig = defineConfig([
     ".next/**",
     "out/**",
     "build/**",
+    "studio-ogya-ntom-prayer-army/.sanity/**",
+    "studio-ogya-ntom-prayer-army/dist/**",
+    "studio-ogya-ntom-prayer-army/node_modules/**",
     "next-env.d.ts",
   ]),
 ]);

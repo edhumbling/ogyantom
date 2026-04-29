@@ -1,81 +1,87 @@
 import Image from "next/image";
-import { ShieldCheck, UsersThree } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
 import {
+  ArrowRight,
+  Play,
+  ShieldCheck,
+  UsersThree,
+} from "@phosphor-icons/react/dist/ssr";
+import {
+  armyPillars,
+  contactDetails,
   coreValues,
   missionStatement,
   ministryType,
-  thomasBio,
+  opaninBio,
+  opaninFullName,
   visionStatement,
 } from "@/lib/site";
 
+const pillarIcons = [ShieldCheck, UsersThree];
+
 export default function MinistryPage() {
   return (
-    <main className="bg-[#e6ebe7] text-[#07120d]">
-      <section className="hero-shell hero-start hero-wine-accent overflow-hidden border-b border-white/10">
-        <div className="hero-media">
+    <main className="testimony-page ministry-page">
+      <section className="testimony-hero">
+        <div className="testimony-hero-media">
           <Image
             src="/brand/watchman-opanin-thomas.png"
-            alt="Watchman Opanin Thomas"
+            alt={opaninFullName}
             fill
             sizes="100vw"
-            className="object-cover object-[52%_top] lg:object-contain lg:object-right lg:scale-[0.94]"
+            className="object-cover object-[50%_top] lg:object-contain lg:object-right"
+            priority
           />
-          <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_85%_8%,rgba(207,180,95,0.26),transparent_36%),linear-gradient(140deg,rgba(7,18,13,0.36),rgba(13,58,39,0.38),rgba(3,6,4,0.84))]" />
         </div>
-        <div className="hero-content mx-auto grid max-w-7xl gap-8 px-5 py-16 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end lg:px-10 lg:py-20">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
-              Ministry
+        <div className="testimony-hero-inner">
+          <div className="testimony-hero-copy">
+            <p className="testimony-kicker">Ministry</p>
+            <h1>Formation under watchful covering.</h1>
+            <p>
+              {ministryType}. Ogya Ntom Prayer Army is shaped around discipline,
+              care, testimony, spiritual growth, and clear leadership.
             </p>
-            <p className="hero-script mt-4">Formation and covering</p>
-            <h1 className="font-display tracking-tighter mt-4 max-w-4xl text-6xl font-light leading-none text-white sm:text-7xl">
-              Formation under watchful covering.
-            </h1>
           </div>
-          <p className="max-w-2xl text-xl leading-8 text-[#dce7e1]">
-            {ministryType}. Ogya Ntom Prayer Army is shaped around discipline,
-            care, testimony, spiritual growth, and leadership that keeps the watch clear.
-          </p>
         </div>
       </section>
 
-      <section className="section-rule bg-[#06100c] px-5 py-16 text-white lg:py-24 sm:px-8 lg:px-10">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-          <div className="architectural-band relative min-h-[420px] overflow-hidden bg-[#07120d]">
+      <section className="ministry-depth-section ministry-arch-section ministry-arch-section-dark section-rule px-5 text-white sm:px-8 lg:px-10">
+        <div className="ministry-watchman-arch mx-auto max-w-7xl">
+          <div className="ministry-media-card ministry-portrait-slab relative min-h-[420px] overflow-hidden bg-[#07120d]">
             <Image
               src="/brand/watchman-opanin-thomas.png"
-              alt="Watchman Opanin Thomas"
+              alt={opaninFullName}
               fill
               sizes="(min-width: 1024px) 520px, 100vw"
-              className="object-cover object-top"
+              className="ministry-media-card-image object-cover object-top"
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(6,16,12,0.82))]" />
           </div>
-          <div>
+          <div className="ministry-watchman-copy">
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
-              Thomas Bio
+              {opaninFullName}
             </p>
             <h2 className="font-display tracking-tighter mt-4 text-5xl font-light leading-none sm:text-6xl">
               Prayer changes things. Prayer changes us.
             </h2>
             <p className="mt-7 max-w-3xl text-xl leading-9 text-[#f3f6f3]">
-              {thomasBio}
+              {opaninBio}
             </p>
           </div>
         </div>
       </section>
 
-      <section className="section-rule px-5 pb-20 lg:pb-24 sm:px-8 lg:px-10">
-        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-[0.82fr_1.18fr]">
-          <div className="glass-panel p-8">
+      <section className="ministry-card-section ministry-arch-section ministry-arch-section-light section-rule px-5 sm:px-8 lg:px-10">
+        <div className="ministry-manifesto-arch mx-auto max-w-7xl">
+          <div className="ministry-statement-card ministry-statement-card-light ministry-arch-panel ministry-vision-panel p-8">
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
               Vision
             </p>
-            <h2 className="font-display tracking-tighter mt-5 text-4xl font-light leading-none sm:text-5xl">
+            <h2 className="font-display mt-5 text-4xl font-light leading-none tracking-tighter sm:text-5xl">
               {visionStatement}
             </h2>
           </div>
-          <div className="glass-panel-dark p-8 text-white">
+          <div className="ministry-statement-card ministry-statement-card-dark ministry-arch-panel ministry-mission-panel p-8 text-white">
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
               Mission
             </p>
@@ -86,30 +92,43 @@ export default function MinistryPage() {
         </div>
       </section>
 
-      <section className="section-rule px-5 pb-20 lg:pb-24 sm:px-8 lg:px-10 ">
-        <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2">
-          <article className="glass-panel p-8">
-            <ShieldCheck size={36} weight="bold" className="text-[#0d3a27]" />
-            <h2 className="mt-10 text-3xl font-bold">Covering</h2>
-            <p className="mt-4 max-w-xl text-lg leading-8 text-[#53635a]">
-              Prayer requests are carried with order, confidentiality, and
-              pastoral sensitivity.
-            </p>
-          </article>
-          <article className="glass-panel-dark p-8 text-white">
-            <UsersThree size={36} weight="bold" className="text-[#cfb45f]" />
-            <h2 className="mt-10 text-3xl font-bold">Formation</h2>
-            <p className="mt-4 max-w-xl text-lg leading-8 text-[#dfe6e1]">
-              Warriors are encouraged to grow in consistency, humility, faith,
-              and shared responsibility.
-            </p>
-          </article>
+      <section className="ministry-card-section ministry-arch-section ministry-arch-section-light section-rule px-5 sm:px-8 lg:px-10 ">
+        <div className="ministry-pillar-rail mx-auto max-w-7xl">
+          {armyPillars.map((pillar, index) => {
+            const Icon = pillarIcons[index] ?? ShieldCheck;
+            return (
+              <Link
+                key={pillar.slug}
+                href={`/pillars/${pillar.slug}`}
+                className={`ministry-principle-card ministry-pillar-cell p-8 ${
+                  index === 1
+                    ? "ministry-principle-card-dark text-white"
+                    : "ministry-principle-card-light"
+                }`}
+              >
+                <div className="ministry-card-icon">
+                  <Icon size={36} weight="bold" />
+                </div>
+                <span className="ministry-card-index">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h2 className="mt-10 text-3xl font-bold">{pillar.title}</h2>
+                <p className="mt-4 max-w-xl text-lg leading-8">
+                  {pillar.text}
+                </p>
+                <span className="mt-7 inline-flex items-center gap-2 text-sm font-bold">
+                  Read Pillar
+                  <ArrowRight size={17} weight="bold" aria-hidden="true" />
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      <section className="section-rule px-5 pb-20 lg:pb-24 sm:px-8 lg:px-10">
+      <section className="ministry-card-section ministry-arch-section ministry-arch-section-light section-rule px-5 sm:px-8 lg:px-10">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-10 max-w-3xl">
+          <div className="ministry-section-head mb-10 max-w-3xl">
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
               Core Values
             </p>
@@ -117,19 +136,54 @@ export default function MinistryPage() {
               What shapes the prayer culture.
             </h2>
           </div>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-            {coreValues.map((value) => (
-              <article
+          <div className="ministry-value-grid ministry-value-ribbon">
+            {coreValues.map((value, index) => (
+              <Link
                 key={value.title}
-                className="glass-panel min-h-72 p-6"
+                href={`/core-values/${value.slug}`}
+                className="ministry-value-card ministry-value-line p-6"
               >
+                <span className="ministry-value-count">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 <h3 className="text-xl font-bold">{value.title}</h3>
                 <p className="mt-5 text-base leading-7 text-[#53635a]">
                   {value.text}
                 </p>
-              </article>
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#6d1237]">
+                  Read Value
+                  <ArrowRight size={17} weight="bold" aria-hidden="true" />
+                </span>
+              </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="ministry-community-cta ministry-arch-section px-5 sm:px-8 lg:px-10">
+        <div className="ministry-community-cta-shell ministry-community-arch-shell mx-auto max-w-7xl">
+          <div>
+            <p className="ministry-community-kicker">Prayer Community</p>
+            <h2 className="font-display">
+              Stand with the prayer army.
+            </h2>
+            <p>
+              Join the prayer community on WhatsApp and stay connected to the
+              watch rhythm, covering, and ministry updates.
+            </p>
+          </div>
+
+          <Link
+            href={contactDetails.prayerArmyWhatsapp}
+            className="ministry-community-action"
+            aria-label="Join the prayer community on WhatsApp"
+          >
+            <span className="ministry-play-glow" aria-hidden="true">
+              <Play size={20} weight="fill" />
+            </span>
+            <span>Join Prayer Community</span>
+            <ArrowRight size={18} weight="bold" aria-hidden="true" />
+          </Link>
         </div>
       </section>
     </main>

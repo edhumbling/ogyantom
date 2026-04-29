@@ -19,7 +19,7 @@ export function TestimonyForm() {
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    setState({ status: "submitting", message: "Sending your testimony..." });
+    setState({ status: "submitting", message: "Sending your testimony…" });
 
     const payload = {
       name: formData.get("name"),
@@ -81,11 +81,11 @@ export function TestimonyForm() {
       <div className="testimony-form-grid">
         <label className="testimony-field">
           <span>Phone or WhatsApp</span>
-          <input name="phone" type="tel" maxLength={40} autoComplete="tel" placeholder="+233..." />
+          <input name="phone" type="tel" maxLength={40} autoComplete="tel" placeholder="+233 24 000 0000…" />
         </label>
         <label className="testimony-field">
           <span>Short highlight</span>
-          <input name="highlight" type="text" maxLength={80} placeholder="Healing, provision..." />
+          <input name="highlight" type="text" maxLength={80} placeholder="Healing, provision…" />
         </label>
       </div>
 
@@ -111,7 +111,7 @@ export function TestimonyForm() {
           disabled={state.status === "submitting"}
           className="testimony-submit-button"
         >
-          {state.status === "submitting" ? "Sending..." : "Submit testimony"}
+          {state.status === "submitting" ? "Sending testimony…" : "Submit Testimony"}
           <ArrowRight size={20} weight="bold" />
         </button>
       </div>

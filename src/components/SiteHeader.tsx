@@ -4,13 +4,16 @@ import Link from "next/link";
 import { ArrowRight, List, X } from "@phosphor-icons/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { contactDetails, navItems } from "@/lib/site";
+import { navItems } from "@/lib/site";
 import { LogoMark } from "./LogoMark";
 
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const desktopNavItems = navItems.filter((item) => item.href !== "/contact");
+  const desktopNavItems = navItems.filter(
+    (item) => item.href !== "/contact" && item.href !== "/support",
+  );
+  const mobileNavItems = navItems.filter((item) => item.href !== "/support");
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -45,8 +48,17 @@ export function SiteHeader() {
                 </Link>
               );
             })}
-            <Link href="/contact" className="site-button-primary nav-prayer-button">
-              <span>Prayer Request</span>
+            <Link
+              href="/prayer-request"
+              className={
+                "header-nav-link nav-prayer-link font-sans " +
+                (pathname === "/prayer-request" ? "header-nav-link-active" : "text-white/74")
+              }
+            >
+              Prayer Request
+            </Link>
+            <Link href="/support" className="site-button-primary nav-support-button">
+              <span>Give / Support</span>
               <ArrowRight size={15} weight="bold" aria-hidden="true" />
             </Link>
           </nav>
@@ -74,22 +86,22 @@ export function SiteHeader() {
           aria-label="Close menu backdrop"
           onClick={() => setOpen(false)}
           className={
-            "absolute inset-0 bg-[#030604]/72 transition-opacity duration-[180ms] ease-out " +
+            "mobile-menu-backdrop absolute inset-0 transition-opacity duration-[180ms] ease-out " +
             (open ? "opacity-100" : "opacity-0")
           }
         />
 
         <div
           className={
-            "relative max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-b border-white/10 bg-[#07120d] text-white shadow-[0_24px_60px_rgba(3,6,4,0.32)] transition duration-[180ms] ease-out sm:max-h-[calc(100dvh-4rem)] " +
-            (open ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0")
+            "mobile-menu-panel relative max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-b border-white/10 text-white shadow-[0_24px_60px_rgba(3,6,4,0.32)] transition duration-[180ms] ease-out sm:max-h-[calc(100dvh-4rem)] " +
+            (open ? "mobile-menu-panel-open translate-y-0 opacity-100" : "-translate-y-2 opacity-0")
           }
         >
           <nav className="mx-auto flex max-w-7xl flex-col px-3 py-4 sm:px-6">
             <p className="border-b border-white/10 px-1 pb-3 text-[0.68rem] font-bold uppercase tracking-[0.24em] text-[#cfb45f]">
               Prayer here, Prayer there
             </p>
-            {navItems.map((item) => {
+            {mobileNavItems.map((item) => {
               const active = pathname === item.href;
               return (
                 <Link
@@ -108,20 +120,23 @@ export function SiteHeader() {
               );
             })}
 
-            <div className="mt-2 grid gap-2 border-t border-white/10 pt-4">
+            <div className="mobile-menu-actions mt-2 grid gap-2 border-t border-white/10 pt-4">
               <Link
-                href="/contact"
+                href="/prayer-request"
                 onClick={() => setOpen(false)}
-                className="site-button-primary min-h-12 w-full rounded-md text-sm sm:text-sm"
+                className="mobile-glow-action mobile-glow-action-prayer"
               >
-                Send Prayer Request
+                <span>Request Prayer</span>
+                <ArrowRight size={15} weight="bold" aria-hidden="true" />
               </Link>
-              <a
-                href={`mailto:${contactDetails.email}`}
-                className="rounded-md border border-white/12 bg-white/4 px-4 py-3 text-xs text-white/72 transition duration-[150ms] ease-out hover:border-[#cfb45f]/55 hover:text-white break-all sm:text-sm"
+              <Link
+                href="/support"
+                onClick={() => setOpen(false)}
+                className="mobile-glow-action mobile-glow-action-support"
               >
-                {contactDetails.email}
-              </a>
+                <span>Give / Support</span>
+                <ArrowRight size={15} weight="bold" aria-hidden="true" />
+              </Link>
             </div>
           </nav>
         </div>
