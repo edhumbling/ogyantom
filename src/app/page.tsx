@@ -40,7 +40,7 @@ export default function Home() {
         <div className="home-hero-backdrop" />
         <div className="home-hero-grid">
           <div className="home-hero-copy">
-            <p className="home-kicker">Prayer here, Prayer there</p>
+            <p className="home-kicker">Fire here! Fire there!</p>
             <h1>Ogya Ntom Prayer Army</h1>
             <p>
               A disciplined online prayer community for morning and evening

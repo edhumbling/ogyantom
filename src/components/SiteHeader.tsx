@@ -99,7 +99,7 @@ export function SiteHeader() {
         >
           <nav className="mx-auto flex max-w-7xl flex-col px-3 py-4 sm:px-6">
             <p className="border-b border-white/10 px-1 pb-3 text-[0.68rem] font-bold uppercase tracking-[0.24em] text-[#cfb45f]">
-              Prayer here, Prayer there
+              Fire here! Fire there!
             </p>
             {mobileNavItems.map((item) => {
               const active = pathname === item.href;

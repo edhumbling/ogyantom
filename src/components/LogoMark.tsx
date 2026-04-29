@@ -39,7 +39,7 @@ export function LogoMark({
         </span>
         {showSlogan && (
           <span className="hidden truncate text-[0.65rem] font-bold uppercase tracking-[0.22em] text-[var(--gold)] sm:block sm:text-xs">
-            Prayer here, Prayer there
+            Fire here! Fire there!
           </span>
         )}
       </span>
