@@ -22,6 +22,21 @@ export function SiteHeader() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
+
   return (
     <>
       <header className="mobile-header-bar">
@@ -67,6 +82,7 @@ export function SiteHeader() {
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
+            aria-controls="mobile-site-menu"
             onClick={() => setOpen((value) => !value)}
             className="mobile-menu-trigger rounded-md lg:hidden"
           >
@@ -92,8 +108,9 @@ export function SiteHeader() {
         />
 
         <div
+          id="mobile-site-menu"
           className={
-            "mobile-menu-panel relative max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-b border-white/10 text-white shadow-[0_24px_60px_rgba(3,6,4,0.32)] transition duration-[180ms] ease-out sm:max-h-[calc(100dvh-4rem)] " +
+            "mobile-menu-panel relative overflow-y-auto border-b border-white/10 text-white shadow-[0_24px_60px_rgba(3,6,4,0.32)] transition duration-[180ms] ease-out " +
             (open ? "mobile-menu-panel-open translate-y-0 opacity-100" : "-translate-y-2 opacity-0")
           }
         >

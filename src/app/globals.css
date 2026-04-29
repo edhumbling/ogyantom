@@ -7089,3 +7089,231 @@ html {
     color: #fff8e8 !important;
   }
 }
+
+@keyframes mobile-glass-cut-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.85rem) skewX(-2deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) skewX(0deg);
+  }
+}
+
+@media (max-width: 639px) {
+  .mobile-menu-backdrop {
+    background:
+      radial-gradient(28rem 18rem at 0% 0%, rgba(207, 180, 95, 0.16), transparent 64%),
+      rgba(3, 6, 4, 0.54);
+    backdrop-filter: blur(2px);
+  }
+
+  .mobile-menu-panel {
+    max-height: min(72dvh, 31rem) !important;
+    margin: 0.65rem max(0.65rem, env(safe-area-inset-right)) 0 max(0.65rem, env(safe-area-inset-left));
+    border: 1px solid rgba(245, 223, 160, 0.18);
+    border-bottom-color: rgba(245, 223, 160, 0.18) !important;
+    background:
+      linear-gradient(112deg, rgba(255, 248, 232, 0.11) 0 1px, transparent 1px 52%),
+      radial-gradient(24rem 18rem at 8% 0%, rgba(207, 180, 95, 0.16), transparent 62%),
+      linear-gradient(142deg, rgba(7, 18, 13, 0.96), rgba(13, 58, 39, 0.94) 58%, rgba(3, 6, 4, 0.98));
+    clip-path: polygon(0 0, calc(100% - 1.15rem) 0, 100% 1.15rem, 100% 100%, 1.15rem 100%, 0 calc(100% - 1.15rem));
+    box-shadow:
+      0 22px 52px rgba(3, 6, 4, 0.34),
+      inset 0 1px 0 rgba(255, 248, 232, 0.14);
+    overscroll-behavior: contain;
+  }
+
+  .mobile-menu-panel nav {
+    padding: 0.85rem 0.75rem 0.95rem;
+  }
+
+  .mobile-menu-row {
+    min-height: 2.85rem;
+    border-bottom-color: rgba(255, 248, 232, 0.08);
+    padding: 0.72rem 0.55rem;
+    font-size: 0.82rem;
+  }
+
+  .mobile-menu-row:focus-visible,
+  .mobile-glow-action:focus-visible {
+    outline: 2px solid #f5dfa0;
+    outline-offset: 3px;
+  }
+
+  .home-hero,
+  .prayer-watch-page .testimony-hero {
+    min-height: 100svh !important;
+    background:
+      radial-gradient(18rem 22rem at 76% 14%, rgba(109, 18, 55, 0.44), transparent 62%),
+      radial-gradient(22rem 18rem at 2% 12%, rgba(207, 180, 95, 0.22), transparent 66%),
+      linear-gradient(145deg, #030604 0%, #07120d 52%, #140611 100%) !important;
+  }
+
+  .home-hero::before,
+  .prayer-watch-page .testimony-hero::before {
+    position: absolute;
+    inset: 3.6rem 0.55rem 0.85rem;
+    z-index: -1;
+    border: 1px solid rgba(245, 223, 160, 0.13);
+    background:
+      linear-gradient(118deg, rgba(255, 248, 232, 0.16) 0 1px, transparent 1px 34%, rgba(255, 248, 232, 0.08) 34% 35%, transparent 35%),
+      linear-gradient(154deg, transparent 0 62%, rgba(207, 180, 95, 0.12) 62% 63%, transparent 63%);
+    clip-path: polygon(0 1.8rem, 1.8rem 0, 100% 0, 100% calc(100% - 2.6rem), calc(100% - 2.6rem) 100%, 0 100%);
+    content: "";
+    pointer-events: none;
+  }
+
+  .home-hero::after,
+  .prayer-watch-page .testimony-hero::after {
+    position: absolute;
+    inset: auto -18% -12% 28%;
+    z-index: -1;
+    height: 52%;
+    border-top: 1px solid rgba(207, 180, 95, 0.22);
+    background: linear-gradient(112deg, rgba(255, 248, 232, 0.08), rgba(13, 58, 39, 0.16), transparent 70%);
+    clip-path: polygon(12% 0, 100% 20%, 88% 100%, 0 82%);
+    content: "";
+    pointer-events: none;
+  }
+
+  .home-hero-grid,
+  .prayer-watch-page .testimony-hero-inner {
+    min-height: 100svh !important;
+    align-content: end;
+    align-items: end;
+    padding-top: max(4.35rem, calc(3.75rem + env(safe-area-inset-top))) !important;
+    padding-bottom: max(1.05rem, env(safe-area-inset-bottom)) !important;
+  }
+
+  .home-hero-copy,
+  .prayer-watch-page .testimony-hero-copy {
+    position: relative;
+    isolation: isolate;
+    padding: 0.85rem 0.75rem 0.95rem;
+    border: 1px solid rgba(255, 248, 232, 0.12);
+    background:
+      linear-gradient(120deg, rgba(255, 248, 232, 0.11), rgba(255, 248, 232, 0.035) 44%, rgba(7, 18, 13, 0.16)),
+      rgba(3, 6, 4, 0.22);
+    clip-path: polygon(0 0, calc(100% - 1.25rem) 0, 100% 1.25rem, 100% 100%, 1rem 100%, 0 calc(100% - 1rem));
+    backdrop-filter: blur(12px);
+    box-shadow: 0 18px 44px rgba(3, 6, 4, 0.2);
+    animation: mobile-glass-cut-enter 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .home-hero-copy::before,
+  .prayer-watch-page .testimony-hero-copy::before {
+    position: absolute;
+    inset: 0.55rem 0.55rem auto auto;
+    width: 36%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245, 223, 160, 0.72));
+    content: "";
+    pointer-events: none;
+  }
+
+  .home-hero-copy h1,
+  .prayer-watch-page .testimony-hero h1 {
+    max-width: 10.5ch;
+    font-size: clamp(2.15rem, 10.5vw, 3.25rem) !important;
+    line-height: 0.88 !important;
+    text-wrap: balance;
+  }
+
+  .home-hero-copy > p,
+  .prayer-watch-page .mobile-flow-summary {
+    color: rgba(255, 248, 232, 0.9);
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .home-hero-actions,
+  .prayer-watch-page .testimony-hero-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+
+  .home-primary-action,
+  .home-secondary-action,
+  .prayer-watch-page .testimony-glow-cta,
+  .prayer-watch-page .testimony-secondary-cta {
+    width: 100%;
+    min-height: 2.95rem;
+    color: #fff8e8;
+  }
+
+  .home-primary-action,
+  .prayer-watch-page .testimony-glow-cta {
+    border-color: rgba(245, 223, 160, 0.72);
+    background:
+      linear-gradient(135deg, rgba(109, 18, 55, 0.94), rgba(13, 58, 39, 0.96)),
+      #0d3a27;
+    box-shadow:
+      0 0 0 1px rgba(207, 180, 95, 0.32),
+      0 0 28px rgba(207, 180, 95, 0.34);
+  }
+
+  .home-secondary-action,
+  .prayer-watch-page .testimony-secondary-cta {
+    border-color: rgba(255, 248, 232, 0.22);
+    background: rgba(255, 248, 232, 0.08);
+  }
+
+  .home-hero-portrait,
+  .prayer-watch-page .testimony-hero-media {
+    opacity: 0.7;
+    clip-path: polygon(26% 0, 100% 0, 100% 100%, 0 100%, 18% 66%);
+  }
+
+  .home-hero-image,
+  .prayer-watch-page .testimony-hero-media img {
+    object-position: 72% top !important;
+    filter: saturate(0.94) contrast(1.06);
+  }
+
+  .home-section-grid,
+  .home-section-shell,
+  .home-declaration-shell,
+  .home-cta-shell,
+  .prayer-watch-page .prayer-army-architecture,
+  .prayer-watch-page .prayer-watch-grid,
+  .prayer-watch-page .ministry-community-cta-shell {
+    padding-right: max(0.72rem, env(safe-area-inset-right));
+    padding-left: max(0.72rem, env(safe-area-inset-left));
+  }
+
+  .home-platform-card,
+  .home-facet-card,
+  .home-value-card,
+  .home-watch-card,
+  .prayer-watch-page .prayer-army-arch-panel,
+  .prayer-watch-page .prayer-army-scripture-line,
+  .prayer-watch-page .prayer-watch-card,
+  .prayer-watch-page .ministry-community-cta-shell {
+    border: 1px solid rgba(16, 37, 29, 0.12);
+    border-radius: 0 !important;
+    clip-path: polygon(0 0, calc(100% - 1.4rem) 0, 100% 1.4rem, 100% 100%, 0.95rem 100%, 0 calc(100% - 0.95rem)) !important;
+    box-shadow: 0 16px 38px rgba(14, 34, 25, 0.08);
+  }
+
+  .home-watch-band .home-section-grid,
+  .home-cta-shell,
+  .prayer-watch-page .prayer-army-arch-panel-dark,
+  .prayer-watch-page .prayer-watch-card-dark,
+  .prayer-watch-page .ministry-community-cta-shell {
+    background:
+      radial-gradient(18rem 14rem at 12% 0%, rgba(207, 180, 95, 0.16), transparent 68%),
+      linear-gradient(145deg, rgba(7, 18, 13, 0.96), rgba(13, 58, 39, 0.96) 72%, rgba(3, 6, 4, 0.98));
+    color: #fff8e8;
+  }
+}
+
+@media (max-width: 639px) and (prefers-reduced-motion: reduce) {
+  .home-hero-copy,
+  .prayer-watch-page .testimony-hero-copy {
+    animation: none;
+  }
+}
