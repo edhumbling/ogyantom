@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { GlobalStructuredData } from "@/components/GlobalStructuredData";
+import { SiteChrome } from "@/components/SiteChrome";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import {
@@ -89,9 +90,9 @@ export default function RootLayout({
     >
       <body className="min-h-full" suppressHydrationWarning>
         <GlobalStructuredData />
-        <SiteHeader />
-        {children}
-        <SiteFooter />
+        <SiteChrome header={<SiteHeader />} footer={<SiteFooter />}>
+          {children}
+        </SiteChrome>
       </body>
     </html>
   );

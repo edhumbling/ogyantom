@@ -9,6 +9,7 @@ import {
   HandHeart,
   Package,
 } from "@phosphor-icons/react/dist/ssr";
+import { givingOptions } from "@/lib/giving";
 import { contactDetails, opaninFullName } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -25,7 +26,7 @@ const supportWays = [
   },
   {
     title: "Digital Giving",
-    text: "A Paystack payment link will be embedded here for card, mobile money, and digital cash support.",
+    text: "Give securely through Paystack with one-time and recurring giving options.",
     icon: Bank,
   },
   {
@@ -74,7 +75,10 @@ export default function SupportPage() {
         </div>
       </section>
 
-      <section id="support-options" className="support-options-section px-5 py-16 sm:px-8 lg:px-10">
+      <section
+        id="support-options"
+        className="support-options-section px-5 py-16 sm:px-8 lg:px-10"
+      >
         <div className="support-architecture-list mx-auto max-w-7xl">
           {supportWays.map((way) => {
             const Icon = way.icon;
@@ -94,26 +98,41 @@ export default function SupportPage() {
       <section className="support-paystack-section px-5 pb-20 sm:px-8 lg:px-10">
         <div className="support-paystack-shell mx-auto max-w-7xl">
           <div>
-            <p className="ministry-community-kicker">Paystack Ready</p>
-            <h2 className="font-display">Online giving will be embedded here.</h2>
+            <p className="ministry-community-kicker">Paystack Giving</p>
+            <h2 className="font-display">Choose your giving rhythm.</h2>
             <p>
-              Send the Paystack payment link and this panel can become the
-              official digital giving area for card, mobile money, and other
-              supported payment methods.
+              Support the prayer army through a single gift or recurring
+              support. Each option opens a focused Paystack giving page.
             </p>
           </div>
 
-          <div className="support-paystack-embed">
-            <HandHeart size={34} weight="bold" aria-hidden="true" />
-            <p>Paystack Link Pending</p>
-            <span>
-              Until the payment link is provided, supporters can contact the
-              ministry directly for cash or gifts in kind.
-            </span>
-            <Link href="/contact" className="support-contact-link">
-              Contact Ministry
-              <ArrowRight size={17} weight="bold" aria-hidden="true" />
-            </Link>
+          <div
+            className="support-giving-options"
+            aria-label="Paystack giving options"
+          >
+            {givingOptions.map((option) => (
+              <Link
+                key={option.kind}
+                href={option.href}
+                className="support-giving-card"
+              >
+                <span className="support-giving-icon" aria-hidden="true">
+                  {option.kind === "one-time" ? (
+                    <HandHeart size={28} weight="bold" />
+                  ) : (
+                    <CurrencyCircleDollar size={28} weight="bold" />
+                  )}
+                </span>
+                <span className="support-giving-copy">
+                  <strong>{option.title}</strong>
+                  <span>{option.text}</span>
+                </span>
+                <span className="support-giving-action">
+                  {option.label}
+                  <ArrowRight size={17} weight="bold" aria-hidden="true" />
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

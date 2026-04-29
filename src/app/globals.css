@@ -4251,6 +4251,292 @@ html {
   outline-offset: 3px;
 }
 
+.support-giving-options {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.support-giving-card {
+  display: grid;
+  min-height: 8.5rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.85rem;
+  align-content: start;
+  border: 1px solid rgba(207, 180, 95, 0.24);
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, rgba(255, 248, 232, 0.085), rgba(255, 248, 232, 0.03));
+  padding: 1rem;
+  color: #fff8e8;
+  text-decoration: none;
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.support-giving-card:hover,
+.support-giving-card:focus-visible {
+  border-color: rgba(207, 180, 95, 0.58);
+  background-color: rgba(255, 248, 232, 0.055);
+  box-shadow: 0 0 0 4px rgba(207, 180, 95, 0.12);
+  transform: translateY(-1px);
+}
+
+.support-giving-card:focus-visible {
+  outline: 2px solid #fff8e8;
+  outline-offset: 3px;
+}
+
+.support-giving-icon {
+  display: inline-grid;
+  width: 3.15rem;
+  height: 3.15rem;
+  place-items: center;
+  border: 1px solid rgba(207, 180, 95, 0.34);
+  border-radius: 0.5rem;
+  background: rgba(207, 180, 95, 0.14);
+  color: #cfb45f;
+}
+
+.support-giving-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.38rem;
+}
+
+.support-giving-copy strong {
+  color: #fff8e8;
+  font-size: 1.12rem;
+  line-height: 1.15;
+}
+
+.support-giving-copy span {
+  color: rgba(255, 248, 232, 0.72);
+  line-height: 1.6;
+}
+
+.support-giving-action {
+  display: inline-flex;
+  min-height: 2.7rem;
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 1px solid rgba(207, 180, 95, 0.62);
+  border-radius: 999px;
+  color: #f5dfa0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
+}
+
+.support-giving-card:hover .support-giving-action,
+.support-giving-card:focus-visible .support-giving-action {
+  border-color: #dfc66e;
+  background: #dfc66e;
+  color: #07120d;
+}
+
+.giving-embed-page,
+.giving-success-page {
+  display: grid;
+  min-height: 100dvh;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  background: #f3efe6;
+  color: #07120d;
+}
+
+.giving-embed-header {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  min-height: 4rem;
+  align-items: center;
+  border-bottom: 1px solid rgba(207, 180, 95, 0.22);
+  background: #07120d;
+  padding:
+    max(0.6rem, env(safe-area-inset-top))
+    max(0.75rem, env(safe-area-inset-right))
+    0.6rem
+    max(0.75rem, env(safe-area-inset-left));
+  box-shadow: 0 10px 28px rgba(3, 6, 4, 0.18);
+}
+
+.giving-embed-back {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(207, 180, 95, 0.42);
+  border-radius: 999px;
+  background: rgba(255, 248, 232, 0.06);
+  padding: 0 1rem;
+  color: #fff8e8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.giving-embed-back:hover,
+.giving-embed-back:focus-visible {
+  border-color: #dfc66e;
+  background: rgba(207, 180, 95, 0.18);
+  box-shadow: 0 0 0 4px rgba(207, 180, 95, 0.14);
+  transform: translateY(-1px);
+}
+
+.giving-embed-back:focus-visible {
+  outline: 2px solid #fff8e8;
+  outline-offset: 3px;
+}
+
+.giving-embed-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  background: #ffffff;
+}
+
+.giving-success-section {
+  display: grid;
+  min-height: 100%;
+  place-items: center;
+  padding: 2rem max(1rem, env(safe-area-inset-right)) 2rem max(1rem, env(safe-area-inset-left));
+}
+
+.giving-success-shell {
+  width: min(100%, 52rem);
+  border: 1px solid rgba(207, 180, 95, 0.28);
+  border-radius: 0.5rem;
+  background:
+    linear-gradient(130deg, rgba(255, 253, 248, 0.98), rgba(243, 239, 230, 0.92)),
+    radial-gradient(circle at 18% 12%, rgba(207, 180, 95, 0.18), transparent 35%);
+  padding: clamp(1.25rem, 5vw, 3rem);
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(14, 34, 25, 0.12);
+}
+
+.giving-success-mark {
+  display: inline-grid;
+  width: 4.5rem;
+  height: 4.5rem;
+  place-items: center;
+  border: 1px solid rgba(13, 58, 39, 0.16);
+  border-radius: 999px;
+  background: #0d3a27;
+  color: #cfb45f;
+}
+
+.giving-success-kicker {
+  margin-top: 1.25rem;
+  color: #6d1237;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.giving-success-shell h1 {
+  max-width: 12ch;
+  margin: 0.85rem auto 0;
+  font-size: clamp(2.65rem, 8vw, 5.6rem);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+.giving-success-shell > p:not(.giving-success-kicker) {
+  max-width: 42rem;
+  margin: 1.2rem auto 0;
+  color: #31473d;
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.giving-success-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.7rem;
+}
+
+.giving-success-primary,
+.giving-success-secondary {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0 1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.giving-success-primary {
+  border: 1px solid #cfb45f;
+  background: #cfb45f;
+  color: #07120d;
+}
+
+.giving-success-secondary {
+  border: 1px solid rgba(13, 58, 39, 0.22);
+  background: rgba(255, 253, 248, 0.72);
+  color: #0d3a27;
+}
+
+.giving-success-primary:hover,
+.giving-success-primary:focus-visible,
+.giving-success-secondary:hover,
+.giving-success-secondary:focus-visible {
+  transform: translateY(-1px);
+}
+
+.giving-success-primary:hover,
+.giving-success-primary:focus-visible {
+  background: #dfc66e;
+  box-shadow: 0 0 0 4px rgba(207, 180, 95, 0.18);
+}
+
+.giving-success-secondary:hover,
+.giving-success-secondary:focus-visible {
+  border-color: rgba(13, 58, 39, 0.38);
+  background: #ffffff;
+}
+
+.giving-success-primary:focus-visible,
+.giving-success-secondary:focus-visible {
+  outline: 2px solid #0d3a27;
+  outline-offset: 3px;
+}
+
 .prayer-army-architecture {
   display: grid;
   gap: 0;
@@ -5548,7 +5834,12 @@ html {
   .ministry-card-icon,
   .mobile-menu-panel,
   .mobile-menu-row,
-  .mobile-glow-action {
+  .mobile-glow-action,
+  .support-giving-card,
+  .support-giving-action,
+  .giving-embed-back,
+  .giving-success-primary,
+  .giving-success-secondary {
     transition: none;
   }
 
@@ -6180,3 +6471,65 @@ html {
 
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+@media (max-width: 639px) {
+  .support-giving-card {
+    min-height: auto;
+    padding: 0.8rem;
+  }
+
+  .support-giving-icon {
+    width: 2.65rem;
+    height: 2.65rem;
+  }
+
+  .support-giving-copy strong {
+    font-size: 1rem;
+  }
+
+  .support-giving-copy span {
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .giving-embed-header {
+    min-height: 3.5rem;
+  }
+
+  .giving-embed-back,
+  .giving-success-primary,
+  .giving-success-secondary {
+    min-height: 2.6rem;
+    padding: 0 0.72rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+  }
+
+  .giving-success-section {
+    align-items: start;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .giving-success-shell {
+    border-radius: 0;
+    padding: 1rem;
+    box-shadow: none;
+  }
+
+  .giving-success-mark {
+    width: 3.55rem;
+    height: 3.55rem;
+  }
+
+  .giving-success-shell h1 {
+    max-width: 13ch;
+    font-size: 2rem;
+    line-height: 0.96;
+  }
+
+  .giving-success-shell > p:not(.giving-success-kicker) {
+    font-size: 0.86rem;
+    line-height: 1.6;
+  }
+}
