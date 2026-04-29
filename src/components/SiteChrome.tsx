@@ -2,6 +2,8 @@
 
 import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
+import { FloatingActions } from "./FloatingActions";
+import { HeroBackControls } from "./HeroBackControls";
 
 const headerlessRoutePrefixes = ["/support/give"];
 
@@ -24,7 +26,9 @@ export function SiteChrome({ children, footer, header }: SiteChromeProps) {
   return (
     <>
       {header}
+      <HeroBackControls />
       {children}
+      <FloatingActions />
       {footer}
     </>
   );

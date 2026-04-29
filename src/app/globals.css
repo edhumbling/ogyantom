@@ -3249,18 +3249,162 @@ html {
   color: #ffffff;
 }
 
+.hero-back-button {
+  position: absolute;
+  top: auto;
+  bottom: 1.15rem;
+  left: max(0.85rem, env(safe-area-inset-left));
+  z-index: 8;
+  display: inline-flex;
+  min-height: 2.55rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  border: 1px solid rgba(245, 223, 160, 0.34);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.13), rgba(255, 248, 232, 0.035)),
+    rgba(7, 18, 13, 0.54);
+  padding: 0 0.82rem;
+  color: #fff8e8;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 1px 10px rgba(3, 6, 4, 0.34);
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 0 0 1px rgba(207, 180, 95, 0.12),
+    0 0 20px rgba(207, 180, 95, 0.18),
+    0 14px 34px rgba(3, 6, 4, 0.22);
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.hero-back-button:hover {
+  border-color: rgba(245, 223, 160, 0.62);
+  background:
+    linear-gradient(135deg, rgba(207, 180, 95, 0.2), rgba(255, 248, 232, 0.06)),
+    rgba(7, 18, 13, 0.66);
+  box-shadow:
+    0 0 0 1px rgba(207, 180, 95, 0.18),
+    0 0 28px rgba(207, 180, 95, 0.28),
+    0 16px 38px rgba(3, 6, 4, 0.25);
+}
+
+.hero-back-button:active {
+  transform: scale(0.97);
+}
+
+.hero-back-button:focus-visible {
+  outline: 2px solid #f5dfa0;
+  outline-offset: 3px;
+}
+
+.floating-action-stack {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 58;
+  display: grid;
+  gap: 0.7rem;
+  justify-items: end;
+  pointer-events: none;
+}
+
+.floating-whatsapp,
+.floating-scroll-top {
+  pointer-events: auto;
+  display: inline-flex;
+  width: 3.55rem;
+  height: 3.55rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  touch-action: manipulation;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.floating-whatsapp {
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  background: #25d366;
+  box-shadow:
+    0 0 0 1px rgba(18, 225, 132, 0.2),
+    0 0 28px rgba(37, 211, 102, 0.28),
+    0 18px 42px rgba(3, 6, 4, 0.26);
+}
+
+.floating-whatsapp img {
+  width: 2.38rem;
+  height: 2.38rem;
+}
+
+.floating-scroll-top {
+  border: 1px solid rgba(245, 223, 160, 0.72);
+  background: #d4af5d;
+  color: #07120d;
+  opacity: 0;
+  transform: translateY(0.6rem) scale(0.9);
+  box-shadow:
+    0 0 0 1px rgba(207, 180, 95, 0.22),
+    0 0 22px rgba(207, 180, 95, 0.28),
+    0 14px 34px rgba(3, 6, 4, 0.2);
+}
+
+.floating-scroll-top-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.floating-whatsapp:hover,
+.floating-whatsapp:focus-visible {
+  border-color: rgba(255, 255, 255, 0.66);
+  box-shadow:
+    0 0 0 1px rgba(18, 225, 132, 0.3),
+    0 0 34px rgba(37, 211, 102, 0.4),
+    0 20px 46px rgba(3, 6, 4, 0.3);
+  transform: translateY(-2px);
+}
+
+.floating-scroll-top:hover,
+.floating-scroll-top:focus-visible {
+  background: #f5dfa0;
+  transform: translateY(-2px) scale(1);
+}
+
+.floating-whatsapp:active,
+.floating-scroll-top:active {
+  transform: scale(0.96);
+}
+
+.floating-whatsapp:focus-visible,
+.floating-scroll-top:focus-visible {
+  outline: 2px solid #fff8e8;
+  outline-offset: 3px;
+}
+
 .testimony-hero-media {
   position: absolute;
   inset: 0;
-  opacity: 0.52;
+  opacity: 0.78;
+  filter: saturate(1.08) contrast(1.06);
 }
 
 .testimony-hero-media::after {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(3, 6, 4, 0.94) 0%, rgba(3, 6, 4, 0.82) 40%, rgba(3, 6, 4, 0.5) 72%, rgba(3, 6, 4, 0.84) 100%),
-    linear-gradient(180deg, rgba(3, 6, 4, 0.16), rgba(3, 6, 4, 0.94));
+    linear-gradient(90deg, rgba(3, 6, 4, 0.94) 0%, rgba(3, 6, 4, 0.78) 38%, rgba(3, 6, 4, 0.18) 72%, rgba(3, 6, 4, 0.54) 100%),
+    linear-gradient(180deg, rgba(3, 6, 4, 0.08), rgba(3, 6, 4, 0.78));
   content: "";
 }
 
@@ -3359,6 +3503,19 @@ html {
   border: 1px solid rgba(212, 175, 93, 0.82);
   background: #d4af5d;
   color: #07120d;
+}
+
+.prayer-watch-page .testimony-glow-cta {
+  background:
+    linear-gradient(135deg, rgba(109, 18, 55, 0.96), rgba(13, 58, 39, 0.96)),
+    #0d3a27;
+  color: #fff8e8;
+  text-shadow: 0 1px 12px rgba(3, 6, 4, 0.36);
+}
+
+.prayer-watch-page .testimony-glow-cta span,
+.prayer-watch-page .testimony-glow-cta svg {
+  color: #fff8e8;
 }
 
 .testimony-glow-cta::before,
@@ -6252,6 +6409,32 @@ html {
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
   }
 
+  .hero-back-button {
+    top: max(4.25rem, calc(3.55rem + env(safe-area-inset-top)));
+    bottom: auto;
+    left: max(0.65rem, env(safe-area-inset-left));
+    min-height: 2.75rem;
+    padding: 0 0.76rem;
+    font-size: 0.62rem;
+  }
+
+  .floating-action-stack {
+    right: max(0.7rem, env(safe-area-inset-right));
+    bottom: max(0.7rem, env(safe-area-inset-bottom));
+    gap: 0.55rem;
+  }
+
+  .floating-whatsapp,
+  .floating-scroll-top {
+    width: 3.05rem;
+    height: 3.05rem;
+  }
+
+  .floating-whatsapp img {
+    width: 2.08rem;
+    height: 2.08rem;
+  }
+
   .mobile-menu-trigger {
     width: 2.5rem;
     height: 2.5rem;
@@ -7485,7 +7668,7 @@ html {
 
   .home-hero-portrait,
   .prayer-watch-page .testimony-hero-media {
-    opacity: 0.7;
+    opacity: 0.9;
     clip-path: polygon(26% 0, 100% 0, 100% 100%, 0 100%, 18% 66%);
   }
 
