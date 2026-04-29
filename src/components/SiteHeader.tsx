@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { List, X } from "@phosphor-icons/react";
+import { ArrowRight, List, X } from "@phosphor-icons/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { contactDetails, navItems } from "@/lib/site";
@@ -10,6 +10,7 @@ import { LogoMark } from "./LogoMark";
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const desktopNavItems = navItems.filter((item) => item.href !== "/contact");
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -21,35 +22,34 @@ export function SiteHeader() {
   return (
     <>
       <header className="mobile-header-bar">
-        <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-3 px-3 sm:h-16 sm:px-6 lg:px-10">
-          <div className="min-w-0">
+        <div className="header-rail mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-3 px-3 sm:h-16 sm:px-6 lg:px-10">
+          <div className="header-brand min-w-0">
             <LogoMark shortTitle showSlogan={false} />
           </div>
 
-          <div className="ml-auto hidden items-center gap-2 lg:flex">
-            <nav className="hidden items-center gap-2 lg:flex">
-              {navItems.map((item) => {
-                const active = pathname === item.href;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={
-                      "font-sans rounded-md px-3 py-2 text-[0.78rem] font-semibold tracking-[0.01em] transition duration-[180ms] ease-out xl:px-3.5 " +
-                      (active
-                        ? "bg-white/10 text-[var(--gold)]"
-                        : "text-white/74 hover:bg-white/6 hover:text-white")
-                    }
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </nav>
-            <Link href="/contact" className="site-button-primary nav-prayer-button rounded-md">
-              Send Prayer Request
+          <nav className="header-nav ml-auto hidden items-center lg:flex" aria-label="Primary navigation">
+            {desktopNavItems.map((item) => {
+              const active = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={
+                    "header-nav-link font-sans " +
+                    (active
+                      ? "header-nav-link-active"
+                      : "text-white/74")
+                  }
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+            <Link href="/contact" className="site-button-primary nav-prayer-button">
+              <span>Prayer Request</span>
+              <ArrowRight size={15} weight="bold" aria-hidden="true" />
             </Link>
-          </div>
+          </nav>
 
           <button
             type="button"
