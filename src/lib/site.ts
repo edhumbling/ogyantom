@@ -75,7 +75,7 @@ export const opaninFullName = "Watchman Opanin Thomas";
 export const ministryType = "An online ministry";
 
 export const contactDetails = {
-  email: "Kwabena.myown25@gmail.com",
+  email: "opanin@ogyantomprayer.works",
   phones: ["0247518816", "0594575260"],
   whatsapp: "https://wa.me/233247518816",
   tiktok: "https://www.tiktok.com/@opaninnie?_r=1&_t=ZS-95wZ5cjczd2",
