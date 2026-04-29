@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 
 export type TestimonyEntry = {
@@ -25,33 +25,21 @@ function initials(name: string) {
     .slice(0, 2);
 }
 
-export function TestimonyBrowser({ testimonies }: TestimonyBrowserProps) {
+type TestimonySetProps = TestimonyBrowserProps & {
+  pageSize: number;
+};
+
+function TestimonySet({ testimonies, pageSize }: TestimonySetProps) {
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(desktopPageSize);
-
-  useEffect(() => {
-    const query = window.matchMedia("(min-width: 1024px)");
-    const updatePageSize = () => {
-      setPageSize(query.matches ? desktopPageSize : mobilePageSize);
-      setPage(0);
-    };
-
-    updatePageSize();
-    query.addEventListener("change", updatePageSize);
-
-    return () => query.removeEventListener("change", updatePageSize);
-  }, []);
-
   const pageCount = Math.max(1, Math.ceil(testimonies.length / pageSize));
+  const safePage = Math.min(page, pageCount - 1);
   const pagedItems = useMemo(
-    () => testimonies.slice(page * pageSize, page * pageSize + pageSize),
-    [page, pageSize, testimonies],
+    () => testimonies.slice(safePage * pageSize, safePage * pageSize + pageSize),
+    [safePage, pageSize, testimonies],
   );
   const showPagination = testimonies.length > pageSize;
-  const firstVisible = page * pageSize + 1;
-  const lastVisible = Math.min(testimonies.length, page * pageSize + pagedItems.length);
-
-  if (testimonies.length === 0) return null;
+  const firstVisible = safePage * pageSize + 1;
+  const lastVisible = Math.min(testimonies.length, safePage * pageSize + pagedItems.length);
 
   const goPrevious = () => {
     setPage((current) => (current === 0 ? pageCount - 1 : current - 1));
@@ -61,7 +49,7 @@ export function TestimonyBrowser({ testimonies }: TestimonyBrowserProps) {
   };
 
   return (
-    <div className="testimony-browser">
+    <>
       {showPagination ? (
         <div className="testimony-pagination-bar">
           <span>
@@ -83,7 +71,7 @@ export function TestimonyBrowser({ testimonies }: TestimonyBrowserProps) {
           <article key={`${item.name}-${item.title}`} className="testimony-story-card">
             <div className="testimony-story-card-head">
               <span className="testimony-ledger-number">
-                {String(page * pageSize + index + 1).padStart(2, "0")}
+                {String(safePage * pageSize + index + 1).padStart(2, "0")}
               </span>
               <span className="testimony-pill">{item.highlight}</span>
             </div>
@@ -95,6 +83,21 @@ export function TestimonyBrowser({ testimonies }: TestimonyBrowserProps) {
             </footer>
           </article>
         ))}
+      </div>
+    </>
+  );
+}
+
+export function TestimonyBrowser({ testimonies }: TestimonyBrowserProps) {
+  if (testimonies.length === 0) return null;
+
+  return (
+    <div className="testimony-browser">
+      <div className="testimony-browser-desktop">
+        <TestimonySet testimonies={testimonies} pageSize={desktopPageSize} />
+      </div>
+      <div className="testimony-browser-mobile">
+        <TestimonySet testimonies={testimonies} pageSize={mobilePageSize} />
       </div>
     </div>
   );

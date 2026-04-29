@@ -1002,6 +1002,15 @@ html {
   margin-top: 1.25rem;
 }
 
+.testimony-browser-desktop {
+  display: none;
+}
+
+.testimony-browser-mobile {
+  display: grid;
+  gap: 1rem;
+}
+
 .testimony-card-grid {
   display: grid;
   gap: 0.9rem;
@@ -1583,6 +1592,15 @@ html {
 
   .testimony-card-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .testimony-browser-desktop {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .testimony-browser-mobile {
+    display: none;
   }
 
   .testimony-story-card {
