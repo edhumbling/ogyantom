@@ -1,13 +1,17 @@
 import { createClient } from "next-sanity";
-import { sanityConfig } from "./env";
+import { hasSanityConfig, sanityConfig } from "./env";
 
-export const client = createClient(sanityConfig);
+export const client = hasSanityConfig ? createClient(sanityConfig) : null;
 
 export async function sanityFetch<T>(
   query: string,
   params: Record<string, string> = {},
   fallback: T,
 ): Promise<T> {
+  if (!client) {
+    return fallback;
+  }
+
   try {
     return await client.fetch<T>(query, params, {
       next: { revalidate: 60 },

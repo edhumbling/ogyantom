@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { richBodyField } from "./richBodyField";
 
 export const eventType = defineType({
   name: "event",
@@ -9,12 +10,13 @@ export const eventType = defineType({
       name: "title",
       title: "Title",
       type: "string",
-      validation: (rule) => rule.required(),
+      description: "Used to generate the public URL slug.",
     }),
     defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
+      description: "Generate this from the title so the URL uses readable words.",
       options: { source: "title", maxLength: 96 },
     }),
     defineField({
@@ -27,7 +29,6 @@ export const eventType = defineType({
       name: "startDate",
       title: "Start date",
       type: "datetime",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "endDate",
@@ -65,8 +66,9 @@ export const eventType = defineType({
     }),
     defineField({
       name: "image",
-      title: "Event image",
+      title: "Cover image",
       type: "image",
+      description: "Used as the event page image and Open Graph preview image.",
       options: { hotspot: true },
       fields: [
         defineField({
@@ -75,6 +77,11 @@ export const eventType = defineType({
           type: "string",
         }),
       ],
+    }),
+    richBodyField({
+      title: "Full event content",
+      description:
+        "Optional event details with agenda, directions, links, images, video, and audio.",
     }),
   ],
   preview: {

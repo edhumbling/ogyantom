@@ -7,9 +7,9 @@ import { LogoMark } from "./LogoMark";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-white/10 bg-[#030604] text-white">
+    <footer className="bg-[#030604] text-white">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:px-10">
-        <div className="border-b border-white/10 pb-10 lg:border-b-0 lg:pb-0 lg:pr-8">
+        <div className="lg:pr-8">
           <LogoMark />
           <p className="mt-6 max-w-xl text-base leading-8 text-[#c7d0ca] sm:text-lg">
             An online prayer army led by Chief Prayer Warrior Watchman Opanin
@@ -54,10 +54,7 @@ export function SiteFooter() {
                 Morning Watch
               </Link>
               <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/prayer-watch">
-                Midday Intercession
-              </Link>
-              <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/prayer-watch">
-                Night Vigil
+                Evening Watch
               </Link>
               <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/testimonies">
                 Answered Prayer
@@ -67,7 +64,7 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-white/10 px-5 py-7 text-center sm:px-8 lg:px-10">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-5 py-7 text-center sm:px-8 lg:px-10">
         {onlinePlatforms.map((platform) => (
           <a key={platform.name} href={platform.href} className="inline-flex min-h-12 items-center gap-3 text-[0.95rem] text-[#d2dbd6] transition duration-[150ms] ease-out hover:text-[var(--gold)]">
             <Image

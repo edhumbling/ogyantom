@@ -270,25 +270,18 @@ html {
 
 .header-brand > a {
   min-height: 2.75rem;
-  border-radius: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.045);
-  padding: 0.22rem 0.65rem 0.22rem 0.32rem;
-  transition: border-color 180ms ease-out, background-color 180ms ease-out, transform 120ms ease-out;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  transition: color 180ms ease-out, opacity 180ms ease-out, transform 120ms ease-out;
 }
 
 .header-brand > a:hover {
-  border-color: rgba(207, 180, 95, 0.42);
-  background: rgba(255, 255, 255, 0.075);
+  opacity: 0.96;
 }
 
 .header-nav {
   gap: 0.15rem;
-  border-radius: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.035));
-  padding: 0.25rem;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 16px 38px rgba(2, 5, 4, 0.18);
 }
 
 .header-nav-link {
@@ -330,7 +323,6 @@ html {
 }
 
 .header-nav-link-active {
-  background: rgba(207, 180, 95, 0.1);
   color: #f1d98c;
 }
 
@@ -341,15 +333,14 @@ html {
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.05);
+  border: 0;
+  background: transparent;
   color: var(--gold);
   transition: transform 120ms ease-out, background-color 180ms ease-out, border-color 180ms ease-out;
 }
 
 .mobile-menu-trigger:hover {
-  border-color: rgba(207, 180, 95, 0.58);
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .mobile-menu-trigger:active {
@@ -385,14 +376,7 @@ html {
   }
 
   .header-rail::before {
-    position: absolute;
-    inset: 0.75rem 2.5rem;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    background: rgba(3, 6, 4, 0.22);
-    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.18);
-    content: "";
-    pointer-events: none;
+    content: none;
   }
 
   .mobile-menu-trigger {
@@ -701,6 +685,34 @@ html {
   margin-top: 2.5rem;
 }
 
+.prose-prayer h1 {
+  color: #07120d;
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  font-size: clamp(2.35rem, 5vw, 3.75rem);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1;
+  margin-top: 2.75rem;
+}
+
+.prose-prayer h3 {
+  color: #07120d;
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.15;
+  margin-top: 2.25rem;
+}
+
+.prose-prayer h4 {
+  color: #0d3a27;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.25;
+  margin-top: 1.8rem;
+}
+
 .prose-prayer blockquote {
   border-left: 0.28rem solid var(--gold);
   color: #0d3a27;
@@ -725,6 +737,51 @@ html {
 
 .prose-prayer li + li {
   margin-top: 0.55rem;
+}
+
+.prose-prayer code {
+  background: rgba(7, 18, 13, 0.08);
+  border: 1px solid rgba(7, 18, 13, 0.1);
+  color: #6d1237;
+  font-size: 0.92em;
+  padding: 0.12rem 0.32rem;
+}
+
+.rich-media {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.62);
+  padding: 0.75rem;
+}
+
+.rich-media iframe,
+.rich-media video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  background: #07120d;
+}
+
+.rich-media audio {
+  display: block;
+  width: 100%;
+}
+
+.rich-media figcaption {
+  margin-top: 0.75rem;
+  color: #53635a;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.rich-media-title {
+  margin-bottom: 0.65rem;
+  color: #07120d;
+  font-weight: 700;
+}
+
+.rich-media-audio {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(238, 243, 239, 0.92));
 }
 
 @media (min-width: 768px) {

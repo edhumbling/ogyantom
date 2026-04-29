@@ -12,18 +12,13 @@ export const navItems = [
 export const prayerWatches = [
   {
     title: "Morning Watch",
-    kicker: "Dawn covering",
+    kicker: "Monday to Saturday · 6:30am",
     text: "A focused start for families, work, protection, and spiritual alignment.",
   },
   {
-    title: "Midday Intercession",
-    kicker: "Standing in the gap",
-    text: "A disciplined pause for urgent needs, community burdens, and ministry requests.",
-  },
-  {
-    title: "Night Vigil",
-    kicker: "Faithful watch",
-    text: "A deeper watch for worship, testimony, deliverance, and expectation.",
+    title: "Evening Watch",
+    kicker: "Monday to Saturday · 8:00pm",
+    text: "An evening gathering for worship, testimony, deliverance, and expectation.",
   },
 ];
 
@@ -31,7 +26,7 @@ export const ministryFacets = [
   {
     href: "/prayer-watch",
     title: "Prayer Watch",
-    text: "Structured rhythms for prayer warriors who carry the day in intercession.",
+    text: "Structured rhythms for prayer warriors who gather Monday to Saturday in the morning and evening.",
   },
   {
     href: "/testimonies",

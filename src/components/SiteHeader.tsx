@@ -24,7 +24,7 @@ export function SiteHeader() {
       <header className="mobile-header-bar">
         <div className="header-rail mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-3 px-3 sm:h-16 sm:px-6 lg:px-10">
           <div className="header-brand min-w-0">
-            <LogoMark shortTitle showSlogan={false} />
+            <LogoMark showSlogan={false} />
           </div>
 
           <nav className="header-nav ml-auto hidden items-center lg:flex" aria-label="Primary navigation">

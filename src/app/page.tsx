@@ -50,8 +50,9 @@ export default function Home() {
             <div className="hero-description-panel mt-8 max-w-2xl">
               <p className="hero-description-label">Online Prayer Community</p>
               <p className="mt-4 text-base leading-8 text-[#ecf4ef] sm:text-lg">
-                A disciplined online prayer community for daily intercession,
-                spiritual covering, testimony, and formation under watchful leadership.
+                A disciplined online prayer community for Monday to Saturday
+                morning and evening intercession, spiritual covering,
+                testimony, and formation under watchful leadership.
               </p>
               <div className="mt-7 grid gap-2 sm:grid-cols-2">
                 <Link
@@ -212,8 +213,11 @@ export default function Home() {
               Prayer Watch
             </p>
             <h2 className="font-display mt-3 text-5xl font-light leading-none sm:text-6xl">
-              Three watches. One disciplined covering.
+              Two watches. One disciplined covering.
             </h2>
+            <p className="mt-4 max-w-xl text-base leading-7 text-[#dfe6e1]">
+              Monday to Saturday at 6:30am and 8:00pm.
+            </p>
           </div>
 
           <div className="grid gap-3">

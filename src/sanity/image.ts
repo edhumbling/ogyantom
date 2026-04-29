@@ -1,10 +1,8 @@
 import { createImageUrlBuilder } from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url";
-import { client } from "./client";
-
-const { projectId, dataset } = client.config();
+import { hasSanityConfig, sanityDataset, sanityProjectId } from "./env";
 
 export const urlFor = (source: SanityImageSource) =>
-  projectId && dataset
-    ? createImageUrlBuilder({ projectId, dataset }).image(source)
+  hasSanityConfig
+    ? createImageUrlBuilder({ projectId: sanityProjectId, dataset: sanityDataset }).image(source)
     : null;

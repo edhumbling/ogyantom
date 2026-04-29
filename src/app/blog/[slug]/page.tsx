@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { PortableText } from "@portabletext/react";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
+import { RichPortableText } from "@/components/RichPortableText";
 import { SanityImage } from "@/components/SanityImage";
 import { sanityFetch } from "@/sanity/client";
+import { buildContentMetadata } from "@/sanity/metadata";
 import { postBySlugQuery } from "@/sanity/queries";
 import type { Post } from "@/sanity/types";
 
@@ -24,11 +25,15 @@ function formatDate(value?: string) {
 export async function generateMetadata({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const post = await sanityFetch<Post | null>(postBySlugQuery, { slug }, null);
+  const title = post ? `${post.title} | Ogya Ntom Prayer Army` : "Blog Post";
 
-  return {
-    title: post ? `${post.title} | Ogya Ntom Prayer Army` : "Blog Post",
+  return buildContentMetadata({
+    title,
     description: post?.excerpt,
-  };
+    image: post?.mainImage,
+    imageAlt: post?.title,
+    path: `/blog/${slug}`,
+  });
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
@@ -97,11 +102,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <section className="px-5 pb-20 pt-12 sm:px-8 lg:px-10 lg:pb-32 lg:pt-16">
           <div className="glass-panel mx-auto max-w-4xl rounded-[2.25rem] p-7 sm:p-10">
             <div className="prose-prayer">
-              {post.body ? (
-                <PortableText value={post.body} />
-              ) : (
-                <p>This post has been published without body content.</p>
-              )}
+              <RichPortableText
+                value={post.body}
+                emptyText="This post has been published without body content."
+              />
             </div>
           </div>
         </section>

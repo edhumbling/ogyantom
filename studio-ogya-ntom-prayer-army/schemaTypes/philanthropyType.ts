@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { richBodyField } from "./richBodyField";
 
 export const philanthropyType = defineType({
   name: "philanthropy",
@@ -9,14 +10,14 @@ export const philanthropyType = defineType({
       name: "title",
       title: "Title",
       type: "string",
-      validation: (rule) => rule.required(),
+      description: "Used to generate the public URL slug.",
     }),
     defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
+      description: "Generate this from the title so the URL uses readable words.",
       options: { source: "title", maxLength: 96 },
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "summary",
@@ -29,7 +30,6 @@ export const philanthropyType = defineType({
       title: "Published at",
       type: "datetime",
       initialValue: () => new Date().toISOString(),
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "beneficiary",
@@ -38,7 +38,6 @@ export const philanthropyType = defineType({
       options: {
         list: ["Widows", "Orphans", "Families", "Elderly", "Community"],
       },
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "location",
@@ -59,8 +58,9 @@ export const philanthropyType = defineType({
     }),
     defineField({
       name: "image",
-      title: "Update image",
+      title: "Cover image",
       type: "image",
+      description: "Used as the page image and Open Graph preview image.",
       options: { hotspot: true },
       fields: [
         defineField({
@@ -69,6 +69,9 @@ export const philanthropyType = defineType({
           type: "string",
         }),
       ],
+    }),
+    richBodyField({
+      title: "Full update content",
     }),
   ],
   preview: {

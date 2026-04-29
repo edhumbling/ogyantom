@@ -99,7 +99,7 @@ export default async function EventsPage() {
                     <div className="relative min-h-[22rem] overflow-hidden bg-[#07120d]">
                       <SanityImage
                         image={event.image}
-                        altFallback={event.title}
+                        altFallback={event.title || "Upcoming event"}
                         priority={index === 0}
                       />
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_45%,rgba(3,6,4,0.72))]" />
@@ -118,7 +118,7 @@ export default async function EventsPage() {
                       </div>
 
                       <h2 className="font-display mt-8 text-5xl font-light leading-none tracking-tighter">
-                        {event.title}
+                        {event.title || "Untitled event"}
                       </h2>
                       {event.summary ? (
                         <p className="mt-5 max-w-2xl text-lg leading-8 text-[#53635a]">
@@ -133,15 +133,25 @@ export default async function EventsPage() {
                           {event.status || "upcoming"}
                         </span>
                       </div>
-                      {event.meetingLink ? (
-                        <Link
-                          href={event.meetingLink}
-                          className="site-button-primary mt-8 text-sm uppercase tracking-[0.16em]"
-                        >
-                          Join event
-                          <LinkSimple size={18} weight="bold" />
-                        </Link>
-                      ) : null}
+                      <div className="mt-8 flex flex-wrap gap-3">
+                        {event.slug ? (
+                          <Link
+                            href={`/events/${event.slug}`}
+                            className="site-button-secondary text-sm uppercase tracking-[0.16em]"
+                          >
+                            View details
+                          </Link>
+                        ) : null}
+                        {event.meetingLink ? (
+                          <Link
+                            href={event.meetingLink}
+                            className="site-button-primary text-sm uppercase tracking-[0.16em]"
+                          >
+                            Join event
+                            <LinkSimple size={18} weight="bold" />
+                          </Link>
+                        ) : null}
+                      </div>
                     </div>
                   </article>
                 );

@@ -22,20 +22,20 @@ export default function PrayerWatchPage() {
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
               Prayer Watch
             </p>
-            <p className="hero-script mt-4">Stand in the gap</p>
+            <p className="hero-script mt-4">Monday to Saturday</p>
             <h1 className="font-display tracking-tighter mt-4 max-w-4xl text-6xl font-light leading-none text-white sm:text-7xl">
               A clear rhythm for the prayer army.
             </h1>
           </div>
           <p className="max-w-2xl text-xl leading-8 text-[#dfe7e2]">
             The watch is structured so people know when to gather, what to carry,
-            and how to stay spiritually alert through the day.
+            and how to stay spiritually alert in the morning and evening.
           </p>
         </div>
       </section>
 
       <section className="section-rule px-5 pb-20 pt-16 lg:pb-24 lg:pt-20 sm:px-8 lg:px-10 ">
-        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-2">
           {prayerWatches.map((watch, index) => (
             <article
               key={watch.title}

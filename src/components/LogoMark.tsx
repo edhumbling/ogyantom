@@ -24,18 +24,18 @@ export function LogoMark({
           className={"w-auto object-contain " + (compact ? "h-5" : "h-6 sm:h-8")}
         />
       </span>
-      <span className={"min-w-0 sm:max-w-none " + (shortTitle ? "max-w-[8rem]" : "max-w-[12rem]")}>
+      <span className="min-w-0 flex flex-col">
         <span
           className={
-            "block truncate font-bold leading-tight text-current " +
-            (compact ? "text-[0.82rem]" : "text-[0.88rem] sm:text-lg")
+            "inline-block whitespace-nowrap font-extrabold leading-tight tracking-[-0.04em] text-current drop-shadow-[0_1px_0_rgba(3,6,4,0.22)] " +
+            (compact
+              ? "text-[0.8rem]"
+              : shortTitle
+                ? "text-[0.86rem] sm:text-lg"
+                : "text-[0.78rem] sm:text-[0.95rem] lg:text-[1.05rem]")
           }
         >
-          {shortTitle ? (
-            "Ogya Ntom"
-          ) : (
-            "Ogya Ntom Prayer Army"
-          )}
+          {shortTitle ? "Ogya Ntom" : "Ogya Ntom Prayer Army"}
         </span>
         {showSlogan && (
           <span className="hidden truncate text-[0.65rem] font-bold uppercase tracking-[0.22em] text-[var(--gold)] sm:block sm:text-xs">

@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { richBodyField } from "./richBodyField";
 
 export const postType = defineType({
   name: "post",
@@ -9,12 +10,14 @@ export const postType = defineType({
       name: "title",
       title: "Title",
       type: "string",
+      description: "Used to generate the public URL slug.",
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
+      description: "Generate this from the title so the URL uses readable words.",
       options: { source: "title", maxLength: 96 },
       validation: (rule) => rule.required(),
     }),
@@ -39,8 +42,9 @@ export const postType = defineType({
     }),
     defineField({
       name: "mainImage",
-      title: "Main image",
+      title: "Cover image",
       type: "image",
+      description: "Used as the blog page image and Open Graph preview image.",
       options: { hotspot: true },
       fields: [
         defineField({
@@ -50,56 +54,7 @@ export const postType = defineType({
         }),
       ],
     }),
-    defineField({
-      name: "body",
-      title: "Body",
-      type: "array",
-      of: [
-        defineArrayMember({
-          type: "block",
-          styles: [
-            { title: "Normal", value: "normal" },
-            { title: "Heading", value: "h2" },
-            { title: "Quote", value: "blockquote" },
-          ],
-          lists: [
-            { title: "Bullet", value: "bullet" },
-            { title: "Numbered", value: "number" },
-          ],
-          marks: {
-            decorators: [
-              { title: "Strong", value: "strong" },
-              { title: "Emphasis", value: "em" },
-            ],
-            annotations: [
-              {
-                name: "link",
-                title: "Link",
-                type: "object",
-                fields: [
-                  defineField({
-                    name: "href",
-                    title: "URL",
-                    type: "url",
-                  }),
-                ],
-              },
-            ],
-          },
-        }),
-        defineArrayMember({
-          type: "image",
-          options: { hotspot: true },
-          fields: [
-            defineField({
-              name: "alt",
-              title: "Alternative text",
-              type: "string",
-            }),
-          ],
-        }),
-      ],
-    }),
+    richBodyField(),
   ],
   preview: {
     select: {

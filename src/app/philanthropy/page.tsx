@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { HandHeart, MapPin } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
+import { ArrowRight, HandHeart, MapPin } from "@phosphor-icons/react/dist/ssr";
 import { SanityImage } from "@/components/SanityImage";
 import { sanityFetch } from "@/sanity/client";
 import { philanthropyQuery } from "@/sanity/queries";
@@ -71,14 +72,11 @@ export default async function PhilanthropyPage() {
           ) : (
             <div className="grid gap-5">
               {updates.map((item, index) => (
-                <article
-                  key={item._id}
-                  className="glass-panel grid overflow-hidden lg:grid-cols-[0.86fr_1.14fr]"
-                >
+                <article key={item._id} className="glass-panel grid overflow-hidden lg:grid-cols-[0.86fr_1.14fr]">
                   <div className="relative min-h-[22rem] overflow-hidden bg-[#07120d]">
                     <SanityImage
                       image={item.image}
-                      altFallback={item.title}
+                      altFallback={item.title || "Philanthropy update"}
                       priority={index === 0}
                     />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(3,6,4,0.72))]" />
@@ -96,7 +94,7 @@ export default async function PhilanthropyPage() {
                     </div>
 
                     <h2 className="font-display mt-7 text-5xl font-light leading-none tracking-tighter">
-                      {item.title}
+                      {item.title || "Untitled philanthropy update"}
                     </h2>
 
                     {item.summary ? (
@@ -119,6 +117,20 @@ export default async function PhilanthropyPage() {
                       <p className="mt-6 border-l-2 border-[var(--wine)] pl-4 text-base leading-8 text-[#31473d]">
                         {item.impact}
                       </p>
+                    ) : null}
+
+                    {item.slug ? (
+                      <Link
+                        href={`/philanthropy/${item.slug}`}
+                        className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-[#0d3a27]"
+                      >
+                        Read full update
+                        <ArrowRight
+                          size={18}
+                          weight="bold"
+                          className="transition group-hover:translate-x-1"
+                        />
+                      </Link>
                     ) : null}
                   </div>
                 </article>

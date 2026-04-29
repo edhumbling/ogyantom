@@ -15,8 +15,22 @@ export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0] {
   excerpt,
   publishedAt,
   categories,
-  body,
-  mainImage
+  mainImage,
+  body[] {
+    ...,
+    _type == "image" => {
+      ...,
+      asset->
+    },
+    _type == "videoFile" => {
+      ...,
+      asset->
+    },
+    _type == "audioFile" => {
+      ...,
+      asset->
+    }
+  }
 }`;
 
 export const eventsQuery = `*[_type == "event"] | order(startDate asc) {
@@ -44,4 +58,61 @@ export const philanthropyQuery = `*[_type == "philanthropy"] | order(publishedAt
   donationValue,
   impact,
   image
+}`;
+
+export const eventBySlugQuery = `*[_type == "event" && slug.current == $slug][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  summary,
+  startDate,
+  endDate,
+  location,
+  platform,
+  meetingLink,
+  status,
+  image,
+  body[] {
+    ...,
+    _type == "image" => {
+      ...,
+      asset->
+    },
+    _type == "videoFile" => {
+      ...,
+      asset->
+    },
+    _type == "audioFile" => {
+      ...,
+      asset->
+    }
+  }
+}`;
+
+export const philanthropyBySlugQuery = `*[_type == "philanthropy" && slug.current == $slug][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  summary,
+  publishedAt,
+  beneficiary,
+  location,
+  donationValue,
+  impact,
+  image,
+  body[] {
+    ...,
+    _type == "image" => {
+      ...,
+      asset->
+    },
+    _type == "videoFile" => {
+      ...,
+      asset->
+    },
+    _type == "audioFile" => {
+      ...,
+      asset->
+    }
+  }
 }`;

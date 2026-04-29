@@ -16,6 +16,12 @@
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
+    "get-tsconfig": "4.13.0",
     "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "get-tsconfig": "4.13.0",
+    "reselect": "5.1.0",
+    "fdir": "6.4.6"
   }
 }
