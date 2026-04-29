@@ -1,8 +1,5 @@
-"use client";
-
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { ArrowRight, CaretLeft, CaretRight, MagnifyingGlass, X } from "@phosphor-icons/react/dist/ssr";
 import { SanityImage } from "@/components/SanityImage";
 import type { SanityImage as SanityImageType } from "@/sanity/types";
 
@@ -15,88 +12,135 @@ export type SanityCardGridItem = {
   meta?: string;
   actionLabel: string;
   cover?: SanityImageType;
+  searchText?: string;
 };
 
 type SanityCardGridProps = {
   items: SanityCardGridItem[];
   ariaLabel: string;
+  search: {
+    basePath: string;
+    label: string;
+    placeholder: string;
+    query: string;
+    resultLabel: string;
+    totalCount: number;
+  };
+  pagination: {
+    page: number;
+    pageCount: number;
+  };
 };
 
-const desktopPageSize = 12;
-const mobilePageSize = 6;
+function pageHref(basePath: string, query: string, page: number) {
+  const params = new URLSearchParams();
 
-function useResponsivePageSize() {
-  const [pageSize, setPageSize] = useState(mobilePageSize);
+  if (query) params.set("q", query);
+  if (page > 1) params.set("page", String(page));
 
-  useEffect(() => {
-    const media = window.matchMedia("(min-width: 1024px)");
-    const syncPageSize = () => {
-      setPageSize(media.matches ? desktopPageSize : mobilePageSize);
-    };
-
-    syncPageSize();
-    media.addEventListener("change", syncPageSize);
-
-    return () => {
-      media.removeEventListener("change", syncPageSize);
-    };
-  }, []);
-
-  return pageSize;
+  const suffix = params.toString();
+  return suffix ? `${basePath}?${suffix}` : basePath;
 }
 
-export function SanityCardGrid({ ariaLabel, items }: SanityCardGridProps) {
-  const pageSize = useResponsivePageSize();
-  const [page, setPage] = useState(0);
-  const pageCount = Math.max(1, Math.ceil(items.length / pageSize));
-  const safePage = Math.min(page, pageCount - 1);
-  const pageStart = safePage * pageSize;
-  const pageItems = useMemo(
-    () => items.slice(pageStart, pageStart + pageSize),
-    [items, pageSize, pageStart],
+function PaginationControls({
+  ariaLabel,
+  basePath,
+  page,
+  pageCount,
+  query,
+}: {
+  ariaLabel: string;
+  basePath: string;
+  page: number;
+  pageCount: number;
+  query: string;
+}) {
+  if (pageCount <= 1) return null;
+
+  return (
+    <nav className="sanity-card-pagination" aria-label={`${ariaLabel} pagination`}>
+      <span>
+        Page {page} of {pageCount}
+      </span>
+      <div>
+        {page > 1 ? (
+          <Link href={pageHref(basePath, query, page - 1)} aria-label={`Previous ${ariaLabel}`}>
+            <CaretLeft size={17} weight="bold" aria-hidden="true" />
+          </Link>
+        ) : (
+          <span aria-hidden="true" className="sanity-card-pagination-disabled">
+            <CaretLeft size={17} weight="bold" />
+          </span>
+        )}
+        {page < pageCount ? (
+          <Link href={pageHref(basePath, query, page + 1)} aria-label={`Next ${ariaLabel}`}>
+            <CaretRight size={17} weight="bold" aria-hidden="true" />
+          </Link>
+        ) : (
+          <span aria-hidden="true" className="sanity-card-pagination-disabled">
+            <CaretRight size={17} weight="bold" />
+          </span>
+        )}
+      </div>
+    </nav>
   );
-  const showPagination = items.length > pageSize;
-  const firstVisible = items.length ? pageStart + 1 : 0;
-  const lastVisible = Math.min(items.length, pageStart + pageItems.length);
+}
 
-  const goPrevious = () => {
-    setPage(Math.max(0, safePage - 1));
-  };
-
-  const goNext = () => {
-    setPage(Math.min(pageCount - 1, safePage + 1));
-  };
+export function SanityCardGrid({
+  ariaLabel,
+  items,
+  pagination,
+  search,
+}: SanityCardGridProps) {
+  const showSearchEmpty = search.totalCount === 0 && search.query;
 
   return (
     <div className="sanity-card-browser" aria-label={ariaLabel}>
-      {showPagination ? (
-        <div className="sanity-card-pagination" aria-label={`${ariaLabel} pagination`}>
-          <span>
-            {firstVisible}-{lastVisible} of {items.length}
-          </span>
-          <div>
-            <button
-              type="button"
-              onClick={goPrevious}
-              disabled={safePage === 0}
-              aria-label={`Previous ${ariaLabel}`}
-            >
-              <CaretLeft size={17} weight="bold" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              onClick={goNext}
-              disabled={safePage === pageCount - 1}
-              aria-label={`Next ${ariaLabel}`}
-            >
-              <CaretRight size={17} weight="bold" aria-hidden="true" />
-            </button>
-          </div>
+      <form className="sanity-search-bar" action={search.basePath} role="search">
+        <label className="sr-only" htmlFor={`${ariaLabel.replace(/\s+/g, "-")}-search`}>
+          {search.label}
+        </label>
+        <MagnifyingGlass size={18} weight="bold" aria-hidden="true" />
+        <input
+          id={`${ariaLabel.replace(/\s+/g, "-")}-search`}
+          name="q"
+          type="search"
+          defaultValue={search.query}
+          placeholder={search.placeholder}
+          autoComplete="off"
+          spellCheck={false}
+        />
+        {search.query ? (
+          <Link href={search.basePath} aria-label={`Clear ${search.label}`} className="sanity-search-clear">
+            <X size={16} weight="bold" aria-hidden="true" />
+          </Link>
+        ) : null}
+        <button type="submit">Search</button>
+      </form>
+
+      <p className="sanity-search-status" aria-live="polite">
+        {search.query
+          ? `${search.totalCount} ${search.resultLabel} for "${search.query}"`
+          : `${search.totalCount} ${search.resultLabel}`}
+      </p>
+
+      <PaginationControls
+        ariaLabel={ariaLabel}
+        basePath={search.basePath}
+        page={pagination.page}
+        pageCount={pagination.pageCount}
+        query={search.query}
+      />
+
+      {showSearchEmpty ? (
+        <div className="sanity-search-empty">
+          <p>No {search.resultLabel} matched this search.</p>
+          <Link href={search.basePath}>View all {search.resultLabel}</Link>
         </div>
       ) : null}
 
       <div className="sanity-square-grid">
-        {pageItems.map((item, index) => {
+        {items.map((item, index) => {
           const content = (
             <>
               <div className="sanity-square-cover">
@@ -105,7 +149,7 @@ export function SanityCardGrid({ ariaLabel, items }: SanityCardGridProps) {
                   altFallback={item.title}
                   width={900}
                   height={900}
-                  priority={safePage === 0 && index < 4}
+                  priority={pagination.page === 1 && index < 4}
                 />
                 <div className="sanity-square-cover-shade" />
               </div>
@@ -126,16 +170,24 @@ export function SanityCardGrid({ ariaLabel, items }: SanityCardGridProps) {
           );
 
           return item.href ? (
-            <Link key={item.id} href={item.href} className="sanity-square-card">
+            <Link key={item.id} href={item.href} className="sanity-square-card" data-search-index={item.searchText}>
               {content}
             </Link>
           ) : (
-            <article key={item.id} className="sanity-square-card">
+            <article key={item.id} className="sanity-square-card" data-search-index={item.searchText}>
               {content}
             </article>
           );
         })}
       </div>
+
+      <PaginationControls
+        ariaLabel={ariaLabel}
+        basePath={search.basePath}
+        page={pagination.page}
+        pageCount={pagination.pageCount}
+        query={search.query}
+      />
     </div>
   );
 }

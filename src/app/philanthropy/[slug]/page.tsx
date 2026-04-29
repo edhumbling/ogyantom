@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, HandHeart, MapPin } from "@phosphor-icons/react/dist/ssr";
 import { RichPortableText } from "@/components/RichPortableText";
+import { SanityImage } from "@/components/SanityImage";
 import { sanityFetch } from "@/sanity/client";
 import { buildContentMetadata } from "@/sanity/metadata";
 import { philanthropyBySlugQuery } from "@/sanity/queries";
@@ -112,10 +113,19 @@ export default async function PhilanthropyUpdatePage({ params }: PhilanthropyUpd
           </div>
         </section>
 
-        <section className="px-5 pb-20 pt-12 sm:px-8 lg:px-10 lg:pb-32 lg:pt-16">
-          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[0.68fr_0.32fr] lg:items-start">
-            <div className="glass-panel p-7 sm:p-10">
-              <div className="prose-prayer">
+        <section className="sanity-detail-section">
+          <div className="sanity-detail-shell">
+            <div className="sanity-detail-main">
+              <figure className="sanity-detail-media">
+                <SanityImage
+                  image={update.image}
+                  altFallback={title}
+                  width={1400}
+                  height={820}
+                />
+              </figure>
+
+              <div className="prose-prayer sanity-detail-prose">
                 <RichPortableText
                   value={update.body}
                   emptyText="This update has been published without full body content."
@@ -123,7 +133,7 @@ export default async function PhilanthropyUpdatePage({ params }: PhilanthropyUpd
               </div>
             </div>
 
-            <aside className="glass-panel p-6">
+            <aside className="sanity-detail-aside">
               <h2 className="text-sm font-bold uppercase tracking-[0.18em] text-[#0d3a27]">
                 Update details
               </h2>

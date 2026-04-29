@@ -1,6 +1,12 @@
 import Image from "next/image";
 import { CalendarBlank } from "@phosphor-icons/react/dist/ssr";
 import { SanityCardGrid, type SanityCardGridItem } from "@/components/SanityCardGrid";
+import {
+  buildSearchIndex,
+  filterSanityCards,
+  normalizeListSearchParams,
+  paginateSanityCards,
+} from "@/lib/sanity-browser";
 import { sanityFetch } from "@/sanity/client";
 import { eventsQuery } from "@/sanity/queries";
 import type { Event } from "@/sanity/types";
@@ -12,6 +18,10 @@ export const metadata = {
 };
 
 export const revalidate = 60;
+
+type EventsPageProps = {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+};
 
 function formatDate(value?: string) {
   if (!value) return "Date to be announced";
@@ -25,7 +35,8 @@ function formatDate(value?: string) {
   }).format(new Date(value));
 }
 
-export default async function EventsPage() {
+export default async function EventsPage({ searchParams }: EventsPageProps) {
+  const { page, query } = normalizeListSearchParams(await searchParams);
   const events = await sanityFetch<Event[]>(eventsQuery, {}, []);
   const cards: SanityCardGridItem[] = events.map((event) => ({
     id: event._id,
@@ -38,7 +49,18 @@ export default async function EventsPage() {
       .join(" / "),
     actionLabel: "View Details",
     cover: event.image,
+    searchText: buildSearchIndex([
+      "event online watch vigil prayer meeting gathering",
+      event.title,
+      event.summary,
+      event.platform,
+      event.location,
+      event.status,
+      formatDate(event.startDate),
+    ]),
   }));
+  const filteredCards = filterSanityCards(cards, query);
+  const pagedCards = paginateSanityCards(filteredCards, page);
 
   return (
     <main className="testimony-page">
@@ -79,7 +101,22 @@ export default async function EventsPage() {
               </p>
             </div>
           ) : (
-            <SanityCardGrid items={cards} ariaLabel="upcoming events" />
+            <SanityCardGrid
+              items={pagedCards.pageItems}
+              ariaLabel="upcoming events"
+              search={{
+                basePath: "/events",
+                label: "Search upcoming events",
+                placeholder: "Search online watches…",
+                query,
+                resultLabel: "events",
+                totalCount: filteredCards.length,
+              }}
+              pagination={{
+                page: pagedCards.page,
+                pageCount: pagedCards.pageCount,
+              }}
+            />
           )}
         </div>
       </section>

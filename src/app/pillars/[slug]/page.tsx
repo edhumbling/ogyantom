@@ -40,7 +40,7 @@ export default async function PillarPage({ params }: PageProps) {
   }
 
   return (
-    <main className="testimony-page">
+    <main className="testimony-page mobile-focus-detail">
       <section className="testimony-hero">
         <div className="testimony-hero-media">
           <Image
@@ -56,7 +56,8 @@ export default async function PillarPage({ params }: PageProps) {
           <div className="testimony-hero-copy">
             <p className="testimony-kicker">Prayer Army Pillar</p>
             <h1>{pillar.deepTitle}</h1>
-            <p>{pillar.text}</p>
+            <p className="mobile-flow-long">{pillar.text}</p>
+            <p className="mobile-flow-summary">{pillar.title}: {pillar.text}</p>
             <div className="testimony-hero-actions">
               <Link href="/ministry" className="testimony-secondary-cta">
                 <ArrowLeft size={17} weight="bold" />
@@ -80,11 +81,11 @@ export default async function PillarPage({ params }: PageProps) {
             <p className="mt-5 text-lg leading-8">{pillar.text}</p>
           </aside>
 
-          <article className="ministry-principle-card ministry-principle-card-dark p-8 text-white">
+          <article className="mobile-focus-resonance ministry-principle-card ministry-principle-card-dark p-8 text-white">
             <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
               Resonance With the Army
             </p>
-            <p className="mt-5 text-xl leading-9">{pillar.armyResonance}</p>
+            <p className="mobile-flow-long mt-5 text-xl leading-9">{pillar.armyResonance}</p>
 
             <div className="mt-8 grid gap-3">
               {pillar.principles.map((principle) => (
@@ -102,7 +103,7 @@ export default async function PillarPage({ params }: PageProps) {
           <div>
             <p className="ministry-community-kicker">How It Works</p>
             <h2 className="font-display">How this pillar carries the army.</h2>
-            <p>{pillar.practice}</p>
+            <p className="mobile-flow-long">{pillar.practice}</p>
           </div>
           <Link
             href="/prayer-request"

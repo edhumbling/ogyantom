@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { RichPortableText } from "@/components/RichPortableText";
+import { SanityImage } from "@/components/SanityImage";
 import { sanityFetch } from "@/sanity/client";
 import { buildContentMetadata } from "@/sanity/metadata";
 import { postBySlugQuery } from "@/sanity/queries";
@@ -94,9 +95,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         </section>
 
-        <section className="px-5 pb-20 pt-12 sm:px-8 lg:px-10 lg:pb-32 lg:pt-16">
-          <div className="glass-panel mx-auto max-w-4xl rounded-[2.25rem] p-7 sm:p-10">
-            <div className="prose-prayer">
+        <section className="sanity-detail-section">
+          <div className="sanity-detail-shell sanity-detail-shell-single">
+            <figure className="sanity-detail-media">
+              <SanityImage
+                image={post.mainImage}
+                altFallback={post.title}
+                width={1400}
+                height={820}
+              />
+            </figure>
+
+            <div className="prose-prayer sanity-detail-prose">
               <RichPortableText
                 value={post.body}
                 emptyText="This post has been published without body content."

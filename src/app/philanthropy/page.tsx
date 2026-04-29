@@ -1,6 +1,12 @@
 import Image from "next/image";
 import { HandHeart } from "@phosphor-icons/react/dist/ssr";
 import { SanityCardGrid, type SanityCardGridItem } from "@/components/SanityCardGrid";
+import {
+  buildSearchIndex,
+  filterSanityCards,
+  normalizeListSearchParams,
+  paginateSanityCards,
+} from "@/lib/sanity-browser";
 import { sanityFetch } from "@/sanity/client";
 import { philanthropyQuery } from "@/sanity/queries";
 import type { PhilanthropyUpdate } from "@/sanity/types";
@@ -13,6 +19,10 @@ export const metadata = {
 
 export const revalidate = 60;
 
+type PhilanthropyPageProps = {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+};
+
 function formatDate(value?: string) {
   if (!value) return "Recent update";
   return new Intl.DateTimeFormat("en-US", {
@@ -22,7 +32,8 @@ function formatDate(value?: string) {
   }).format(new Date(value));
 }
 
-export default async function PhilanthropyPage() {
+export default async function PhilanthropyPage({ searchParams }: PhilanthropyPageProps) {
+  const { page, query } = normalizeListSearchParams(await searchParams);
   const updates = await sanityFetch<PhilanthropyUpdate[]>(philanthropyQuery, {}, []);
   const cards: SanityCardGridItem[] = updates.map((item) => ({
     id: item._id,
@@ -35,7 +46,19 @@ export default async function PhilanthropyPage() {
       .join(" / "),
     actionLabel: "Read Update",
     cover: item.image,
+    searchText: buildSearchIndex([
+      "philanthropy giving outreach widows orphans families elderly community",
+      item.title,
+      item.summary,
+      item.beneficiary,
+      item.location,
+      item.donationValue,
+      item.impact,
+      formatDate(item.publishedAt),
+    ]),
   }));
+  const filteredCards = filterSanityCards(cards, query);
+  const pagedCards = paginateSanityCards(filteredCards, page);
 
   return (
     <main className="testimony-page">
@@ -76,7 +99,22 @@ export default async function PhilanthropyPage() {
               </p>
             </div>
           ) : (
-            <SanityCardGrid items={cards} ariaLabel="philanthropy updates" />
+            <SanityCardGrid
+              items={pagedCards.pageItems}
+              ariaLabel="philanthropy updates"
+              search={{
+                basePath: "/philanthropy",
+                label: "Search philanthropy updates",
+                placeholder: "Search giving updates…",
+                query,
+                resultLabel: "updates",
+                totalCount: filteredCards.length,
+              }}
+              pagination={{
+                page: pagedCards.page,
+                pageCount: pagedCards.pageCount,
+              }}
+            />
           )}
         </div>
       </section>

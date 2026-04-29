@@ -447,7 +447,142 @@ html {
 
 .sanity-card-browser {
   display: grid;
+  gap: 0.9rem;
+}
+
+.sanity-search-bar {
+  display: grid;
+  min-height: 3.2rem;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid rgba(16, 37, 29, 0.14);
+  border-radius: 999px;
+  background: #fffdf8;
+  padding: 0.35rem 0.38rem 0.35rem 0.95rem;
+  box-shadow: 0 14px 36px rgba(14, 34, 25, 0.07);
+}
+
+.sanity-search-bar:focus-within {
+  border-color: rgba(109, 18, 55, 0.34);
+  box-shadow:
+    0 0 0 4px rgba(207, 180, 95, 0.13),
+    0 18px 42px rgba(14, 34, 25, 0.09);
+}
+
+.sanity-search-bar > svg {
+  color: #6d1237;
+}
+
+.sanity-search-bar input {
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: #07120d;
+  font-size: 1rem;
+  outline: 0;
+}
+
+.sanity-search-bar input::placeholder {
+  color: #748078;
+}
+
+.sanity-search-bar button,
+.sanity-search-clear {
+  display: inline-flex;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.sanity-search-bar button {
+  border: 1px solid rgba(16, 37, 29, 0.14);
+  background: #10251d;
+  padding: 0 0.95rem;
+  color: #fff8e8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sanity-search-clear {
+  color: #6d1237;
+}
+
+.sanity-search-bar button:hover,
+.sanity-search-bar button:focus-visible {
+  background: #cfb45f;
+  color: #07120d;
+  box-shadow: 0 0 0 4px rgba(207, 180, 95, 0.16);
+}
+
+.sanity-search-clear:hover,
+.sanity-search-clear:focus-visible {
+  background: rgba(109, 18, 55, 0.08);
+}
+
+.sanity-search-bar button:focus-visible,
+.sanity-search-clear:focus-visible {
+  outline: 2px solid #6d1237;
+  outline-offset: 3px;
+}
+
+.sanity-search-bar button:active,
+.sanity-search-clear:active {
+  transform: scale(0.96);
+}
+
+.sanity-search-status {
+  color: #53635a;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sanity-search-empty {
+  display: flex;
+  min-height: 8rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
+  border-top: 1px solid rgba(16, 37, 29, 0.12);
+  border-bottom: 1px solid rgba(16, 37, 29, 0.12);
+  background: rgba(255, 253, 248, 0.58);
+  padding: 1rem;
+}
+
+.sanity-search-empty p {
+  color: #31473d;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.sanity-search-empty a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  border: 1px solid rgba(109, 18, 55, 0.18);
+  border-radius: 999px;
+  padding: 0 0.9rem;
+  color: #6d1237;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 .sanity-card-pagination {
@@ -474,7 +609,8 @@ html {
   gap: 0.45rem;
 }
 
-.sanity-card-pagination button {
+.sanity-card-pagination a,
+.sanity-card-pagination-disabled {
   display: inline-flex;
   width: 2.35rem;
   height: 2.35rem;
@@ -484,6 +620,7 @@ html {
   background: #10251d;
   color: #fff8e8;
   touch-action: manipulation;
+  text-decoration: none;
   transition:
     background-color 150ms ease,
     border-color 150ms ease,
@@ -491,24 +628,23 @@ html {
     transform 150ms ease;
 }
 
-.sanity-card-pagination button:hover:not(:disabled),
-.sanity-card-pagination button:focus-visible:not(:disabled) {
+.sanity-card-pagination a:hover,
+.sanity-card-pagination a:focus-visible {
   border-color: rgba(18, 225, 132, 0.5);
   background: #12e184;
   color: #02120b;
 }
 
-.sanity-card-pagination button:focus-visible {
+.sanity-card-pagination a:focus-visible {
   outline: 2px solid #12e184;
   outline-offset: 3px;
 }
 
-.sanity-card-pagination button:active:not(:disabled) {
+.sanity-card-pagination a:active {
   transform: scale(0.96);
 }
 
-.sanity-card-pagination button:disabled {
-  cursor: not-allowed;
+.sanity-card-pagination-disabled {
   opacity: 0.45;
 }
 
@@ -622,6 +758,63 @@ html {
 .sanity-square-card:focus-visible {
   outline: 2px solid #12e184;
   outline-offset: 4px;
+}
+
+.sanity-detail-section {
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.94), rgba(243, 239, 230, 0.9)),
+    #f3efe6;
+  padding: clamp(2rem, 6vw, 5rem) max(1rem, env(safe-area-inset-right)) clamp(3rem, 7vw, 7rem) max(1rem, env(safe-area-inset-left));
+}
+
+.sanity-detail-shell {
+  display: grid;
+  width: min(100%, 82rem);
+  margin: 0 auto;
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.sanity-detail-shell:not(.sanity-detail-shell-single) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.sanity-detail-shell-single {
+  width: min(100%, 64rem);
+}
+
+.sanity-detail-main {
+  display: grid;
+  min-width: 0;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.sanity-detail-media {
+  position: relative;
+  min-height: clamp(18rem, 42vw, 35rem);
+  overflow: hidden;
+  border-block: 1px solid rgba(16, 37, 29, 0.12);
+  background: #07120d;
+}
+
+.sanity-detail-media > div,
+.sanity-detail-media > img {
+  min-height: inherit;
+}
+
+.sanity-detail-prose {
+  max-width: 48rem;
+}
+
+.sanity-detail-shell-single .sanity-detail-prose {
+  margin: 0 auto;
+}
+
+.sanity-detail-aside {
+  align-self: start;
+  border-top: 1px solid rgba(16, 37, 29, 0.16);
+  border-bottom: 1px solid rgba(16, 37, 29, 0.16);
+  background: rgba(255, 253, 248, 0.42);
+  padding: 1rem 0;
 }
 
 .section-rule {
@@ -3133,6 +3326,10 @@ html {
   text-transform: uppercase;
 }
 
+.mobile-flow-summary {
+  display: none;
+}
+
 .testimony-hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -5107,6 +5304,16 @@ html {
 }
 
 @media (min-width: 1024px) {
+  .sanity-detail-shell:not(.sanity-detail-shell-single) {
+    grid-template-columns: minmax(0, 0.68fr) minmax(18rem, 0.32fr);
+    align-items: start;
+  }
+
+  .sanity-detail-aside {
+    position: sticky;
+    top: 6rem;
+  }
+
   .sanity-square-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -5793,6 +6000,33 @@ html {
   }
 }
 
+@keyframes mobile-soft-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.7rem) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes mobile-gold-breathe {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(207, 180, 95, 0.3),
+      0 0 18px rgba(207, 180, 95, 0.24);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(245, 223, 160, 0.48),
+      0 0 30px rgba(207, 180, 95, 0.42);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -5805,10 +6039,22 @@ html {
   .hero-media-slow,
   .motion-rise,
   .home-reveal,
+  .mobile-focus-detail .testimony-hero-copy,
+  .mobile-focus-detail .ministry-statement-card,
+  .mobile-focus-detail .ministry-principle-card,
+  .mobile-focus-detail .ministry-community-cta-shell,
+  .prayer-watch-page .testimony-hero-copy,
+  .prayer-watch-page .prayer-army-arch-panel,
+  .prayer-watch-page .prayer-army-scripture-line,
+  .prayer-watch-page .prayer-watch-card,
+  .prayer-watch-page .ministry-community-cta-shell,
   .mobile-menu-panel-open,
   .mobile-menu-panel-open .mobile-menu-row,
   .mobile-menu-panel-open .mobile-menu-actions,
-  .mobile-glow-action::before {
+  .mobile-glow-action::before,
+  .prayer-watch-page .testimony-glow-cta,
+  .prayer-watch-page .ministry-community-action,
+  .mobile-focus-detail .ministry-community-action {
     animation: none;
   }
 
@@ -5832,6 +6078,9 @@ html {
   .mobile-menu-panel,
   .mobile-menu-row,
   .mobile-glow-action,
+  .sanity-card-pagination a,
+  .sanity-search-bar button,
+  .sanity-search-clear,
   .support-giving-card,
   .support-giving-action,
   .giving-embed-back,
@@ -6252,6 +6501,34 @@ html {
     gap: 0.35rem;
   }
 
+  .sanity-search-bar {
+    min-height: 2.9rem;
+    padding: 0.25rem 0.28rem 0.25rem 0.7rem;
+  }
+
+  .sanity-search-bar input {
+    font-size: 1rem;
+  }
+
+  .sanity-search-bar button {
+    min-width: 2.4rem;
+    min-height: 2.4rem;
+    padding: 0 0.7rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+  }
+
+  .sanity-search-clear {
+    min-width: 2.4rem;
+    min-height: 2.4rem;
+  }
+
+  .sanity-search-status {
+    padding: 0 0.45rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+
   .sanity-card-pagination,
   .testimony-pagination-bar,
   .testimony-mobile-controls {
@@ -6268,7 +6545,8 @@ html {
     letter-spacing: 0.08em;
   }
 
-  .sanity-card-pagination button,
+  .sanity-card-pagination a,
+  .sanity-card-pagination-disabled,
   .testimony-pagination-bar button,
   .testimony-mobile-controls button {
     width: 2.5rem;
@@ -6277,14 +6555,12 @@ html {
   }
 
   .sanity-square-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.25rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.35rem;
   }
 
   .sanity-square-card {
-    aspect-ratio: 16 / 10;
-    border-right: 0;
-    border-left: 0;
+    aspect-ratio: 4 / 5;
     box-shadow: none;
   }
 
@@ -6311,6 +6587,26 @@ html {
 
   .sanity-square-cover > div > img {
     max-height: 58%;
+  }
+
+  .sanity-detail-section {
+    padding: 1.5rem 0 2.75rem;
+  }
+
+  .sanity-detail-shell {
+    gap: 1rem;
+  }
+
+  .sanity-detail-media {
+    min-height: 16rem;
+    border-right: 0;
+    border-left: 0;
+  }
+
+  .sanity-detail-prose,
+  .sanity-detail-aside {
+    padding-right: 1rem;
+    padding-left: 1rem;
   }
 
   .prose-prayer {
@@ -6529,5 +6825,267 @@ html {
   .giving-success-shell > p:not(.giving-success-kicker) {
     font-size: 0.86rem;
     line-height: 1.6;
+  }
+}
+
+@media (max-width: 639px) {
+  .mobile-flow-summary {
+    display: block;
+    margin-top: 0.65rem;
+    color: rgba(255, 248, 232, 0.88);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.45;
+    text-wrap: balance;
+  }
+
+  .mobile-flow-long,
+  .prayer-watch-page .prayer-army-hero-long,
+  .prayer-watch-page .prayer-army-scripture-line span,
+  .mobile-focus-detail .ministry-statement-card-light p:not(:first-of-type),
+  .mobile-focus-detail .ministry-principle-card-light p:not(:first-of-type) {
+    display: none !important;
+  }
+
+  .prayer-watch-page .testimony-hero,
+  .mobile-focus-detail .testimony-hero {
+    background:
+      radial-gradient(18rem 14rem at 18% 8%, rgba(207, 180, 95, 0.24), transparent 68%),
+      linear-gradient(180deg, #07120d 0%, #0d3a27 58%, #030604 100%);
+  }
+
+  .prayer-watch-page .testimony-hero-copy,
+  .mobile-focus-detail .testimony-hero-copy {
+    animation: mobile-soft-rise 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .prayer-watch-page .testimony-hero h1,
+  .mobile-focus-detail .testimony-hero h1 {
+    max-width: 13ch;
+    font-size: 2rem;
+    line-height: 0.96;
+  }
+
+  .prayer-watch-page .testimony-hero-actions,
+  .mobile-focus-detail .testimony-hero-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .prayer-watch-page .testimony-glow-cta,
+  .prayer-watch-page .testimony-secondary-cta,
+  .mobile-focus-detail .testimony-secondary-cta,
+  .prayer-watch-page .ministry-community-action,
+  .mobile-focus-detail .ministry-community-action {
+    width: 100%;
+    min-height: 2.9rem;
+    justify-content: center;
+    border-radius: 999px;
+    color: #fff8e8;
+    text-shadow: 0 1px 12px rgba(3, 6, 4, 0.42);
+  }
+
+  .prayer-watch-page .testimony-glow-cta,
+  .prayer-watch-page .ministry-community-action,
+  .mobile-focus-detail .ministry-community-action {
+    border-color: rgba(245, 223, 160, 0.72);
+    background:
+      linear-gradient(135deg, rgba(109, 18, 55, 0.92), rgba(13, 58, 39, 0.96)),
+      #0d3a27;
+    animation: mobile-gold-breathe 3.8s ease-in-out infinite;
+  }
+
+  .prayer-watch-page .testimony-glow-cta:hover,
+  .prayer-watch-page .testimony-glow-cta:focus-visible,
+  .prayer-watch-page .ministry-community-action:hover,
+  .prayer-watch-page .ministry-community-action:focus-visible,
+  .mobile-focus-detail .ministry-community-action:hover,
+  .mobile-focus-detail .ministry-community-action:focus-visible {
+    background:
+      linear-gradient(135deg, rgba(125, 22, 65, 0.96), rgba(16, 76, 50, 0.98)),
+      #0d3a27;
+    color: #fff8e8;
+  }
+
+  .prayer-watch-page .testimony-glow-cta span,
+  .prayer-watch-page .testimony-glow-cta svg,
+  .prayer-watch-page .ministry-community-action span,
+  .prayer-watch-page .ministry-community-action svg,
+  .mobile-focus-detail .ministry-community-action span,
+  .mobile-focus-detail .ministry-community-action svg {
+    color: #fff8e8;
+  }
+
+  .prayer-watch-page .testimony-secondary-cta,
+  .mobile-focus-detail .testimony-secondary-cta {
+    border-color: rgba(255, 248, 232, 0.18);
+    background: rgba(255, 248, 232, 0.08);
+  }
+
+  .prayer-watch-page .prayer-army-remnant-section,
+  .mobile-focus-detail .ministry-detail-section,
+  .mobile-focus-detail .ministry-card-section,
+  .mobile-focus-detail .ministry-community-cta {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .prayer-watch-page .prayer-army-architecture,
+  .mobile-focus-detail .ministry-detail-section > div {
+    display: grid;
+    gap: 0.65rem;
+    padding: 0 0.65rem;
+  }
+
+  .prayer-watch-page .prayer-army-arch-panel,
+  .mobile-focus-detail .ministry-statement-card,
+  .mobile-focus-detail .ministry-principle-card {
+    border: 1px solid rgba(16, 37, 29, 0.1);
+    border-radius: 1.15rem !important;
+    box-shadow: 0 14px 34px rgba(14, 34, 25, 0.08);
+    animation: mobile-soft-rise 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .prayer-watch-page .prayer-army-arch-panel:nth-child(2),
+  .mobile-focus-detail .ministry-statement-card:nth-child(2),
+  .mobile-focus-detail .ministry-principle-card:nth-child(2) {
+    animation-delay: 80ms;
+  }
+
+  .mobile-focus-detail .ministry-statement-card-dark,
+  .mobile-focus-detail .ministry-principle-card-dark {
+    border-color: rgba(207, 180, 95, 0.2);
+    background:
+      radial-gradient(16rem 12rem at 12% 0%, rgba(207, 180, 95, 0.16), transparent 68%),
+      linear-gradient(145deg, #07120d 0%, #0d3a27 100%);
+    color: #fff8e8;
+    box-shadow:
+      0 16px 38px rgba(3, 6, 4, 0.18),
+      inset 0 1px 0 rgba(255, 248, 232, 0.08);
+  }
+
+  .mobile-focus-detail .ministry-statement-card-dark > p:first-of-type,
+  .mobile-focus-detail .ministry-principle-card-dark > p:first-of-type {
+    color: #f5dfa0;
+  }
+
+  .prayer-watch-page .prayer-army-arch-panel .ministry-card-icon,
+  .mobile-focus-detail .ministry-card-icon {
+    width: 2rem;
+    height: 2rem;
+    padding: 0.35rem;
+  }
+
+  .prayer-watch-page .prayer-army-arch-panel p:first-of-type,
+  .mobile-focus-detail .ministry-statement-card > p:first-of-type,
+  .mobile-focus-detail .ministry-principle-card > p:first-of-type {
+    margin-top: 0.65rem !important;
+    font-size: 0.55rem !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  .prayer-watch-page .prayer-army-arch-panel h2,
+  .mobile-focus-detail .ministry-statement-card h2,
+  .mobile-focus-detail .ministry-principle-card h2 {
+    margin-top: 0.45rem !important;
+    padding-right: 0;
+    font-size: 1.42rem !important;
+    line-height: 1.02 !important;
+    text-wrap: balance;
+  }
+
+  .prayer-watch-page .prayer-army-scripture-ribbon {
+    display: flex;
+    overflow-x: auto;
+    gap: 0.55rem;
+    border: 0;
+    padding: 0 0.65rem 0.3rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .prayer-watch-page .prayer-army-scripture-line {
+    min-width: 78%;
+    border: 1px solid rgba(16, 37, 29, 0.1);
+    border-radius: 1.15rem !important;
+    background: rgba(255, 253, 248, 0.9);
+    scroll-snap-align: start;
+    animation: mobile-soft-rise 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .prayer-watch-page .prayer-army-scripture-line blockquote {
+    font-size: 1.18rem;
+    line-height: 1.08;
+  }
+
+  .prayer-watch-page .testimony-ledger-section {
+    padding: 1.15rem 0;
+  }
+
+  .prayer-watch-page .testimony-section-head {
+    margin: 0 0.65rem;
+    padding-bottom: 0.8rem;
+  }
+
+  .prayer-watch-page .prayer-watch-grid {
+    display: grid;
+    gap: 0.65rem;
+    padding: 0 0.65rem;
+  }
+
+  .prayer-watch-page .prayer-watch-card {
+    border-radius: 1.15rem !important;
+    animation: mobile-soft-rise 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .mobile-focus-detail .ministry-detail-point {
+    min-height: 2.75rem;
+    border: 1px solid rgba(245, 223, 160, 0.18);
+    border-radius: 0.95rem;
+    background: rgba(255, 248, 232, 0.07);
+    color: #fff8e8;
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .mobile-focus-detail .ministry-community-cta-shell,
+  .prayer-watch-page .ministry-community-cta-shell {
+    display: grid;
+    gap: 0.75rem;
+    border-radius: 1.25rem !important;
+    margin: 0 0.65rem;
+    padding: 1rem !important;
+    animation: mobile-soft-rise 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .mobile-focus-detail .ministry-community-cta h2,
+  .prayer-watch-page .ministry-community-cta h2 {
+    font-size: 1.55rem;
+    line-height: 1;
+  }
+}
+
+@media (max-width: 639px) {
+  .mobile-focus-detail .mobile-focus-resonance {
+    border-color: rgba(207, 180, 95, 0.26) !important;
+    background:
+      radial-gradient(16rem 12rem at 12% 0%, rgba(207, 180, 95, 0.17), transparent 68%),
+      linear-gradient(145deg, #07120d 0%, #0d3a27 100%) !important;
+    color: #fff8e8 !important;
+    box-shadow:
+      0 16px 38px rgba(3, 6, 4, 0.2),
+      inset 0 1px 0 rgba(255, 248, 232, 0.08) !important;
+  }
+
+  .mobile-focus-detail .mobile-focus-resonance > p:first-of-type {
+    color: #f5dfa0 !important;
+  }
+
+  .mobile-focus-detail .mobile-focus-resonance .ministry-detail-point {
+    border-color: rgba(245, 223, 160, 0.22) !important;
+    background: rgba(255, 248, 232, 0.08) !important;
+    color: #fff8e8 !important;
   }
 }

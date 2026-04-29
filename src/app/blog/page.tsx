@@ -1,6 +1,12 @@
 import Image from "next/image";
 import { BookOpenText } from "@phosphor-icons/react/dist/ssr";
 import { SanityCardGrid, type SanityCardGridItem } from "@/components/SanityCardGrid";
+import {
+  buildSearchIndex,
+  filterSanityCards,
+  normalizeListSearchParams,
+  paginateSanityCards,
+} from "@/lib/sanity-browser";
 import { sanityFetch } from "@/sanity/client";
 import { postsQuery } from "@/sanity/queries";
 import type { Post } from "@/sanity/types";
@@ -13,6 +19,10 @@ export const metadata = {
 
 export const revalidate = 60;
 
+type BlogPageProps = {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+};
+
 function formatDate(value?: string) {
   if (!value) return "Ministry note";
   return new Intl.DateTimeFormat("en-US", {
@@ -22,7 +32,8 @@ function formatDate(value?: string) {
   }).format(new Date(value));
 }
 
-export default async function BlogPage() {
+export default async function BlogPage({ searchParams }: BlogPageProps) {
+  const { page, query } = normalizeListSearchParams(await searchParams);
   const posts = await sanityFetch<Post[]>(postsQuery, {}, []);
   const cards: SanityCardGridItem[] = posts.map((post) => ({
     id: post._id,
@@ -33,7 +44,16 @@ export default async function BlogPage() {
     meta: post.categories?.join(" / "),
     actionLabel: "Read Teaching",
     cover: post.mainImage,
+    searchText: buildSearchIndex([
+      "prayer teaching devotional blog ministry note",
+      post.title,
+      post.excerpt,
+      post.categories,
+      formatDate(post.publishedAt),
+    ]),
   }));
+  const filteredCards = filterSanityCards(cards, query);
+  const pagedCards = paginateSanityCards(filteredCards, page);
 
   return (
     <main className="testimony-page">
@@ -74,7 +94,22 @@ export default async function BlogPage() {
               </p>
             </div>
           ) : (
-            <SanityCardGrid items={cards} ariaLabel="blog posts" />
+            <SanityCardGrid
+              items={pagedCards.pageItems}
+              ariaLabel="blog posts"
+              search={{
+                basePath: "/blog",
+                label: "Search prayer teachings",
+                placeholder: "Search prayer teachings…",
+                query,
+                resultLabel: "teachings",
+                totalCount: filteredCards.length,
+              }}
+              pagination={{
+                page: pagedCards.page,
+                pageCount: pagedCards.pageCount,
+              }}
+            />
           )}
         </div>
       </section>

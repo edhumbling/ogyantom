@@ -62,10 +62,13 @@ export default function PrayerArmyPage() {
           <div className="testimony-hero-copy">
             <p className="testimony-kicker">Prayer Army</p>
             <h1>A disciplined army of prayer.</h1>
-            <p>
+            <p className="prayer-army-hero-long mobile-flow-long">
               A remnant of hundreds of prayer warriors covenanting together
               through WhatsApp, Telegram, Google Meet, and other online mediums
               for fervent intercession under watchful leadership.
+            </p>
+            <p className="mobile-flow-summary">
+              Twice-daily online watches for focused prayer, covering, and agreement.
             </p>
             <div className="testimony-hero-actions">
               <Link href="/prayer-request" className="testimony-glow-cta">
@@ -95,7 +98,7 @@ export default function PrayerArmyPage() {
             <h2 className="font-display mt-5 text-5xl font-light leading-none tracking-tighter sm:text-6xl">
               Hundreds covenanting together in prayer.
             </h2>
-            <p className="mt-6 text-lg leading-8">
+            <p className="mobile-flow-long mt-6 text-lg leading-8">
               Ogya Ntom Prayer Army is more than a meeting time. It is a
               covenant rhythm where hundreds of members gather through online
               channels to carry families, urgent needs, testimonies, nations,
@@ -114,7 +117,7 @@ export default function PrayerArmyPage() {
             <h2 className="font-display mt-5 text-4xl font-light leading-none tracking-tighter sm:text-5xl">
               The fire is carried with order, humility, and faith.
             </h2>
-            <p className="mt-6 text-lg leading-8 text-[#506157]">
+            <p className="mobile-flow-long mt-6 text-lg leading-8 text-[#506157]">
               This remnant is not built on performance. It is built on believers
               who return to the watch with faith when others grow tired, who
               pray with compassion when needs are heavy, and who believe that
@@ -142,7 +145,7 @@ export default function PrayerArmyPage() {
             </p>
             <h2>Morning and evening coverage.</h2>
           </div>
-          <p>
+          <p className="mobile-flow-long">
             The army rhythm gives people a clear time to gather, a shared
             language for agreement, and a steady covering for requests carried
             by the ministry.
@@ -175,7 +178,7 @@ export default function PrayerArmyPage() {
           <div>
             <p className="ministry-community-kicker">Prayer Covering</p>
             <h2 className="font-display">Bring the matter to the army.</h2>
-            <p>
+            <p className="mobile-flow-long">
               Prayer requests now have a dedicated route so people can submit
               needs clearly without mixing them into general contact.
             </p>
