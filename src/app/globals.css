@@ -4536,6 +4536,62 @@ html {
   color: #07120d;
 }
 
+.support-priority-giving {
+  padding-top: 2rem;
+}
+
+.support-paystack-shell-priority {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - 2.2rem) 0, 100% 2.2rem, 100% 100%, 1.4rem 100%, 0 calc(100% - 1.4rem));
+}
+
+.support-paystack-shell-priority::before {
+  position: absolute;
+  inset: 0.85rem 0.85rem auto auto;
+  width: min(16rem, 42%);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245, 223, 160, 0.74));
+  content: "";
+  pointer-events: none;
+}
+
+.support-giving-card-priority {
+  min-height: 9.25rem;
+  border-color: rgba(245, 223, 160, 0.32);
+  background:
+    linear-gradient(120deg, rgba(255, 248, 232, 0.13), rgba(255, 248, 232, 0.045) 48%, rgba(109, 18, 55, 0.1)),
+    rgba(255, 248, 232, 0.035);
+  clip-path: polygon(0 0, calc(100% - 1.25rem) 0, 100% 1.25rem, 100% 100%, 0.85rem 100%, 0 calc(100% - 0.85rem));
+}
+
+.support-priority-copy {
+  align-self: center;
+}
+
+.support-options-head {
+  display: grid;
+  gap: 0.75rem;
+  border-top: 1px solid rgba(16, 37, 29, 0.12);
+  padding-top: 1.25rem;
+}
+
+.support-options-head h2 {
+  max-width: 13ch;
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 0.94;
+}
+
+.support-options-head > p:not(.testimony-kicker) {
+  max-width: 48rem;
+  color: #506157;
+  line-height: 1.7;
+}
+
 .giving-embed-page,
 .giving-success-page {
   display: grid;
@@ -5304,6 +5360,10 @@ html {
 }
 
 @media (min-width: 1024px) {
+  .support-paystack-shell-priority {
+    grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.72fr);
+  }
+
   .sanity-detail-shell:not(.sanity-detail-shell-single) {
     grid-template-columns: minmax(0, 0.68fr) minmax(18rem, 0.32fr);
     align-items: start;
@@ -6767,6 +6827,55 @@ html {
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 @media (max-width: 639px) {
+  .support-priority-giving {
+    padding-top: 0.9rem !important;
+    padding-bottom: 1.15rem !important;
+  }
+
+  .support-paystack-shell-priority {
+    gap: 0.85rem;
+    border-right: 1px solid rgba(207, 180, 95, 0.22);
+    border-left: 1px solid rgba(207, 180, 95, 0.22);
+    padding: 0.85rem !important;
+    clip-path: polygon(0 0, calc(100% - 1.35rem) 0, 100% 1.35rem, 100% 100%, 0.95rem 100%, 0 calc(100% - 0.95rem)) !important;
+    box-shadow:
+      0 16px 42px rgba(3, 6, 4, 0.18),
+      inset 0 1px 0 rgba(255, 248, 232, 0.08);
+  }
+
+  .support-giving-card-priority {
+    min-height: 8.4rem;
+    border-radius: 0 !important;
+    padding: 0.9rem !important;
+    box-shadow:
+      0 0 0 1px rgba(207, 180, 95, 0.08),
+      0 0 28px rgba(207, 180, 95, 0.12);
+  }
+
+  .support-priority-copy {
+    padding-top: 0.25rem;
+  }
+
+  .support-priority-copy h2 {
+    max-width: 10ch;
+    font-size: 1.9rem;
+    line-height: 0.96;
+  }
+
+  .support-options-section {
+    padding-top: 0.5rem !important;
+  }
+
+  .support-options-head {
+    padding-right: max(0.72rem, env(safe-area-inset-right));
+    padding-left: max(0.72rem, env(safe-area-inset-left));
+  }
+
+  .support-options-head h2 {
+    max-width: 11ch;
+    font-size: 1.85rem;
+  }
+
   .support-giving-card {
     min-height: auto;
     padding: 0.8rem;

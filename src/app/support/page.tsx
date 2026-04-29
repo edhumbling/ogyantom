@@ -55,9 +55,8 @@ export default function SupportPage() {
             <p className="testimony-kicker">Give / Support</p>
             <h1>Stand behind the work of prayer.</h1>
             <p>
-              Support the ministry through cash, digital giving, or gifts in
-              kind so the prayer army can keep serving with structure,
-              compassion, and consistency.
+              Choose a giving rhythm first, then see the ways your support
+              strengthens prayer, outreach, care, and ministry operations.
             </p>
             <div className="testimony-hero-actions">
               <a href="#support-options" className="testimony-glow-cta">
@@ -77,35 +76,9 @@ export default function SupportPage() {
 
       <section
         id="support-options"
-        className="support-options-section px-5 py-16 sm:px-8 lg:px-10"
+        className="support-paystack-section support-priority-giving px-5 py-16 sm:px-8 lg:px-10"
       >
-        <div className="support-architecture-list mx-auto max-w-7xl">
-          {supportWays.map((way) => {
-            const Icon = way.icon;
-            return (
-              <article key={way.title} className="support-arch-row">
-                <div className="ministry-card-icon" aria-hidden="true">
-                  <Icon size={32} weight="bold" />
-                </div>
-                <h2>{way.title}</h2>
-                <p>{way.text}</p>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="support-paystack-section px-5 pb-20 sm:px-8 lg:px-10">
-        <div className="support-paystack-shell mx-auto max-w-7xl">
-          <div>
-            <p className="ministry-community-kicker">Paystack Giving</p>
-            <h2 className="font-display">Choose your giving rhythm.</h2>
-            <p>
-              Support the prayer army through a single gift or recurring
-              support. Each option opens a focused Paystack giving page.
-            </p>
-          </div>
-
+        <div className="support-paystack-shell support-paystack-shell-priority mx-auto max-w-7xl">
           <div
             className="support-giving-options"
             aria-label="Paystack giving options"
@@ -114,7 +87,7 @@ export default function SupportPage() {
               <Link
                 key={option.kind}
                 href={option.href}
-                className="support-giving-card"
+                className="support-giving-card support-giving-card-priority"
               >
                 <span className="support-giving-icon" aria-hidden="true">
                   {option.kind === "one-time" ? (
@@ -134,6 +107,43 @@ export default function SupportPage() {
               </Link>
             ))}
           </div>
+
+          <div className="support-priority-copy">
+            <p className="ministry-community-kicker">Paystack Giving</p>
+            <h2 className="font-display">Choose your giving rhythm.</h2>
+            <p>
+              Members and partners can support according to capacity: a single
+              gift for immediate ministry needs, or recurring support that helps
+              the prayer army serve consistently month after month.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="support-options-section px-5 pb-16 sm:px-8 lg:px-10">
+        <div className="support-options-head mx-auto max-w-7xl">
+          <p className="testimony-kicker testimony-kicker-dark">Ways Support Helps</p>
+          <h2>Give in the way that matches your burden.</h2>
+          <p>
+            Every gift is received as partnership in the work of prayer: online
+            gatherings, outreach, family care, and the practical structure that
+            keeps the ministry moving.
+          </p>
+        </div>
+
+        <div className="support-architecture-list mx-auto mt-5 max-w-7xl">
+          {supportWays.map((way) => {
+            const Icon = way.icon;
+            return (
+              <article key={way.title} className="support-arch-row">
+                <div className="ministry-card-icon" aria-hidden="true">
+                  <Icon size={32} weight="bold" />
+                </div>
+                <h2>{way.title}</h2>
+                <p>{way.text}</p>
+              </article>
+            );
+          })}
         </div>
       </section>
 
