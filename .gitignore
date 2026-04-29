@@ -31,6 +31,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 .logs/
+.next-dev-*.log
+.next-dev-*.err.log
+.playwright-mcp/
 build-full.log
 build-output.txt
 

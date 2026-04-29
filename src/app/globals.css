@@ -781,8 +781,8 @@ html {
 
 .mobile-menu-trigger {
   display: flex;
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 2.75rem;
+  width: 2.75rem;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
@@ -5555,6 +5555,626 @@ html {
   .ministry-community-action:hover .ministry-play-glow::before,
   .ministry-community-action:focus-visible .ministry-play-glow::before {
     animation: none;
+  }
+}
+
+:where(a, button, input, textarea, select, summary) {
+  touch-action: manipulation;
+}
+
+:where(a, button, input, textarea, select, summary):focus-visible {
+  outline: 2px solid #cfb45f;
+  outline-offset: 3px;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: 5rem;
+}
+
+@media (max-width: 639px) {
+  body {
+    font-size: 0.86rem;
+    line-height: 1.48;
+  }
+
+  #main-content {
+    overflow-x: hidden;
+  }
+
+  #main-content :where(.mx-auto) {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  #main-content :where(
+    .max-w-7xl,
+    .max-w-6xl,
+    .max-w-4xl,
+    .max-w-3xl,
+    .max-w-2xl,
+    .max-w-xl
+  ) {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  #main-content :where([class*="px-5"], [class*="px-8"], [class*="px-10"]) {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  #main-content :where(.p-12, .p-10, .p-8, .p-7, .p-6) {
+    padding: 0.75rem !important;
+  }
+
+  #main-content :where(.py-20, .py-16, .py-14) {
+    padding-top: 1.75rem !important;
+    padding-bottom: 1.75rem !important;
+  }
+
+  #main-content :where(.pt-36, .pt-20, .pt-16, .pt-12) {
+    padding-top: 1rem !important;
+  }
+
+  #main-content :where(.pb-32, .pb-20) {
+    padding-bottom: 1.75rem !important;
+  }
+
+  #main-content :where(.gap-12, .gap-10, .gap-8, .gap-6, .gap-5, .gap-4) {
+    gap: 0.75rem !important;
+  }
+
+  #main-content :where(.mt-10, .mt-8, .mt-7, .mt-6, .mt-5) {
+    margin-top: 0.75rem !important;
+  }
+
+  #main-content :where(.mb-10, .mb-8) {
+    margin-bottom: 0.75rem !important;
+  }
+
+  #main-content :where(.text-6xl, .text-5xl) {
+    font-size: 1.35rem !important;
+    line-height: 1.02 !important;
+  }
+
+  #main-content :where(.text-4xl, .text-3xl) {
+    font-size: 1.12rem !important;
+    line-height: 1.08 !important;
+  }
+
+  #main-content :where(.text-xl, .text-lg) {
+    font-size: 0.86rem !important;
+    line-height: 1.5 !important;
+  }
+
+  #main-content :where(.text-sm) {
+    font-size: 0.66rem !important;
+  }
+
+  .mobile-header-bar {
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+  }
+
+  .mobile-menu-trigger {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+  }
+
+  .header-rail {
+    gap: 0.35rem !important;
+    padding-right: max(0.3rem, env(safe-area-inset-right)) !important;
+    padding-left: max(0.3rem, env(safe-area-inset-left)) !important;
+  }
+
+  .mobile-menu-row {
+    min-height: 2.6rem;
+    padding: 0.6rem 0.2rem;
+    font-size: 0.75rem;
+    line-height: 1.15;
+  }
+
+  .mobile-glow-action {
+    min-height: 2.6rem;
+    padding: 0 0.6rem;
+    border-radius: 999px;
+    font-size: 0.6rem;
+    letter-spacing: 0.04em;
+  }
+
+  .home-hero,
+  .prayer-command {
+    min-height: auto;
+  }
+
+  .home-hero-grid,
+  .prayer-command-grid {
+    width: 100%;
+    max-width: 100%;
+    min-height: auto;
+    padding: 4.15rem max(0.55rem, env(safe-area-inset-right)) 1rem max(0.55rem, env(safe-area-inset-left));
+  }
+
+  .home-hero-copy,
+  .prayer-command-copy,
+  .testimony-hero-copy {
+    max-width: 100%;
+  }
+
+  .home-kicker,
+  .testimony-kicker,
+  .prayer-command-kicker,
+  .prayer-watch-intro p,
+  .prayer-form-head span,
+  .ministry-community-kicker {
+    min-height: 1.45rem;
+    padding: 0 0.42rem;
+    font-size: 0.52rem;
+    letter-spacing: 0.12em;
+    line-height: 1.1;
+  }
+
+  .home-hero-copy h1,
+  .prayer-command-copy h1 {
+    max-width: 12ch;
+    margin-top: 0.55rem;
+    font-size: 1.85rem;
+    line-height: 0.95;
+  }
+
+  .home-hero-copy > p,
+  .prayer-command-copy > p:not(.prayer-command-kicker),
+  .testimony-hero-copy > p:not(.testimony-kicker) {
+    margin-top: 0.55rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .home-hero-actions,
+  .testimony-hero-actions,
+  .prayer-command-actions,
+  .home-cta-actions {
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+  }
+
+  .home-primary-action,
+  .home-secondary-action,
+  .testimony-glow-cta,
+  .testimony-secondary-cta,
+  .testimony-submit-button,
+  .prayer-command-primary,
+  .prayer-command-secondary,
+  .site-button-primary,
+  .site-button-secondary,
+  .support-contact-link,
+  .footer-support-button,
+  .ministry-community-action {
+    min-height: 2.6rem;
+    padding: 0 0.68rem;
+    border-radius: 999px;
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+  }
+
+  .home-section,
+  .home-cta-section,
+  .testimony-ledger-section,
+  .testimony-submit-section,
+  .ministry-arch-section,
+  .ministry-card-section,
+  .ministry-detail-section,
+  .ministry-community-cta,
+  .prayer-army-remnant-section,
+  .support-options-section,
+  .support-paystack-section,
+  .support-social-section,
+  .prayer-watch-strip,
+  .prayer-routing {
+    width: 100%;
+    max-width: 100%;
+    padding: 1.5rem 0;
+  }
+
+  .home-section:not(.home-watch-band) {
+    background: #f4f1eb;
+    color: #07120d;
+  }
+
+  .home-section-grid,
+  .home-section-shell,
+  .home-split-grid,
+  .home-declaration-shell,
+  .home-cta-shell,
+  .testimony-submit-shell,
+  .ministry-watchman-arch,
+  .ministry-manifesto-arch,
+  .ministry-pillar-rail,
+  .ministry-value-ribbon,
+  .ministry-community-cta-shell,
+  .prayer-army-architecture,
+  .prayer-army-scripture-ribbon,
+  .support-architecture-list,
+  .support-paystack-shell,
+  .support-social-rail,
+  .contact-architecture-panel,
+  .platform-architecture-band,
+  .glass-panel,
+  .glass-panel-dark {
+    width: 100%;
+    max-width: 100%;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0 !important;
+    clip-path: none !important;
+    box-shadow: none;
+  }
+
+  .home-section-grid,
+  .home-section-shell,
+  .home-declaration-shell,
+  .testimony-section-head {
+    padding-right: max(0.55rem, env(safe-area-inset-right));
+    padding-left: max(0.55rem, env(safe-area-inset-left));
+  }
+
+  .home-section-title,
+  .testimony-section-head h2,
+  .testimony-submit-copy h2,
+  .prayer-watch-intro h2,
+  .support-paystack-shell h2,
+  .ministry-community-cta h2,
+  .ministry-section-head h2 {
+    margin-top: 0.45rem;
+    font-size: 1.3rem;
+    line-height: 1.04;
+  }
+
+  .home-vision-card h2,
+  .home-mission-card h3,
+  .ministry-watchman-copy h2,
+  .ministry-statement-card h2,
+  .ministry-principle-card h2,
+  .prayer-army-arch-panel h2,
+  .prayer-watch-card h3,
+  .prayer-routing-item h2 {
+    font-size: 1.24rem;
+    line-height: 1.04;
+  }
+
+  .testimony-hero-inner {
+    width: 100%;
+    min-height: auto;
+    padding: 4.25rem max(0.55rem, env(safe-area-inset-right)) 1rem max(0.55rem, env(safe-area-inset-left));
+  }
+
+  .testimony-hero h1 {
+    max-width: 18ch;
+    margin-top: 0.55rem;
+    font-size: 1.42rem;
+    line-height: 1.02;
+  }
+
+  .testimony-hero-meta {
+    font-size: 0.58rem !important;
+    letter-spacing: 0.1em;
+  }
+
+  .home-card-rail,
+  .home-platform-rail,
+  .home-facet-rail,
+  .home-values-rail {
+    grid-auto-columns: minmax(10.5rem, 68%);
+    gap: 0.35rem;
+    scroll-padding-inline: 0;
+    padding: 0.15rem 0 0.45rem;
+  }
+
+  .auto-scroll-arrow {
+    display: none;
+  }
+
+  .home-platform-card,
+  .home-facet-card,
+  .home-value-card,
+  .home-watch-card,
+  .testimony-story-card,
+  .testimony-feature,
+  .prayer-watch-card,
+  .support-arch-row,
+  .contact-arch-line,
+  .platform-arch-link,
+  .prayer-army-scripture-line,
+  .prayer-army-arch-panel,
+  .ministry-watchman-copy,
+  .ministry-statement-card,
+  .ministry-principle-card,
+  .ministry-value-card,
+  .ministry-value-line,
+  .support-paystack-embed {
+    min-height: auto;
+    border-radius: 0 !important;
+    padding: 0.72rem !important;
+  }
+
+  .home-platform-card h3,
+  .home-facet-card h3,
+  .home-value-card h3,
+  .testimony-story-card h3,
+  .testimony-feature h3,
+  .support-arch-row h2,
+  .support-social-rail strong,
+  .contact-arch-line strong,
+  .platform-arch-link strong {
+    font-size: 1rem;
+    line-height: 1.08;
+  }
+
+  .home-platform-card p,
+  .home-facet-card p,
+  .home-value-card p,
+  .home-watch-card div:last-child p,
+  .testimony-story-card > p,
+  .testimony-feature-excerpt,
+  .testimony-section-head > p,
+  .testimony-submit-copy > p:not(.testimony-kicker),
+  .prayer-army-arch-panel p,
+  .prayer-watch-card span,
+  .support-arch-row p,
+  .support-paystack-shell p:not(.ministry-community-kicker),
+  .support-paystack-embed span,
+  .contact-arch-line span,
+  .platform-arch-link span,
+  .ministry-watchman-copy p:not(:first-child),
+  .ministry-principle-card p,
+  .ministry-statement-card p,
+  .ministry-value-card p,
+  .ministry-community-cta p {
+    margin-top: 0.45rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .home-platform-card img,
+  .platform-arch-link > img {
+    width: 2rem !important;
+    height: 2rem !important;
+  }
+
+  .home-facet-card > div,
+  .ministry-card-icon,
+  .contact-arch-line > svg,
+  .platform-arch-link > img {
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0.42rem;
+  }
+
+  .home-watch-list,
+  .prayer-watch-grid,
+  .testimony-card-grid,
+  .testimony-browser,
+  .testimony-browser-mobile {
+    gap: 0.35rem;
+  }
+
+  .sanity-card-browser {
+    gap: 0.35rem;
+  }
+
+  .sanity-card-pagination,
+  .testimony-pagination-bar,
+  .testimony-mobile-controls {
+    min-height: 2.75rem;
+    border-right: 0;
+    border-left: 0;
+    padding: 0.25rem 0.45rem;
+  }
+
+  .sanity-card-pagination span,
+  .testimony-pagination-bar span,
+  .testimony-mobile-controls span {
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+
+  .sanity-card-pagination button,
+  .testimony-pagination-bar button,
+  .testimony-mobile-controls button {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+  }
+
+  .sanity-square-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
+  }
+
+  .sanity-square-card {
+    aspect-ratio: 16 / 10;
+    border-right: 0;
+    border-left: 0;
+    box-shadow: none;
+  }
+
+  .sanity-square-content {
+    gap: 0.2rem;
+    padding: 0.62rem;
+  }
+
+  .sanity-square-content p {
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+  }
+
+  .sanity-square-content h2 {
+    font-size: 0.98rem;
+    line-height: 1.04;
+    -webkit-line-clamp: 2;
+  }
+
+  .sanity-square-content strong {
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+  }
+
+  .sanity-square-cover > div > img {
+    max-height: 58%;
+  }
+
+  .prose-prayer {
+    font-size: 0.86rem;
+    line-height: 1.62;
+  }
+
+  .prose-prayer > * + * {
+    margin-top: 0.8rem;
+  }
+
+  .prose-prayer h1,
+  .prose-prayer h2 {
+    margin-top: 1.15rem;
+    font-size: 1.35rem;
+    line-height: 1.08;
+  }
+
+  .prose-prayer h3 {
+    margin-top: 1rem;
+    font-size: 1.05rem;
+  }
+
+  .prose-prayer h4 {
+    margin-top: 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .prose-prayer blockquote {
+    padding-left: 0.7rem;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .rich-media {
+    border-right: 0;
+    border-left: 0;
+    padding: 0.35rem;
+  }
+
+  .rich-media figcaption {
+    margin-top: 0.35rem;
+    font-size: 0.74rem;
+  }
+
+  .testimony-field input,
+  .testimony-field textarea,
+  .testimony-field select {
+    min-height: 2.75rem;
+    padding: 0.58rem 0.65rem;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .testimony-field textarea {
+    min-height: 7rem;
+  }
+
+  .testimony-field span,
+  .testimony-pill,
+  .testimony-ledger-tag,
+  .home-watch-card p:first-of-type,
+  .prayer-watch-card p,
+  .prayer-army-scripture-line p,
+  .support-paystack-embed p,
+  .ministry-card-index,
+  .ministry-value-count {
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+
+  .prayer-confidential-check {
+    gap: 0.5rem;
+    padding: 0.65rem;
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
+  .prayer-confidential-check input {
+    min-width: 1.25rem;
+    min-height: 1.25rem;
+  }
+
+  .army-marquee-text {
+    font-size: 2.5rem;
+  }
+
+  .army-marquee-logo {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  footer :where(.mx-auto) {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  footer :where(.max-w-7xl, .max-w-xl) {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  footer :where([class*="px-5"], [class*="px-8"], [class*="px-10"]) {
+    padding-right: max(0.55rem, env(safe-area-inset-right)) !important;
+    padding-left: max(0.55rem, env(safe-area-inset-left)) !important;
+  }
+
+  footer :where(.py-14, .py-7, .py-6) {
+    padding-top: 1.15rem !important;
+    padding-bottom: 1.15rem !important;
+  }
+
+  footer :where(.gap-12, .gap-10, .gap-8) {
+    gap: 0.85rem !important;
+  }
+
+  footer p,
+  footer a,
+  footer span {
+    font-size: 0.74rem;
+    line-height: 1.45;
+  }
+
+  footer h2 {
+    font-size: 0.68rem;
+  }
+
+  .footer-contact-mesh {
+    gap: 0.45rem;
+    margin-top: 0.9rem;
+  }
+
+  .footer-contact-primary,
+  .footer-contact-mini a,
+  .footer-sitemap-link {
+    min-height: 2.75rem;
+    padding: 0 0.55rem;
+  }
+
+  .footer-contact-mini {
+    gap: 0.3rem;
+  }
+
+  .footer-support-arc {
+    gap: 0.6rem;
+    text-align: left;
+    justify-items: start;
+  }
+
+  .footer-support-button {
+    width: auto;
+    min-width: min(14rem, 100%);
   }
 }
 
