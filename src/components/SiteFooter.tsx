@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -9,7 +8,7 @@ import {
   TiktokLogo,
   WhatsappLogo,
 } from "@phosphor-icons/react/dist/ssr";
-import { contactDetails, navItems, onlinePlatforms } from "@/lib/site";
+import { contactDetails, navItems } from "@/lib/site";
 import { ArmyMarquee } from "./ArmyMarquee";
 import { LogoMark } from "./LogoMark";
 
@@ -90,21 +89,6 @@ export function SiteFooter() {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-5 py-7 text-center sm:px-8 lg:px-10">
-        {onlinePlatforms.map((platform) => (
-          <a key={platform.name} href={platform.href} className="inline-flex min-h-12 items-center gap-3 text-[0.95rem] text-[#d2dbd6] transition duration-[150ms] ease-out hover:text-[var(--gold)]">
-            <Image
-              src={platform.logo}
-              alt={`${platform.name} logo`}
-              width={24}
-              height={24}
-              className="h-6 w-6"
-            />
-            {platform.name}
-          </a>
-        ))}
       </div>
 
       <ArmyMarquee />

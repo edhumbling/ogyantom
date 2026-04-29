@@ -4,7 +4,7 @@ const items = Array.from({ length: 10 }, (_, index) => index);
 
 export function ArmyMarquee() {
   return (
-    <div className="army-marquee overflow-hidden whitespace-nowrap py-5 text-white">
+    <div className="army-marquee overflow-hidden whitespace-nowrap text-white">
       <div className="army-marquee-track flex items-center">
         {[...items, ...items].map((_, index) => (
           <div key={index} className="army-marquee-item">

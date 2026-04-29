@@ -120,11 +120,7 @@ html {
 
 .army-marquee {
   overflow: hidden;
-  border-top: 1px solid rgba(207, 180, 95, 0.12);
-  border-bottom: 1px solid rgba(207, 180, 95, 0.12);
-  background:
-    radial-gradient(38rem 16rem at 20% 50%, rgba(207, 180, 95, 0.1), transparent 65%),
-    linear-gradient(90deg, rgba(3, 6, 4, 0.94), rgba(13, 58, 39, 0.42), rgba(3, 6, 4, 0.94));
+  background: transparent;
 }
 
 .army-marquee-track {
@@ -148,10 +144,10 @@ html {
 
 .army-marquee-text {
   font-family: var(--font-great-vibes), "Times New Roman", serif;
-  font-size: clamp(4.4rem, 18vw, 9.8rem);
+  font-size: clamp(7rem, 24vw, 18rem);
   font-weight: 400;
   letter-spacing: 0;
-  line-height: 0.9;
+  line-height: 0.82;
   color: #cfb45f;
   text-shadow:
     0 0 18px rgba(207, 180, 95, 0.22),
@@ -159,8 +155,8 @@ html {
 }
 
 .army-marquee-logo {
-  width: clamp(3rem, 8vw, 5.5rem);
-  height: clamp(3rem, 8vw, 5.5rem);
+  width: clamp(4.5rem, 11vw, 9rem);
+  height: clamp(4.5rem, 11vw, 9rem);
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.28));
 }
 
@@ -4874,26 +4870,27 @@ html {
   width: auto;
   min-width: min(18rem, 100%);
   min-height: 3.1rem;
-  border-color: rgba(52, 245, 164, 0.7);
-  background: #12e184;
-  color: #02120b;
+  border-color: rgba(223, 198, 110, 0.86);
+  background: #cfb45f;
+  color: #07120d;
   box-shadow:
-    0 0 0 1px rgba(52, 245, 164, 0.22),
-    0 0 22px rgba(18, 225, 132, 0.34),
-    0 12px 34px rgba(0, 255, 153, 0.12);
+    0 0 0 1px rgba(255, 248, 232, 0.16),
+    0 0 24px rgba(207, 180, 95, 0.44),
+    0 14px 38px rgba(223, 198, 110, 0.18);
 }
 
 .footer-support-button:hover,
 .footer-support-button:focus-visible {
-  background: #34f5a4;
+  border-color: #f5dfa0;
+  background: #dfc66e;
   box-shadow:
-    0 0 0 4px rgba(52, 245, 164, 0.14),
-    0 0 34px rgba(18, 225, 132, 0.46),
-    0 16px 42px rgba(0, 255, 153, 0.16);
+    0 0 0 4px rgba(207, 180, 95, 0.18),
+    0 0 36px rgba(223, 198, 110, 0.58),
+    0 18px 48px rgba(223, 198, 110, 0.22);
 }
 
 .footer-support-button:focus-visible {
-  outline: 2px solid #baffdf;
+  outline: 2px solid #fff8e8;
   outline-offset: 4px;
 }
 
@@ -6398,12 +6395,13 @@ html {
   }
 
   .army-marquee-text {
-    font-size: 2.5rem;
+    font-size: 4.5rem;
+    line-height: 0.86;
   }
 
   .army-marquee-logo {
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 3.5rem;
+    height: 3.5rem;
   }
 
   footer :where(.mx-auto) {
@@ -6459,12 +6457,12 @@ html {
 
   .footer-support-arc {
     gap: 0.6rem;
-    text-align: left;
-    justify-items: start;
+    text-align: center;
+    justify-items: center;
   }
 
   .footer-support-button {
-    width: auto;
+    width: min(100%, 16rem);
     min-width: min(14rem, 100%);
   }
 }
