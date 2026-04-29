@@ -69,7 +69,7 @@ export default async function TestimoniesPage() {
     })),
   ];
   return (
-    <main className="testimony-page">
+    <main className="testimony-page testimony-index-page">
       <section className="testimony-hero">
         <div className="testimony-hero-media">
           <Image

@@ -7199,6 +7199,66 @@ html {
   }
 }
 
+.home-hero-portrait {
+  opacity: 0.84;
+}
+
+.home-hero-portrait::before {
+  background:
+    linear-gradient(90deg, rgba(3, 6, 4, 0.88) 0%, rgba(3, 6, 4, 0.58) 42%, rgba(3, 6, 4, 0.12) 100%),
+    linear-gradient(180deg, rgba(3, 6, 4, 0.1), rgba(3, 6, 4, 0.68));
+}
+
+.home-hero-portrait::after {
+  height: 22%;
+  background: linear-gradient(180deg, transparent, rgba(3, 6, 4, 0.72));
+}
+
+.home-hero-image {
+  filter: saturate(1.04) contrast(1.08) drop-shadow(0 28px 42px rgba(0, 0, 0, 0.34));
+}
+
+.ministry-page .testimony-hero,
+.support-page .testimony-hero,
+.testimony-index-page .testimony-hero {
+  isolation: isolate;
+  min-height: clamp(28rem, 58svh, 42rem);
+  background:
+    radial-gradient(34rem 26rem at 80% 8%, rgba(109, 18, 55, 0.38), transparent 64%),
+    radial-gradient(30rem 22rem at 4% 18%, rgba(207, 180, 95, 0.2), transparent 68%),
+    linear-gradient(145deg, #030604 0%, #07120d 54%, #160711 100%);
+}
+
+.ministry-page .testimony-hero-copy,
+.support-page .testimony-hero-copy,
+.testimony-index-page .testimony-hero-copy {
+  position: relative;
+  border: 1px solid rgba(255, 248, 232, 0.12);
+  background:
+    linear-gradient(120deg, rgba(255, 248, 232, 0.12), rgba(255, 248, 232, 0.035) 46%, rgba(7, 18, 13, 0.16)),
+    rgba(3, 6, 4, 0.2);
+  clip-path: polygon(0 0, calc(100% - 1.6rem) 0, 100% 1.6rem, 100% 100%, 1.15rem 100%, 0 calc(100% - 1.15rem));
+  padding: 1.25rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 22px 58px rgba(3, 6, 4, 0.22);
+}
+
+.ministry-page :where(.ministry-watchman-arch, .ministry-manifesto-arch, .ministry-pillar-rail, .ministry-value-ribbon, .ministry-community-cta-shell),
+.support-page :where(.support-paystack-shell, .support-architecture-list, .support-social-rail),
+.testimony-index-page :where(.testimony-submit-shell, .testimony-pagination-bar, .testimony-card-grid) {
+  border-radius: 0 !important;
+  clip-path: polygon(0 0, calc(100% - 2rem) 0, 100% 2rem, 100% 100%, 1.35rem 100%, 0 calc(100% - 1.35rem));
+}
+
+.ministry-page :where(.ministry-media-card, .ministry-statement-card, .ministry-principle-card, .ministry-value-card),
+.support-page :where(.support-giving-card, .support-arch-row, .support-social-rail a),
+.testimony-index-page :where(.testimony-story-card, .testimony-submit-shell, .testimony-form-panel),
+.giving-embed-frame,
+.giving-success-shell {
+  border-radius: 0 !important;
+  clip-path: polygon(0 0, calc(100% - 1.35rem) 0, 100% 1.35rem, 100% 100%, 0.95rem 100%, 0 calc(100% - 0.95rem));
+}
+
 @keyframes mobile-glass-cut-enter {
   from {
     opacity: 0;
@@ -7212,6 +7272,58 @@ html {
 }
 
 @media (max-width: 639px) {
+  .home-hero-portrait {
+    opacity: 0.94 !important;
+  }
+
+  .home-hero-portrait::before {
+    background:
+      linear-gradient(90deg, rgba(3, 6, 4, 0.78) 0%, rgba(3, 6, 4, 0.46) 42%, rgba(3, 6, 4, 0.08) 100%),
+      linear-gradient(180deg, rgba(3, 6, 4, 0.08), rgba(3, 6, 4, 0.64));
+  }
+
+  .home-hero-image {
+    object-position: 58% top !important;
+  }
+
+  .ministry-page .testimony-hero,
+  .support-page .testimony-hero,
+  .testimony-index-page .testimony-hero {
+    min-height: 100svh !important;
+  }
+
+  .ministry-page .testimony-hero-inner,
+  .support-page .testimony-hero-inner,
+  .testimony-index-page .testimony-hero-inner {
+    min-height: 100svh !important;
+    align-items: end;
+    padding-top: max(4.35rem, calc(3.75rem + env(safe-area-inset-top))) !important;
+    padding-bottom: max(1.05rem, env(safe-area-inset-bottom)) !important;
+  }
+
+  .ministry-page .testimony-hero-copy,
+  .support-page .testimony-hero-copy,
+  .testimony-index-page .testimony-hero-copy {
+    padding: 0.85rem 0.75rem 0.95rem;
+    animation: mobile-glass-cut-enter 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .ministry-page .testimony-hero h1,
+  .support-page .testimony-hero h1,
+  .testimony-index-page .testimony-hero h1 {
+    max-width: 11ch;
+    font-size: clamp(2.05rem, 10vw, 3.1rem) !important;
+    line-height: 0.9 !important;
+  }
+
+  .ministry-page .testimony-hero-actions,
+  .support-page .testimony-hero-actions,
+  .testimony-index-page .testimony-hero-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+
   .mobile-menu-backdrop {
     background:
       radial-gradient(28rem 18rem at 0% 0%, rgba(207, 180, 95, 0.16), transparent 64%),
@@ -7422,7 +7534,10 @@ html {
 
 @media (max-width: 639px) and (prefers-reduced-motion: reduce) {
   .home-hero-copy,
-  .prayer-watch-page .testimony-hero-copy {
+  .prayer-watch-page .testimony-hero-copy,
+  .ministry-page .testimony-hero-copy,
+  .support-page .testimony-hero-copy,
+  .testimony-index-page .testimony-hero-copy {
     animation: none;
   }
 }
