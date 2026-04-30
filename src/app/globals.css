@@ -4454,6 +4454,43 @@ html {
   }
 }
 
+/* Mobile assistant intro: lifted, compact, and horizontally scannable. */
+@media (max-width: 767px) {
+  .prayer-chat-empty {
+    align-self: flex-start;
+    width: min(100%, 21rem);
+    margin: clamp(1.6rem, 8svh, 3.8rem) auto auto;
+    padding: 0.2rem 0 0.5rem;
+  }
+
+  .prayer-chat-suggestions {
+    display: flex;
+    width: 100%;
+    max-width: calc(100vw - 1.65rem);
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0.38rem;
+    overflow-x: auto;
+    padding: 0.12rem 0.02rem 0.42rem;
+    scrollbar-width: none;
+  }
+
+  .prayer-chat-suggestions::-webkit-scrollbar {
+    display: none;
+  }
+
+  .prayer-chat-suggestions button {
+    flex: 0 0 auto;
+    min-height: 2rem;
+    border-radius: 999px;
+    padding: 0 0.72rem;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+      0 8px 18px rgba(1, 10, 6, 0.16);
+    white-space: nowrap;
+  }
+}
+
 /* Final assistant/homepage corrections: keep later overrides from changing this pass. */
 .prayer-chat-composer {
   align-items: flex-end;
@@ -9967,5 +10004,42 @@ html {
 
   .prayer-chat-disclaimer svg {
     display: none;
+  }
+}
+
+/* Mobile assistant intro: final lifted helper row. */
+@media (max-width: 767px) {
+  .prayer-chat-empty {
+    align-self: flex-start;
+    width: min(100%, 21rem);
+    margin: clamp(1.6rem, 8svh, 3.8rem) auto auto;
+    padding: 0.2rem 0 0.5rem;
+  }
+
+  .prayer-chat-suggestions {
+    display: flex;
+    width: 100%;
+    max-width: calc(100vw - 1.65rem);
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0.38rem;
+    overflow-x: auto;
+    padding: 0.12rem 0.02rem 0.42rem;
+    scrollbar-width: none;
+  }
+
+  .prayer-chat-suggestions::-webkit-scrollbar {
+    display: none;
+  }
+
+  .prayer-chat-suggestions button {
+    flex: 0 0 auto;
+    min-height: 2rem;
+    border-radius: 999px;
+    padding: 0 0.72rem;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.035) inset,
+      0 8px 18px rgba(1, 10, 6, 0.16);
+    white-space: nowrap;
   }
 }
