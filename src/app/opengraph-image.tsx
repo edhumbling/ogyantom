@@ -1,4 +1,6 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { SITE_DESCRIPTION, SITE_NAME } from "@/lib/seo";
 
 export const alt = `${SITE_NAME} online prayer ministry`;
@@ -7,8 +9,23 @@ export const size = {
   height: 630,
 };
 export const contentType = "image/png";
+export const runtime = "nodejs";
 
-export default function Image() {
+const logoPath = path.join(
+  process.cwd(),
+  "public",
+  "brand",
+  "ogya-ntom-prayer-logo.png",
+);
+
+async function getLogoDataUri() {
+  const logoData = await readFile(logoPath);
+  return `data:image/png;base64,${logoData.toString("base64")}`;
+}
+
+export default async function Image() {
+  const logoSrc = await getLogoDataUri();
+
   return new ImageResponse(
     (
       <div
@@ -77,7 +94,7 @@ export default function Image() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://ogyantomprayer.works/icon.png"
+            src={logoSrc}
             alt=""
             width={236}
             height={236}

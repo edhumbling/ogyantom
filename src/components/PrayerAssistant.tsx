@@ -33,6 +33,20 @@ const welcomeSuggestions = [
   "Send a prayer request",
 ];
 const maxInputLines = 5;
+const maxTableRows = 12;
+const qaFixtures: Message[] = [
+  {
+    id: "fixture-user-1",
+    role: "user",
+    content: "Show me watch times and links.",
+  },
+  {
+    id: "fixture-assistant-1",
+    role: "assistant",
+    content:
+      "| Watch | Time | Link |\n| --- | --- | --- |\n| Dawn | 4:30 AM | https://ogyantomprayer.works/prayer-watch |\n| Noon | 12:00 PM | https://ogyantomprayer.works/prayer-watch |\n| Night | 9:00 PM | https://ogyantomprayer.works/prayer-watch.\n\nPrayer request: https://ogyantomprayer.works/prayer-request#form",
+  },
+];
 
 function createMessageId() {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
@@ -64,18 +78,39 @@ function renderInlineMarkdown(text: string) {
   const emphasisPattern = /(\*\*[^*]+\*\*|__[^_]+__|\*[^*\s][^*]*[^*\s]\*)/g;
   const parts = text.split(urlPattern);
 
+  const stripTrailingPunctuation = (url: string) => {
+    const trailingChars = [".", ",", "!", "?", ":", ";", ")", "]", "}", "#"];
+    let trimmed = url;
+    let trailing = "";
+
+    while (trimmed && trailingChars.includes(trimmed.slice(-1))) {
+      trailing = `${trimmed.slice(-1)}${trailing}`;
+      trimmed = trimmed.slice(0, -1);
+    }
+
+    return { url: trimmed, trailing };
+  };
+
   return parts.map((part, partIndex) => {
     if (part.match(urlPattern)) {
+      const { url, trailing } = stripTrailingPunctuation(part);
+
+      if (!url) {
+        return part;
+      }
+
       return (
-        <a
-          key={`${part}-${partIndex}`}
-          href={part}
-          target="_blank"
-          rel="noreferrer"
-          className="prayer-chat-inline-link"
-        >
-          {part}
-        </a>
+        <span key={`${part}-${partIndex}`}>
+          <a
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+            className="prayer-chat-inline-link"
+          >
+            {url}
+          </a>
+          {trailing}
+        </span>
       );
     }
 
@@ -101,18 +136,132 @@ function renderInlineMarkdown(text: string) {
   });
 }
 
+type MessageBlock =
+  | { type: "text"; lines: string[] }
+  | { type: "table"; lines: string[] };
+
+function isTableSeparator(line: string) {
+  return /^\s*\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)+\|?\s*$/.test(line);
+}
+
+function parseMessageBlocks(content: string): MessageBlock[] {
+  const lines = content.split("\n");
+  const blocks: MessageBlock[] = [];
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const nextLine = lines[index + 1];
+
+    if (line.includes("|") && nextLine && isTableSeparator(nextLine)) {
+      const tableLines: string[] = [line, nextLine];
+      let rowIndex = index + 2;
+
+      while (rowIndex < lines.length) {
+        const rowLine = lines[rowIndex];
+
+        if (!rowLine.trim() || !rowLine.includes("|")) {
+          break;
+        }
+
+        tableLines.push(rowLine);
+        rowIndex += 1;
+      }
+
+      blocks.push({ type: "table", lines: tableLines });
+      index = rowIndex - 1;
+      continue;
+    }
+
+    blocks.push({ type: "text", lines: [line] });
+  }
+
+  return blocks;
+}
+
+function splitTableRow(line: string) {
+  let normalized = line.trim();
+
+  if (normalized.startsWith("|")) {
+    normalized = normalized.slice(1);
+  }
+
+  if (normalized.endsWith("|")) {
+    normalized = normalized.slice(0, -1);
+  }
+
+  return normalized.split("|").map((cell) => cell.trim());
+}
+
 function MessageContent({ content }: { content: string }) {
-  const normalized = content
-    .replace(/^\s*#{1,6}\s+/gm, "")
-    .replace(/^\s*[-*]\s+/gm, "• ");
+  const normalizeLine = (line: string) =>
+    line.replace(/^\s*#{1,6}\s+/, "").replace(/^\s*[-*]\s+/, "• ");
+  const blocks = parseMessageBlocks(content);
 
   return (
     <>
-      {normalized.split("\n").map((line, index) => (
-        <span key={`${line}-${index}`} className="block">
-          {line ? renderInlineMarkdown(line) : "\u00a0"}
-        </span>
-      ))}
+      {blocks.map((block, blockIndex) => {
+        if (block.type === "table") {
+          const headerCells = splitTableRow(block.lines[0]);
+          const bodyLines = block.lines.slice(2).map(splitTableRow);
+          const columnCount = headerCells.length;
+          const hasValidColumns =
+            columnCount > 1 && bodyLines.every((row) => row.length === columnCount);
+
+          if (!hasValidColumns) {
+            return block.lines.map((line, lineIndex) => {
+              const normalizedLine = normalizeLine(line);
+              return (
+                <span key={`${line}-${blockIndex}-${lineIndex}`} className="block">
+                  {normalizedLine ? renderInlineMarkdown(normalizedLine) : "\u00a0"}
+                </span>
+              );
+            });
+          }
+
+          const trimmedRows = bodyLines.slice(0, maxTableRows);
+
+          return (
+            <div
+              key={`table-${blockIndex}`}
+              className="prayer-chat-table"
+              role="region"
+              aria-label="Response table"
+            >
+              <table>
+                <thead>
+                  <tr>
+                    {headerCells.map((cell, cellIndex) => (
+                      <th key={`header-${blockIndex}-${cellIndex}`} scope="col">
+                        {cell ? renderInlineMarkdown(cell) : "\u00a0"}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {trimmedRows.map((row, rowIndex) => (
+                    <tr key={`row-${blockIndex}-${rowIndex}`}>
+                      {row.map((cell, cellIndex) => (
+                        <td key={`cell-${blockIndex}-${rowIndex}-${cellIndex}`}>
+                          {cell ? renderInlineMarkdown(cell) : "\u00a0"}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        }
+
+        return block.lines.map((line, lineIndex) => {
+          const normalizedLine = normalizeLine(line);
+          return (
+            <span key={`${line}-${blockIndex}-${lineIndex}`} className="block">
+              {normalizedLine ? renderInlineMarkdown(normalizedLine) : "\u00a0"}
+            </span>
+          );
+        });
+      })}
     </>
   );
 }
@@ -301,6 +450,25 @@ export function PrayerAssistant() {
       window.removeEventListener("scroll", updateVisibility);
       window.removeEventListener("resize", updateVisibility);
     };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    if (process.env.NODE_ENV === "production") {
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.get("chat_qa") !== "1") {
+      return;
+    }
+
+    setIsOpen(true);
+    setMessages(qaFixtures);
   }, []);
 
   const sendMessage = useCallback(
