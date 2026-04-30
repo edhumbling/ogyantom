@@ -3,17 +3,24 @@
 import Link from "next/link";
 import { ArrowRight, List, X } from "@phosphor-icons/react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { navItems } from "@/lib/site";
 import { LogoMark } from "./LogoMark";
 
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const desktopNavItems = navItems.filter(
     (item) => item.href !== "/contact" && item.href !== "/support",
   );
   const mobileNavItems = navItems.filter((item) => item.href !== "/support");
+
+  const closeMenu = useCallback(() => {
+    setOpen(false);
+    window.setTimeout(() => triggerRef.current?.focus(), 0);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -27,15 +34,44 @@ export function SiteHeader() {
       return;
     }
 
+    window.setTimeout(() => {
+      const closeButton = menuRef.current?.querySelector<HTMLElement>(".mobile-menu-close");
+      closeButton?.focus();
+    }, 80);
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setOpen(false);
+        closeMenu();
+        return;
+      }
+
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      const focusable = menuRef.current?.querySelectorAll<HTMLElement>(
+        'button, a[href], [tabindex]:not([tabindex="-1"])',
+      );
+
+      if (!focusable?.length) {
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [open]);
+  }, [closeMenu, open]);
 
   return (
     <>
@@ -79,6 +115,7 @@ export function SiteHeader() {
           </nav>
 
           <button
+            ref={triggerRef}
             type="button"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
@@ -91,73 +128,77 @@ export function SiteHeader() {
         </div>
       </header>
 
-      <div
-        className={
-          "fixed inset-x-0 bottom-0 top-14 z-50 lg:hidden sm:top-16 " +
-          (open ? "pointer-events-auto" : "pointer-events-none")
-        }
-      >
-        <button
-          type="button"
-          aria-label="Close menu backdrop"
-          onClick={() => setOpen(false)}
-          className={
-            "mobile-menu-backdrop absolute inset-0 transition-opacity duration-[180ms] ease-out " +
-            (open ? "opacity-100" : "opacity-0")
-          }
-        />
+      {open && (
+        <div className="fixed inset-0 z-[90] lg:hidden">
+          <button
+            type="button"
+            aria-label="Close menu backdrop"
+            onClick={closeMenu}
+            className="mobile-menu-backdrop absolute inset-0 opacity-100"
+          />
 
-        <div
-          id="mobile-site-menu"
-          className={
-            "mobile-menu-panel relative overflow-y-auto border-b border-white/10 text-white shadow-[0_24px_60px_rgba(3,6,4,0.32)] transition duration-[180ms] ease-out " +
-            (open ? "mobile-menu-panel-open translate-y-0 opacity-100" : "-translate-y-2 opacity-0")
-          }
-        >
-          <nav className="mx-auto flex max-w-7xl flex-col px-3 py-4 sm:px-6">
-            <p className="border-b border-white/10 px-1 pb-3 text-[0.68rem] font-bold uppercase tracking-[0.24em] text-[#cfb45f]">
-              Fire here! Fire there!
-            </p>
-            {mobileNavItems.map((item) => {
-              const active = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className={
-                    "mobile-menu-row rounded-md px-2 " +
-                    (active
-                      ? "border-[#cfb45f] text-[#cfb45f]"
-                      : "text-white/82 hover:bg-white/6 hover:text-white")
-                  }
+          <div
+            ref={menuRef}
+            id="mobile-site-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile site menu"
+            className="mobile-menu-panel mobile-menu-panel-open relative overflow-y-auto text-white opacity-100"
+          >
+            <nav className="mobile-menu-nav mx-auto flex max-w-7xl flex-col px-3 py-4 sm:px-6">
+              <div className="mobile-menu-topline">
+                <LogoMark showSlogan={false} />
+                <button
+                  type="button"
+                  className="mobile-menu-close"
+                  onClick={closeMenu}
+                  aria-label="Close menu"
                 >
-                  {item.label}
-                </Link>
-              );
-            })}
+                  <X size={17} weight="bold" aria-hidden="true" />
+                </button>
+              </div>
+              <p className="mobile-menu-kicker">Fire here! Fire there!</p>
+              {mobileNavItems.map((item) => {
+                const active = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={closeMenu}
+                    className={
+                      "mobile-menu-row " +
+                      (active
+                        ? "mobile-menu-row-active"
+                        : "")
+                    }
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
 
-            <div className="mobile-menu-actions mt-2 grid gap-2 border-t border-white/10 pt-4">
-              <Link
-                href="/prayer-request"
-                onClick={() => setOpen(false)}
-                className="mobile-glow-action mobile-glow-action-prayer"
-              >
-                <span>Request Prayer</span>
-                <ArrowRight size={15} weight="bold" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/support"
-                onClick={() => setOpen(false)}
-                className="mobile-glow-action mobile-glow-action-support"
-              >
-                <span>Give / Support</span>
-                <ArrowRight size={15} weight="bold" aria-hidden="true" />
-              </Link>
-            </div>
-          </nav>
+              <div className="mobile-menu-actions mt-2 grid gap-2 border-t border-white/10 pt-4">
+                <Link
+                  href="/prayer-request"
+                  onClick={closeMenu}
+                  className="mobile-glow-action mobile-glow-action-prayer"
+                >
+                  <span>Request Prayer</span>
+                  <ArrowRight size={15} weight="bold" aria-hidden="true" />
+                </Link>
+                <Link
+                  href="/support"
+                  onClick={closeMenu}
+                  className="mobile-glow-action mobile-glow-action-support"
+                >
+                  <span>Give / Support</span>
+                  <ArrowRight size={15} weight="bold" aria-hidden="true" />
+                </Link>
+              </div>
+            </nav>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

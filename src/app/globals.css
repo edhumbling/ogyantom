@@ -4500,6 +4500,524 @@ html {
   }
 }
 
+/* Premium mobile navigation and chat control refinements. */
+.mobile-menu-backdrop {
+  opacity: 0;
+  transition:
+    opacity 260ms ease,
+    backdrop-filter 260ms ease;
+}
+
+.mobile-menu-backdrop.opacity-100 {
+  opacity: 1;
+}
+
+.mobile-menu-panel {
+  min-height: 100dvh;
+  max-height: 100dvh;
+  border: 0;
+  border-radius: 0;
+  background:
+    radial-gradient(24rem 30rem at 92% 4%, rgba(109, 18, 55, 0.34), transparent 62%),
+    radial-gradient(28rem 20rem at 6% 16%, rgba(207, 180, 95, 0.18), transparent 66%),
+    radial-gradient(22rem 22rem at 72% 88%, rgba(52, 245, 164, 0.12), transparent 64%),
+    linear-gradient(180deg, rgba(3, 6, 4, 0.96), rgba(7, 18, 13, 0.96) 48%, rgba(3, 6, 4, 0.98));
+  box-shadow: none;
+  clip-path: none;
+  transform-origin: 50% 0;
+}
+
+.mobile-menu-panel::before {
+  inset: 0 0 auto;
+  height: 48%;
+  border: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(115deg, rgba(255, 248, 232, 0.12) 0 1px, transparent 1px 38%),
+    linear-gradient(180deg, rgba(255, 248, 232, 0.08), transparent);
+  opacity: 0.82;
+  transform: none;
+}
+
+.mobile-menu-panel::after {
+  inset: auto 0 0;
+  height: 32%;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(0deg, rgba(52, 245, 164, 0.12), transparent);
+  opacity: 0.7;
+  transform: none;
+}
+
+.mobile-menu-nav {
+  min-height: 100dvh;
+  justify-content: start;
+  gap: 0.18rem;
+  padding:
+    max(0.82rem, env(safe-area-inset-top))
+    max(0.92rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom))
+    max(0.92rem, env(safe-area-inset-left));
+}
+
+.mobile-menu-topline {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: clamp(1rem, 6svh, 2.5rem);
+}
+
+.mobile-menu-topline .logo-lockup {
+  min-width: 0;
+}
+
+.mobile-menu-close {
+  position: relative;
+  display: inline-flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff8e8;
+  touch-action: manipulation;
+}
+
+.mobile-menu-close::before {
+  position: absolute;
+  inset: 0.36rem;
+  border: 1px solid rgba(255, 248, 232, 0.18);
+  border-radius: inherit;
+  background: rgba(255, 248, 232, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  content: "";
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    transform 150ms ease;
+}
+
+.mobile-menu-close svg {
+  position: relative;
+  z-index: 1;
+}
+
+.mobile-menu-close:hover::before,
+.mobile-menu-close:focus-visible::before {
+  border-color: rgba(245, 223, 160, 0.46);
+  background: rgba(245, 223, 160, 0.14);
+  transform: scale(1.06);
+}
+
+.mobile-menu-close:focus-visible {
+  outline: 2px solid #f5dfa0;
+  outline-offset: 2px;
+}
+
+.mobile-menu-kicker {
+  width: fit-content;
+  margin-bottom: 0.55rem;
+  border-bottom: 1px solid rgba(207, 180, 95, 0.42);
+  padding-bottom: 0.35rem;
+  color: #cfb45f;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.mobile-menu-row {
+  display: flex;
+  min-height: clamp(3rem, 7.3svh, 4.4rem);
+  align-items: center;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 248, 232, 0.08);
+  border-radius: 0;
+  padding: 0.18rem 0;
+  color: rgba(255, 248, 232, 0.86);
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  font-size: clamp(1.18rem, 6.4vw, 2rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    color 160ms ease,
+    padding-left 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 160ms ease;
+}
+
+.mobile-menu-row:hover,
+.mobile-menu-row:focus-visible,
+.mobile-menu-row-active {
+  border-bottom-color: rgba(207, 180, 95, 0.34);
+  color: #f5dfa0;
+  padding-left: 0.35rem;
+}
+
+.mobile-menu-row:focus-visible {
+  outline: 2px solid #f5dfa0;
+  outline-offset: 4px;
+}
+
+.mobile-menu-actions {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.55rem;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 248, 232, 0.1) !important;
+  padding-top: 1rem;
+}
+
+.mobile-glow-action {
+  min-height: 3.15rem;
+  border-radius: 999px;
+  padding: 0 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.12) inset,
+    0 18px 44px rgba(0, 0, 0, 0.24);
+}
+
+.mobile-glow-action-prayer {
+  border-color: rgba(245, 223, 160, 0.54);
+  background:
+    linear-gradient(135deg, rgba(255, 241, 189, 0.22), rgba(207, 180, 95, 0.1)),
+    rgba(255, 248, 232, 0.08);
+  color: #fff8e8;
+}
+
+.mobile-glow-action-support {
+  border-color: rgba(52, 245, 164, 0.36);
+  background:
+    linear-gradient(135deg, rgba(52, 245, 164, 0.2), rgba(7, 18, 13, 0.12)),
+    rgba(255, 255, 255, 0.075);
+  color: #eafff5;
+}
+
+.mobile-menu-panel-open {
+  animation: mobile-menu-full-unveil 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.mobile-menu-panel-open .mobile-menu-topline,
+.mobile-menu-panel-open .mobile-menu-kicker,
+.mobile-menu-panel-open .mobile-menu-row,
+.mobile-menu-panel-open .mobile-menu-actions {
+  opacity: 0;
+  animation: mobile-menu-step-unveil 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.mobile-menu-panel-open .mobile-menu-topline {
+  animation-delay: 70ms;
+}
+
+.mobile-menu-panel-open .mobile-menu-kicker {
+  animation-delay: 120ms;
+}
+
+.mobile-menu-panel-open .mobile-menu-row:nth-of-type(1) {
+  animation-delay: 165ms;
+}
+
+.mobile-menu-panel-open .mobile-menu-row:nth-of-type(2) {
+  animation-delay: 195ms;
+}
+
+.mobile-menu-panel-open .mobile-menu-row:nth-of-type(3) {
+  animation-delay: 225ms;
+}
+
+.mobile-menu-panel-open .mobile-menu-row:nth-of-type(4) {
+  animation-delay: 255ms;
+}
+
+.mobile-menu-panel-open .mobile-menu-row:nth-of-type(5) {
+  animation-delay: 285ms;
+}
+
+.mobile-menu-panel-open .mobile-menu-row:nth-of-type(6) {
+  animation-delay: 315ms;
+}
+
+.mobile-menu-panel-open .mobile-menu-row:nth-of-type(7) {
+  animation-delay: 345ms;
+}
+
+.mobile-menu-panel-open .mobile-menu-row:nth-of-type(8) {
+  animation-delay: 375ms;
+}
+
+.mobile-menu-panel-open .mobile-menu-row:nth-of-type(9) {
+  animation-delay: 405ms;
+}
+
+.mobile-menu-panel-open .mobile-menu-actions {
+  animation-delay: 455ms;
+}
+
+@keyframes mobile-menu-full-unveil {
+  from {
+    filter: blur(16px);
+    opacity: 0;
+    transform: translateY(-1.25rem) scale(0.985);
+  }
+
+  58% {
+    filter: blur(4px);
+  }
+
+  to {
+    filter: blur(0);
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes mobile-menu-step-unveil {
+  from {
+    filter: blur(8px);
+    opacity: 0;
+    transform: translateY(0.8rem);
+  }
+
+  to {
+    filter: blur(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .mobile-menu-panel {
+    max-height: 100dvh !important;
+    margin: 0;
+    border: 0;
+    clip-path: none;
+    overscroll-behavior: contain;
+  }
+
+  .mobile-menu-panel nav {
+    padding:
+      max(0.82rem, env(safe-area-inset-top))
+      max(0.92rem, env(safe-area-inset-right))
+      max(1rem, env(safe-area-inset-bottom))
+      max(0.92rem, env(safe-area-inset-left));
+  }
+
+  .mobile-menu-row {
+    min-height: clamp(2.85rem, 7svh, 4.1rem);
+    padding: 0.12rem 0;
+    font-size: clamp(1.12rem, 6.2vw, 1.92rem);
+    line-height: 1;
+  }
+
+  .mobile-glow-action {
+    min-height: 3rem;
+    padding: 0 1rem;
+    font-size: 0.76rem;
+  }
+
+  .prayer-chat-header-actions {
+    gap: 0.12rem;
+  }
+
+  .prayer-chat-header button {
+    position: relative;
+    width: 2.75rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    min-height: 2.75rem;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .prayer-chat-header button::before {
+    position: absolute;
+    inset: 0.38rem;
+    border: 1px solid rgba(255, 248, 232, 0.14);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    content: "";
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      transform 150ms ease;
+  }
+
+  .prayer-chat-header button svg {
+    position: relative;
+    z-index: 1;
+    width: 0.88rem;
+    height: 0.88rem;
+  }
+
+  .prayer-chat-header button:hover::before,
+  .prayer-chat-header button:focus-visible::before {
+    border-color: rgba(245, 223, 160, 0.44);
+    background: rgba(245, 223, 160, 0.12);
+    transform: scale(1.06);
+  }
+}
+
+/* Mobile card rail system: slow auto-scroll, pause-on-hold, and subtle arrows. */
+.auto-scroll-shell .home-card-rail {
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+}
+
+.auto-scroll-shell[data-paused="true"] .auto-scroll-arrow {
+  border-color: rgba(245, 223, 160, 0.44);
+  background: rgba(7, 18, 13, 0.68);
+}
+
+@media (min-width: 768px) {
+  .sanity-card-browser .auto-scroll-arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .auto-scroll-shell {
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+  }
+
+  .auto-scroll-shell .home-card-rail,
+  .auto-scroll-shell .home-watch-list,
+  .auto-scroll-shell .testimony-card-grid,
+  .auto-scroll-shell .sanity-square-grid,
+  .auto-scroll-shell .ministry-pillar-rail,
+  .auto-scroll-shell .ministry-value-ribbon,
+  .auto-scroll-shell .support-giving-options,
+  .auto-scroll-shell .support-architecture-list,
+  .auto-scroll-shell .support-social-rail,
+  .auto-scroll-shell .legal-card-grid,
+  .auto-scroll-shell .prayer-army-scripture-ribbon,
+  .auto-scroll-shell .prayer-watch-grid {
+    display: grid !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: minmax(12.5rem, 76%) !important;
+    grid-template-columns: none !important;
+    gap: 0.72rem !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: 2.35rem !important;
+    scroll-snap-type: inline mandatory !important;
+    padding: 0.18rem 2.35rem 0.72rem !important;
+  }
+
+  .auto-scroll-shell .home-platform-rail,
+  .auto-scroll-shell .home-facet-rail,
+  .auto-scroll-shell .home-values-rail {
+    grid-auto-columns: minmax(12.5rem, 72%) !important;
+  }
+
+  .auto-scroll-shell .home-watch-list,
+  .auto-scroll-shell .prayer-watch-grid,
+  .auto-scroll-shell .support-giving-options,
+  .auto-scroll-shell .support-social-rail {
+    grid-auto-columns: minmax(11.25rem, 68%) !important;
+  }
+
+  .auto-scroll-shell .testimony-card-grid,
+  .auto-scroll-shell .sanity-square-grid,
+  .auto-scroll-shell .ministry-pillar-rail,
+  .auto-scroll-shell .ministry-value-ribbon,
+  .auto-scroll-shell .support-architecture-list,
+  .auto-scroll-shell .legal-card-grid,
+  .auto-scroll-shell .prayer-army-scripture-ribbon {
+    grid-auto-columns: minmax(13rem, 82%) !important;
+  }
+
+  .auto-scroll-shell .home-card-rail > *,
+  .auto-scroll-shell .home-watch-list > *,
+  .auto-scroll-shell .testimony-card-grid > *,
+  .auto-scroll-shell .sanity-square-grid > *,
+  .auto-scroll-shell .ministry-pillar-rail > *,
+  .auto-scroll-shell .ministry-value-ribbon > *,
+  .auto-scroll-shell .support-giving-options > *,
+  .auto-scroll-shell .support-architecture-list > *,
+  .auto-scroll-shell .support-social-rail > *,
+  .auto-scroll-shell .legal-card-grid > *,
+  .auto-scroll-shell .prayer-army-scripture-ribbon > *,
+  .auto-scroll-shell .prayer-watch-grid > * {
+    width: auto !important;
+    min-width: 0 !important;
+    scroll-snap-align: center !important;
+  }
+
+  .auto-scroll-arrow {
+    display: inline-flex !important;
+    width: 2rem;
+    height: 2rem;
+    border-color: rgba(255, 248, 232, 0.24);
+    background: rgba(7, 18, 13, 0.48);
+    color: rgba(255, 248, 232, 0.82);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      0 10px 24px rgba(3, 6, 4, 0.18);
+    backdrop-filter: blur(14px);
+  }
+
+  .auto-scroll-arrow svg {
+    width: 0.92rem;
+    height: 0.92rem;
+  }
+
+  .auto-scroll-arrow-left {
+    left: 0.28rem;
+  }
+
+  .auto-scroll-arrow-right {
+    right: 0.28rem;
+  }
+
+  .auto-scroll-arrow:hover,
+  .auto-scroll-arrow:focus-visible,
+  .auto-scroll-arrow:active {
+    border-color: rgba(245, 223, 160, 0.56);
+    background: rgba(109, 18, 55, 0.72);
+    color: #fff8e8;
+  }
+}
+
+.prayer-chat-composer button.prayer-chat-send-button {
+  border-radius: 999px;
+}
+
+@media (min-width: 768px) {
+  .prayer-chat-composer button.prayer-chat-send-button {
+    flex: 0 0 2.75rem;
+    width: 2.75rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-panel-open,
+  .mobile-menu-panel-open .mobile-menu-topline,
+  .mobile-menu-panel-open .mobile-menu-kicker,
+  .mobile-menu-panel-open .mobile-menu-row,
+  .mobile-menu-panel-open .mobile-menu-actions {
+    animation: none;
+    filter: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Legal pages and homepage FAQ */
 .home-faq-section {
   background:
@@ -10953,5 +11471,267 @@ html {
       0 0 0 1px rgba(255, 255, 255, 0.035) inset,
       0 8px 18px rgba(1, 10, 6, 0.16);
     white-space: nowrap;
+  }
+}
+
+/* Final mobile menu and assistant controls: keep this after later page overrides. */
+@media (max-width: 767px) {
+  .mobile-menu-panel {
+    min-height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+    background:
+      radial-gradient(24rem 30rem at 92% 4%, rgba(109, 18, 55, 0.34), transparent 62%),
+      radial-gradient(28rem 20rem at 6% 16%, rgba(207, 180, 95, 0.18), transparent 66%),
+      radial-gradient(22rem 22rem at 72% 88%, rgba(52, 245, 164, 0.12), transparent 64%),
+      linear-gradient(180deg, rgba(3, 6, 4, 0.96), rgba(7, 18, 13, 0.96) 48%, rgba(3, 6, 4, 0.98)) !important;
+    clip-path: none !important;
+  }
+
+  .mobile-menu-nav,
+  .mobile-menu-panel nav {
+    min-height: 100dvh;
+    padding:
+      max(0.82rem, env(safe-area-inset-top))
+      max(0.92rem, env(safe-area-inset-right))
+      max(1rem, env(safe-area-inset-bottom))
+      max(0.92rem, env(safe-area-inset-left)) !important;
+  }
+
+  .mobile-menu-row {
+    min-height: clamp(2.85rem, 7svh, 4.1rem) !important;
+    border-bottom: 1px solid rgba(255, 248, 232, 0.08);
+    padding: 0.12rem 0 !important;
+    color: rgba(255, 248, 232, 0.86);
+    font-size: clamp(1.12rem, 6.2vw, 1.92rem) !important;
+    line-height: 1 !important;
+  }
+
+  .mobile-menu-row:hover,
+  .mobile-menu-row:focus-visible,
+  .mobile-menu-row-active {
+    color: #f5dfa0;
+    padding-left: 0.35rem !important;
+  }
+
+  .mobile-glow-action {
+    min-height: 3rem !important;
+    border-radius: 999px !important;
+    padding: 0 1rem !important;
+    font-size: 0.76rem !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .prayer-chat-header button {
+    position: relative;
+    width: 2.75rem !important;
+    min-width: 2.75rem !important;
+    height: 2.75rem !important;
+    min-height: 2.75rem !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .prayer-chat-header button::before {
+    position: absolute;
+    inset: 0.38rem;
+    display: block;
+    border: 1px solid rgba(255, 248, 232, 0.14);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    content: "";
+  }
+
+  .prayer-chat-header button svg {
+    position: relative;
+    z-index: 1;
+    width: 0.88rem !important;
+    height: 0.88rem !important;
+  }
+}
+
+.prayer-chat-composer button.prayer-chat-send-button {
+  border-radius: 999px !important;
+}
+
+@media (min-width: 768px) {
+  .prayer-chat-composer button.prayer-chat-send-button {
+    flex: 0 0 2.75rem !important;
+    width: 2.75rem !important;
+    min-width: 2.75rem !important;
+    height: 2.75rem !important;
+    min-height: 2.75rem !important;
+    padding: 0 !important;
+  }
+}
+
+/* Final polish: compact full-screen menu, glow CTAs, cute mobile floaters, grand footer marquee. */
+.army-marquee {
+  overflow: visible;
+  padding-block: clamp(1.25rem, 5vw, 3rem);
+}
+
+.army-marquee-track {
+  align-items: center;
+}
+
+.army-marquee-item {
+  overflow: visible;
+}
+
+.army-marquee-text {
+  line-height: 1;
+}
+
+@media (max-width: 767px) {
+  .mobile-menu-topline {
+    min-height: 2.75rem;
+    margin-bottom: clamp(0.42rem, 2.6svh, 0.9rem) !important;
+    padding-right: 3rem;
+  }
+
+  .mobile-menu-close {
+    position: fixed;
+    top: max(0.62rem, env(safe-area-inset-top));
+    right: max(0.3rem, env(safe-area-inset-right));
+    z-index: 2;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .mobile-menu-close::before {
+    inset: 0.33rem;
+  }
+
+  .mobile-menu-kicker {
+    margin-bottom: 0.35rem;
+    padding-bottom: 0.25rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+  }
+
+  .mobile-menu-nav,
+  .mobile-menu-panel nav {
+    justify-content: start;
+    gap: 0;
+    overflow: hidden;
+    min-height: 100dvh;
+    padding:
+      max(0.65rem, env(safe-area-inset-top))
+      max(0.9rem, env(safe-area-inset-right))
+      max(0.78rem, env(safe-area-inset-bottom))
+      max(0.9rem, env(safe-area-inset-left)) !important;
+  }
+
+  .mobile-menu-row {
+    min-height: clamp(2.28rem, 5.65svh, 3.25rem) !important;
+    font-size: clamp(0.98rem, 5.25vw, 1.56rem) !important;
+  }
+
+  .mobile-menu-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.48rem !important;
+    margin-top: auto !important;
+    padding-top: 0.65rem !important;
+  }
+
+  .mobile-glow-action {
+    min-height: 2.54rem !important;
+    border-radius: 999px !important;
+    padding: 0 0.5rem !important;
+    overflow: hidden;
+    isolation: isolate;
+    font-size: clamp(0.58rem, 2.7vw, 0.68rem) !important;
+    line-height: 1 !important;
+    white-space: nowrap;
+  }
+
+  .mobile-glow-action::before {
+    inset: -0.72rem;
+    opacity: 0.32;
+    filter: blur(5px);
+    transition: opacity 180ms ease, filter 180ms ease;
+  }
+
+  .mobile-glow-action::after {
+    opacity: 0.52;
+    transition: opacity 180ms ease;
+  }
+
+  .mobile-glow-action:hover::before,
+  .mobile-glow-action:focus-visible::before,
+  .mobile-glow-action:active::before {
+    opacity: 0.82;
+    filter: blur(8px);
+    animation: mobile-cta-glow-shift 2.8s linear infinite;
+  }
+
+  .mobile-glow-action:hover::after,
+  .mobile-glow-action:focus-visible::after,
+  .mobile-glow-action:active::after {
+    opacity: 0.86;
+  }
+
+  .mobile-glow-action:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow:
+      0 0 0 1px rgba(245, 223, 160, 0.3),
+      0 0 26px rgba(207, 180, 95, 0.28),
+      0 14px 34px rgba(0, 0, 0, 0.28);
+  }
+
+  .floating-whatsapp,
+  .floating-scroll-top {
+    width: 2.36rem !important;
+    min-width: 2.36rem !important;
+    height: 2.36rem !important;
+    min-height: 2.36rem !important;
+  }
+
+  .floating-whatsapp img {
+    width: 1.46rem !important;
+    height: 1.46rem !important;
+  }
+
+  .floating-action-stack {
+    right: max(0.56rem, env(safe-area-inset-right)) !important;
+    bottom: max(0.56rem, env(safe-area-inset-bottom)) !important;
+    gap: 0.42rem !important;
+  }
+
+  .prayer-chat-mobile-trigger {
+    width: 2.8rem !important;
+    height: 2.8rem !important;
+  }
+
+  .prayer-chat-mobile-trigger img {
+    width: 2.34rem !important;
+    height: 2.34rem !important;
+  }
+
+  .hero-back-button {
+    min-height: 2.48rem !important;
+    padding: 0 0.66rem !important;
+    font-size: 0.58rem !important;
+  }
+
+  .army-marquee {
+    overflow: visible !important;
+    padding-block: 2.35rem;
+  }
+
+  .army-marquee-text {
+    font-size: clamp(8.8rem, 42vw, 12.5rem) !important;
+    line-height: 1 !important;
+  }
+
+  .army-marquee-logo {
+    width: 5.2rem !important;
+    height: 5.2rem !important;
   }
 }

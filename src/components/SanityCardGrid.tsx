@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, CaretLeft, CaretRight, MagnifyingGlass, X } from "@phosphor-icons/react/dist/ssr";
+import { AutoScrollRail } from "@/components/AutoScrollRail";
 import { SanityImage } from "@/components/SanityImage";
 import type { SanityImage as SanityImageType } from "@/sanity/types";
 
@@ -139,7 +140,10 @@ export function SanityCardGrid({
         </div>
       ) : null}
 
-      <div className="sanity-square-grid">
+      <AutoScrollRail
+        ariaLabel={ariaLabel}
+        className="sanity-square-grid sanity-square-rail"
+      >
         {items.map((item, index) => {
           const content = (
             <>
@@ -179,7 +183,7 @@ export function SanityCardGrid({
             </article>
           );
         })}
-      </div>
+      </AutoScrollRail>
 
       <PaginationControls
         ariaLabel={ariaLabel}

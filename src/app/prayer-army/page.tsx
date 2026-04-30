@@ -9,6 +9,7 @@ import {
   HandsPraying,
   UsersThree,
 } from "@phosphor-icons/react/dist/ssr";
+import { AutoScrollRail } from "@/components/AutoScrollRail";
 import { opaninFullName, prayerWatches } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -126,7 +127,11 @@ export default function PrayerArmyPage() {
           </article>
         </div>
 
-        <div className="prayer-army-scripture-ribbon mx-auto mt-5 max-w-7xl">
+        <AutoScrollRail
+          ariaLabel="army scriptures"
+          className="prayer-army-scripture-ribbon"
+          shellClassName="mx-auto mt-5 max-w-7xl"
+        >
           {armyScriptures.map((scripture) => (
             <article key={scripture.reference} className="prayer-army-scripture-line">
               <p>{scripture.reference}</p>
@@ -134,7 +139,7 @@ export default function PrayerArmyPage() {
               <span>{scripture.meaning}</span>
             </article>
           ))}
-        </div>
+        </AutoScrollRail>
       </section>
 
       <section id="army-rhythm" className="testimony-ledger-section">
@@ -152,7 +157,10 @@ export default function PrayerArmyPage() {
           </p>
         </div>
 
-        <div className="prayer-watch-grid">
+        <AutoScrollRail
+          ariaLabel="prayer watch rhythm"
+          className="prayer-watch-grid"
+        >
           {prayerWatches.map((watch, index) => (
             <article
               key={watch.title}
@@ -170,7 +178,7 @@ export default function PrayerArmyPage() {
               <span>{watch.text}</span>
             </article>
           ))}
-        </div>
+        </AutoScrollRail>
       </section>
 
       <section className="ministry-community-cta px-5 py-16 sm:px-8 lg:px-10">

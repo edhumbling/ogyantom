@@ -16,6 +16,7 @@ import {
   opaninFullName,
   visionStatement,
 } from "@/lib/site";
+import { AutoScrollRail } from "@/components/AutoScrollRail";
 
 const pillarIcons = [ShieldCheck, UsersThree];
 
@@ -93,7 +94,11 @@ export default function MinistryPage() {
       </section>
 
       <section className="ministry-card-section ministry-arch-section ministry-arch-section-light section-rule px-5 sm:px-8 lg:px-10 ">
-        <div className="ministry-pillar-rail mx-auto max-w-7xl">
+        <AutoScrollRail
+          ariaLabel="ministry pillars"
+          className="ministry-pillar-rail"
+          shellClassName="mx-auto max-w-7xl"
+        >
           {armyPillars.map((pillar, index) => {
             const Icon = pillarIcons[index] ?? ShieldCheck;
             return (
@@ -123,7 +128,7 @@ export default function MinistryPage() {
               </Link>
             );
           })}
-        </div>
+        </AutoScrollRail>
       </section>
 
       <section className="ministry-card-section ministry-arch-section ministry-arch-section-light section-rule px-5 sm:px-8 lg:px-10">
@@ -136,7 +141,10 @@ export default function MinistryPage() {
               What shapes the prayer culture.
             </h2>
           </div>
-          <div className="ministry-value-grid ministry-value-ribbon">
+          <AutoScrollRail
+            ariaLabel="core values"
+            className="ministry-value-grid ministry-value-ribbon"
+          >
             {coreValues.map((value, index) => (
               <Link
                 key={value.title}
@@ -156,7 +164,7 @@ export default function MinistryPage() {
                 </span>
               </Link>
             ))}
-          </div>
+          </AutoScrollRail>
         </div>
       </section>
 

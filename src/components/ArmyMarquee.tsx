@@ -9,6 +9,7 @@ export function ArmyMarquee() {
         {[...items, ...items].map((_, index) => (
           <div key={index} className="army-marquee-item">
             <span className="army-marquee-text">Ogya Ntom Prayer Army</span>
+            <span className="army-marquee-text">Fire Here! Fire There!</span>
             <Image
               src="/brand/ogya-ntom-prayer-logo.png"
               alt=""

@@ -8,12 +8,14 @@ type AutoScrollRailProps = {
   ariaLabel: string;
   children: ReactNode;
   className?: string;
+  shellClassName?: string;
 };
 
 export function AutoScrollRail({
   ariaLabel,
   children,
   className = "",
+  shellClassName = "",
 }: AutoScrollRailProps) {
   const railRef = useRef<HTMLDivElement>(null);
   const directionRef = useRef(1);
@@ -21,6 +23,7 @@ export function AutoScrollRail({
   const pointerInsideRef = useRef(false);
   const pointerHeldRef = useRef(false);
   const focusWithinRef = useRef(false);
+  const resumeTimerRef = useRef<number | null>(null);
   const [paused, setPaused] = useState(false);
 
   const syncPausedState = useCallback(() => {
@@ -33,6 +36,19 @@ export function AutoScrollRail({
     setPaused(nextPaused);
   }, []);
 
+  const pauseTemporarily = useCallback((duration = 2000) => {
+    if (resumeTimerRef.current) {
+      window.clearTimeout(resumeTimerRef.current);
+    }
+
+    pausedRef.current = true;
+    setPaused(true);
+    resumeTimerRef.current = window.setTimeout(() => {
+      resumeTimerRef.current = null;
+      syncPausedState();
+    }, duration);
+  }, [syncPausedState]);
+
   const moveByPage = useCallback((direction: -1 | 1) => {
     const rail = railRef.current;
 
@@ -40,11 +56,12 @@ export function AutoScrollRail({
       return;
     }
 
+    pauseTemporarily(2600);
     rail.scrollBy({
       left: direction * rail.clientWidth * 0.78,
       behavior: "smooth",
     });
-  }, []);
+  }, [pauseTemporarily]);
 
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -71,7 +88,7 @@ export function AutoScrollRail({
             directionRef.current = 1;
           }
 
-          rail.scrollLeft += directionRef.current * elapsed * 0.018;
+          rail.scrollLeft += directionRef.current * elapsed * 0.008;
         }
       }
 
@@ -85,9 +102,17 @@ export function AutoScrollRail({
     };
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (resumeTimerRef.current) {
+        window.clearTimeout(resumeTimerRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div
-      className="auto-scroll-shell"
+      className={`auto-scroll-shell ${shellClassName}`}
       onPointerEnter={() => {
         pointerInsideRef.current = true;
         syncPausedState();
@@ -99,15 +124,19 @@ export function AutoScrollRail({
       }}
       onPointerDown={() => {
         pointerHeldRef.current = true;
+        if (resumeTimerRef.current) {
+          window.clearTimeout(resumeTimerRef.current);
+          resumeTimerRef.current = null;
+        }
         syncPausedState();
       }}
       onPointerUp={() => {
         pointerHeldRef.current = false;
-        syncPausedState();
+        pauseTemporarily(2400);
       }}
       onPointerCancel={() => {
         pointerHeldRef.current = false;
-        syncPausedState();
+        pauseTemporarily(1600);
       }}
       onFocusCapture={() => {
         focusWithinRef.current = true;
@@ -128,7 +157,11 @@ export function AutoScrollRail({
         <CaretLeft size={20} weight="bold" aria-hidden="true" />
       </button>
 
-      <div ref={railRef} className={`home-card-rail hide-scrollbar ${className}`} aria-label={ariaLabel}>
+      <div
+        ref={railRef}
+        className={`home-card-rail hide-scrollbar ${className}`}
+        aria-label={ariaLabel}
+      >
         {children}
       </div>
 

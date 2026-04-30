@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { AutoScrollRail } from "@/components/AutoScrollRail";
 
 export type TestimonyEntry = {
   name: string;
@@ -26,10 +27,11 @@ function initials(name: string) {
 }
 
 type TestimonySetProps = TestimonyBrowserProps & {
+  carousel?: boolean;
   pageSize: number;
 };
 
-function TestimonySet({ testimonies, pageSize }: TestimonySetProps) {
+function TestimonySet({ carousel = false, testimonies, pageSize }: TestimonySetProps) {
   const [page, setPage] = useState(0);
   const pageCount = Math.max(1, Math.ceil(testimonies.length / pageSize));
   const safePage = Math.min(page, pageCount - 1);
@@ -66,25 +68,56 @@ function TestimonySet({ testimonies, pageSize }: TestimonySetProps) {
         </div>
       ) : null}
 
-      <div className="testimony-card-grid">
-        {pagedItems.map((item, index) => (
-          <article key={`${item.name}-${item.title}`} className="testimony-story-card">
-            <div className="testimony-story-card-head">
-              <span className="testimony-ledger-number">
-                {String(safePage * pageSize + index + 1).padStart(2, "0")}
-              </span>
-              <span className="testimony-pill">{item.highlight}</span>
-            </div>
-            <h3>{item.title}</h3>
-            <p>&quot;{item.content[0]}&quot;</p>
-            <footer>
-              <span>{initials(item.name)}</span>
-              <strong>{item.name}</strong>
-            </footer>
-          </article>
-        ))}
-      </div>
+      {carousel ? (
+        <AutoScrollRail
+          ariaLabel="testimonies"
+          className="testimony-card-grid testimony-card-rail"
+        >
+          {pagedItems.map((item, index) => (
+            <TestimonyCard
+              item={item}
+              key={`${item.name}-${item.title}`}
+              number={safePage * pageSize + index + 1}
+            />
+          ))}
+        </AutoScrollRail>
+      ) : (
+        <div className="testimony-card-grid">
+          {pagedItems.map((item, index) => (
+            <TestimonyCard
+              item={item}
+              key={`${item.name}-${item.title}`}
+              number={safePage * pageSize + index + 1}
+            />
+          ))}
+        </div>
+      )}
     </>
+  );
+}
+
+function TestimonyCard({
+  item,
+  number,
+}: {
+  item: TestimonyEntry;
+  number: number;
+}) {
+  return (
+    <article className="testimony-story-card">
+      <div className="testimony-story-card-head">
+        <span className="testimony-ledger-number">
+          {String(number).padStart(2, "0")}
+        </span>
+        <span className="testimony-pill">{item.highlight}</span>
+      </div>
+      <h3>{item.title}</h3>
+      <p>&quot;{item.content[0]}&quot;</p>
+      <footer>
+        <span>{initials(item.name)}</span>
+        <strong>{item.name}</strong>
+      </footer>
+    </article>
   );
 }
 
@@ -97,7 +130,7 @@ export function TestimonyBrowser({ testimonies }: TestimonyBrowserProps) {
         <TestimonySet testimonies={testimonies} pageSize={desktopPageSize} />
       </div>
       <div className="testimony-browser-mobile">
-        <TestimonySet testimonies={testimonies} pageSize={mobilePageSize} />
+        <TestimonySet carousel testimonies={testimonies} pageSize={mobilePageSize} />
       </div>
     </div>
   );

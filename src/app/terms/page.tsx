@@ -10,6 +10,7 @@ import {
   ShieldWarning,
   UsersThree,
 } from "@phosphor-icons/react/dist/ssr";
+import { AutoScrollRail } from "@/components/AutoScrollRail";
 import { contactDetails, ministryType, opaninFullName } from "@/lib/site";
 import { SITE_NAME } from "@/lib/seo";
 
@@ -137,17 +138,22 @@ export default function TermsPage() {
           </aside>
 
           <div className="legal-content">
-            <section className="legal-card-grid" aria-label="Terms commitments">
-              {policyPillars.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <article className="legal-highlight-card" key={item.title}>
-                    <Icon size={30} weight="bold" aria-hidden="true" />
-                    <h2>{item.title}</h2>
-                    <p>{item.text}</p>
-                  </article>
-                );
-              })}
+            <section aria-label="Terms commitments">
+              <AutoScrollRail
+                ariaLabel="terms commitments"
+                className="legal-card-grid"
+              >
+                {policyPillars.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <article className="legal-highlight-card" key={item.title}>
+                      <Icon size={30} weight="bold" aria-hidden="true" />
+                      <h2>{item.title}</h2>
+                      <p>{item.text}</p>
+                    </article>
+                  );
+                })}
+              </AutoScrollRail>
             </section>
 
             <section className="legal-document">

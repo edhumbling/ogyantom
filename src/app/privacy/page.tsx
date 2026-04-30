@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   UserCircleCheck,
 } from "@phosphor-icons/react/dist/ssr";
+import { AutoScrollRail } from "@/components/AutoScrollRail";
 import { contactDetails, ministryType, opaninFullName } from "@/lib/site";
 import { SITE_NAME } from "@/lib/seo";
 
@@ -167,17 +168,22 @@ export default function PrivacyPage() {
           </aside>
 
           <div className="legal-content">
-            <section className="legal-card-grid" aria-label="Privacy commitments">
-              {privacyHighlights.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <article className="legal-highlight-card" key={item.title}>
-                    <Icon size={30} weight="bold" aria-hidden="true" />
-                    <h2>{item.title}</h2>
-                    <p>{item.text}</p>
-                  </article>
-                );
-              })}
+            <section aria-label="Privacy commitments">
+              <AutoScrollRail
+                ariaLabel="privacy commitments"
+                className="legal-card-grid"
+              >
+                {privacyHighlights.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <article className="legal-highlight-card" key={item.title}>
+                      <Icon size={30} weight="bold" aria-hidden="true" />
+                      <h2>{item.title}</h2>
+                      <p>{item.text}</p>
+                    </article>
+                  );
+                })}
+              </AutoScrollRail>
             </section>
 
             <section className="legal-document">

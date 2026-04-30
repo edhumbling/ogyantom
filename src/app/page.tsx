@@ -225,7 +225,10 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="home-watch-list">
+          <AutoScrollRail
+            ariaLabel="prayer watches"
+            className="home-watch-list home-watch-rail"
+          >
             {prayerWatches.map((watch) => (
               <Link
                 href="/prayer-army"
@@ -242,7 +245,7 @@ export default function Home() {
                 </div>
               </Link>
             ))}
-          </div>
+          </AutoScrollRail>
         </div>
       </section>
 

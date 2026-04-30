@@ -9,6 +9,7 @@ import {
   HandHeart,
   Package,
 } from "@phosphor-icons/react/dist/ssr";
+import { AutoScrollRail } from "@/components/AutoScrollRail";
 import { givingOptions } from "@/lib/giving";
 import { contactDetails, opaninFullName } from "@/lib/site";
 
@@ -79,9 +80,10 @@ export default function SupportPage() {
         className="support-paystack-section support-priority-giving px-5 py-16 sm:px-8 lg:px-10"
       >
         <div className="support-paystack-shell support-paystack-shell-priority mx-auto max-w-7xl">
-          <div
-            className="support-giving-options"
-            aria-label="Paystack giving options"
+          <AutoScrollRail
+            ariaLabel="Paystack giving options"
+            className="support-giving-options support-giving-rail"
+            shellClassName="support-giving-rail-shell"
           >
             {givingOptions.map((option) => (
               <Link
@@ -106,7 +108,7 @@ export default function SupportPage() {
                 </span>
               </Link>
             ))}
-          </div>
+          </AutoScrollRail>
 
           <div className="support-priority-copy">
             <p className="ministry-community-kicker">Paystack Giving</p>
@@ -131,7 +133,11 @@ export default function SupportPage() {
           </p>
         </div>
 
-        <div className="support-architecture-list mx-auto mt-5 max-w-7xl">
+        <AutoScrollRail
+          ariaLabel="ways support helps"
+          className="support-architecture-list"
+          shellClassName="mx-auto mt-5 max-w-7xl"
+        >
           {supportWays.map((way) => {
             const Icon = way.icon;
             return (
@@ -144,7 +150,7 @@ export default function SupportPage() {
               </article>
             );
           })}
-        </div>
+        </AutoScrollRail>
       </section>
 
       <section className="support-social-section px-5 pb-20 sm:px-8 lg:px-10">
@@ -161,7 +167,11 @@ export default function SupportPage() {
               teaching through the official social channels.
             </p>
           </div>
-          <div className="support-social-rail mt-5">
+          <AutoScrollRail
+            ariaLabel="ministry handles"
+            className="support-social-rail"
+            shellClassName="mt-5"
+          >
             <a href={contactDetails.tiktok} target="_blank" rel="noreferrer">
               <strong>TikTok</strong>
               <span>@opaninnie</span>
@@ -170,7 +180,7 @@ export default function SupportPage() {
               <strong>Facebook</strong>
               <span>Watchman Opanin Thomas</span>
             </a>
-          </div>
+          </AutoScrollRail>
         </div>
       </section>
     </main>
