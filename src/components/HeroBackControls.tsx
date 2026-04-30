@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { ArrowLeft } from "@phosphor-icons/react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const heroSelector = ".home-hero, .testimony-hero, .prayer-command";
 const scrollStoragePrefix = "ogya-scroll:";
@@ -29,7 +29,6 @@ function saveScrollPosition(pathname: string) {
 
 export function HeroBackControls() {
   const pathname = usePathname();
-  const router = useRouter();
   const [hero, setHero] = useState<HTMLElement | null>(null);
   const showBackButton = pathname !== "/";
 
@@ -126,25 +125,16 @@ export function HeroBackControls() {
     <button
       type="button"
       className="hero-back-button"
-        onClick={() => {
-          saveScrollPosition(pathname);
-          try {
-            const referrer = document.referrer ? new URL(document.referrer) : null;
-            const sameOriginReferrer = referrer && referrer.origin === window.location.origin && referrer.pathname !== window.location.pathname;
+      onClick={() => {
+        saveScrollPosition(pathname);
 
-            if (sameOriginReferrer && window.history.length > 1) {
-              router.back();
-              return;
-            }
-          } catch {
-            // fallthrough to fallback push
-          }
+        if (window.history.length > 1) {
+          window.history.back();
+          return;
+        }
 
-          // Fallback: navigate to a sensible parent path (first segment) or root
-          const segments = pathname.split("/").filter(Boolean);
-          const fallback = segments.length ? `/${segments[0]}` : "/";
-          router.push(fallback);
-        }}
+        window.location.assign("/");
+      }}
     >
       <ArrowLeft size={16} weight="bold" aria-hidden="true" />
       <span>Back</span>

@@ -67,6 +67,7 @@ body {
 }
 
 html {
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
@@ -3427,6 +3428,857 @@ html {
   outline-offset: 3px;
 }
 
+.prayer-chat-collapsed {
+  position: fixed;
+  left: 50%;
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 59;
+  display: grid;
+  width: min(33rem, calc(100vw - 2rem));
+  min-height: 3.5rem;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid rgba(245, 223, 160, 0.36);
+  background:
+    linear-gradient(135deg, rgba(7, 18, 13, 0.96), rgba(13, 58, 39, 0.96)),
+    #07120d;
+  box-shadow:
+    0 0 0 1px rgba(207, 180, 95, 0.12),
+    0 18px 44px rgba(3, 6, 4, 0.25);
+  color: #fff8e8;
+  padding: 0.45rem 0.5rem 0.45rem 1rem;
+  transform: translateX(-50%);
+  clip-path: polygon(0 0, calc(100% - 1rem) 0, 100% 1rem, 100% 100%, 1rem 100%, 0 calc(100% - 1rem));
+}
+
+.prayer-chat-collapsed:focus-within {
+  border-color: rgba(245, 223, 160, 0.72);
+  box-shadow:
+    0 0 0 4px rgba(207, 180, 95, 0.16),
+    0 20px 48px rgba(3, 6, 4, 0.32);
+}
+
+.prayer-chat-collapsed-logo {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(245, 223, 160, 0.28);
+  border-radius: 999px;
+  background: #fff8e8;
+  object-fit: contain;
+  padding: 0.1rem;
+}
+
+.prayer-chat-collapsed textarea {
+  min-width: 0;
+  height: 2rem;
+  max-height: 2rem;
+  resize: none;
+  border: 0;
+  background: transparent;
+  color: #fff8e8;
+  font-size: 1rem;
+  line-height: 2rem;
+  outline: 0;
+  overflow: hidden;
+}
+
+.prayer-chat-collapsed textarea::placeholder {
+  color: rgba(255, 248, 232, 0.62);
+}
+
+.prayer-chat-collapsed kbd {
+  border: 1px solid rgba(245, 223, 160, 0.18);
+  background: rgba(255, 248, 232, 0.06);
+  padding: 0.25rem 0.45rem;
+  color: rgba(255, 248, 232, 0.68);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.prayer-chat-collapsed button,
+.prayer-chat-header button,
+.prayer-chat-composer button,
+.prayer-chat-suggestions button,
+.prayer-chat-mobile-trigger {
+  touch-action: manipulation;
+}
+
+.prayer-chat-collapsed button {
+  display: inline-flex;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(245, 223, 160, 0.42);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, #fff1bd, #dfc66e 52%, #cfb45f),
+    #f5dfa0;
+  color: #07120d;
+  box-shadow:
+    0 0 0 1px rgba(245, 223, 160, 0.22),
+    0 8px 20px rgba(3, 6, 4, 0.24);
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.prayer-chat-collapsed button:hover,
+.prayer-chat-collapsed button:focus-visible {
+  background:
+    linear-gradient(135deg, #fff6cf, #f5dfa0 52%, #dfc66e),
+    #f5dfa0;
+  box-shadow:
+    0 0 0 4px rgba(207, 180, 95, 0.22),
+    0 10px 24px rgba(3, 6, 4, 0.3);
+}
+
+.prayer-chat-collapsed button svg {
+  color: #07120d;
+}
+
+.prayer-chat-collapsed button:focus-visible {
+  outline: 2px solid #fff8e8;
+  outline-offset: 3px;
+}
+
+.prayer-chat-collapsed button:active {
+  transform: scale(0.96);
+}
+
+.prayer-chat-mobile-trigger {
+  position: fixed;
+  left: max(0.75rem, env(safe-area-inset-left));
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  z-index: 59;
+  display: none;
+  width: 3.25rem;
+  height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(245, 223, 160, 0.42);
+  border-radius: 999px;
+  background: #fff8e8;
+  box-shadow:
+    0 0 0 1px rgba(207, 180, 95, 0.18),
+    0 18px 38px rgba(3, 6, 4, 0.26);
+  padding: 0;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.prayer-chat-mobile-trigger img {
+  position: relative;
+  z-index: 1;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  object-fit: contain;
+}
+
+.prayer-chat-mobile-trigger:hover,
+.prayer-chat-mobile-trigger:focus-visible {
+  border-color: rgba(245, 223, 160, 0.82);
+  box-shadow:
+    0 0 0 4px rgba(207, 180, 95, 0.18),
+    0 20px 44px rgba(3, 6, 4, 0.3);
+  transform: translateY(-1px);
+}
+
+.prayer-chat-mobile-trigger:focus-visible {
+  outline: 2px solid #f5dfa0;
+  outline-offset: 3px;
+}
+
+.prayer-chat-trigger-ring {
+  position: absolute;
+  inset: -0.35rem;
+  border-radius: 999px;
+  background:
+    conic-gradient(from 0deg, #cfb45f, #6d1237, #0d3a27, #f5dfa0, #cfb45f);
+  filter: blur(0.35rem);
+  opacity: 0.74;
+  animation: prayer-chat-spin 9s linear infinite;
+}
+
+.prayer-chat-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.prayer-chat-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background:
+    radial-gradient(42rem 30rem at 50% 46%, rgba(207, 180, 95, 0.14), transparent 62%),
+    rgba(3, 6, 4, 0.64);
+  backdrop-filter: blur(12px) saturate(0.88);
+  pointer-events: auto;
+}
+
+.prayer-chat-panel {
+  --prayer-chat-vh: 100dvh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  display: flex;
+  width: min(49rem, calc(100vw - 2rem));
+  height: min(42rem, calc(100dvh - 3rem));
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(245, 223, 160, 0.24);
+  border-radius: 0.85rem;
+  background:
+    linear-gradient(112deg, rgba(255, 248, 232, 0.11) 0 1px, transparent 1px 48%),
+    linear-gradient(145deg, rgba(7, 18, 13, 0.98), rgba(13, 58, 39, 0.97) 58%, rgba(3, 6, 4, 0.98)),
+    #07120d;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 232, 0.08),
+    0 34px 90px rgba(3, 6, 4, 0.5),
+    0 0 0 1px rgba(207, 180, 95, 0.08);
+  color: #fff8e8;
+  pointer-events: auto;
+  animation: prayer-chat-enter 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.prayer-chat-header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-bottom: 1px solid rgba(245, 223, 160, 0.14);
+  padding: 0.85rem 0.85rem 0.8rem 1rem;
+}
+
+.prayer-chat-brand {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.prayer-chat-brand img {
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  border: 1px solid rgba(245, 223, 160, 0.22);
+  border-radius: 999px;
+  background: #fff8e8;
+  object-fit: contain;
+}
+
+.prayer-chat-brand h2 {
+  overflow: hidden;
+  color: #fff8e8;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prayer-chat-brand p {
+  margin-top: 0.12rem;
+  color: rgba(255, 248, 232, 0.62);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.prayer-chat-header-actions {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.prayer-chat-header button {
+  display: inline-flex;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(245, 223, 160, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 248, 232, 0.05);
+  color: #fff8e8;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.prayer-chat-header button:hover,
+.prayer-chat-header button:focus-visible {
+  border-color: rgba(245, 223, 160, 0.42);
+  background: rgba(255, 248, 232, 0.1);
+  color: #f5dfa0;
+}
+
+.prayer-chat-header button:focus-visible,
+.prayer-chat-composer button:focus-visible,
+.prayer-chat-suggestions button:focus-visible {
+  outline: 2px solid #f5dfa0;
+  outline-offset: 3px;
+}
+
+.prayer-chat-header button:active,
+.prayer-chat-composer button:active,
+.prayer-chat-suggestions button:active {
+  transform: scale(0.97);
+}
+
+.prayer-chat-stream {
+  position: relative;
+  height: 0.2rem;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: rgba(255, 248, 232, 0.05);
+}
+
+.prayer-chat-stream span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 42%;
+  background: linear-gradient(90deg, transparent, #cfb45f, #6d1237, transparent);
+  animation: prayer-chat-stream 1.7s ease-in-out infinite;
+}
+
+.prayer-chat-messages {
+  display: flex;
+  min-height: 18rem;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.85rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 1rem;
+  scrollbar-color: rgba(245, 223, 160, 0.32) transparent;
+}
+
+.prayer-chat-empty {
+  display: grid;
+  min-height: 100%;
+  align-content: center;
+  justify-items: start;
+  gap: 0.65rem;
+  padding: 1rem 0.2rem;
+}
+
+.prayer-chat-empty img {
+  width: 4.75rem;
+  height: 4.75rem;
+  border: 1px solid rgba(245, 223, 160, 0.22);
+  border-radius: 999px;
+  background: #fff8e8;
+  object-fit: contain;
+}
+
+.prayer-chat-kicker {
+  color: #cfb45f;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.prayer-chat-empty h3 {
+  max-width: 14ch;
+  color: #fff8e8;
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  font-size: clamp(2rem, 8vw, 3.2rem);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 0.96;
+}
+
+.prayer-chat-empty p:not(.prayer-chat-kicker) {
+  max-width: 31rem;
+  color: rgba(255, 248, 232, 0.78);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.prayer-chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding-top: 0.25rem;
+}
+
+.prayer-chat-suggestions button {
+  min-height: 2.5rem;
+  border: 1px solid rgba(245, 223, 160, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 248, 232, 0.06);
+  color: #fff8e8;
+  padding: 0 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.prayer-chat-suggestions button:hover,
+.prayer-chat-suggestions button:focus-visible {
+  border-color: rgba(245, 223, 160, 0.45);
+  background: rgba(207, 180, 95, 0.14);
+  color: #f5dfa0;
+}
+
+.prayer-chat-message {
+  display: flex;
+  gap: 0.65rem;
+  max-width: min(86%, 31rem);
+  animation: prayer-chat-message-in 180ms ease-out both;
+}
+
+.prayer-chat-message > img {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border: 1px solid rgba(245, 223, 160, 0.22);
+  border-radius: 999px;
+  background: #fff8e8;
+  object-fit: contain;
+}
+
+.prayer-chat-message > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  border: 1px solid rgba(245, 223, 160, 0.13);
+  background: rgba(255, 248, 232, 0.07);
+  color: rgba(255, 248, 232, 0.92);
+  padding: 0.75rem 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.58;
+  white-space: pre-wrap;
+}
+
+.prayer-chat-message strong {
+  color: #fff8e8;
+  font-weight: 800;
+}
+
+.prayer-chat-message-user strong {
+  color: #07120d;
+}
+
+.prayer-chat-message-user {
+  align-self: flex-end;
+  justify-content: flex-end;
+}
+
+.prayer-chat-message-user > div {
+  border-color: rgba(207, 180, 95, 0.32);
+  background: #cfb45f;
+  color: #07120d;
+}
+
+.prayer-chat-message-assistant {
+  align-self: flex-start;
+}
+
+.prayer-chat-inline-link {
+  color: #f5dfa0;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.prayer-chat-message-user .prayer-chat-inline-link {
+  color: #07120d;
+}
+
+.prayer-chat-thinking {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.26rem;
+  min-height: 1.4rem;
+}
+
+.prayer-chat-thinking span {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: #cfb45f;
+  animation: prayer-chat-dot 1s ease-in-out infinite;
+}
+
+.prayer-chat-thinking span:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.prayer-chat-thinking span:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.prayer-chat-caret {
+  display: inline-block;
+  width: 0.48rem;
+  height: 1rem;
+  margin-left: 0.16rem;
+  background: #cfb45f;
+  vertical-align: -0.12rem;
+  animation: prayer-chat-caret 820ms steps(2, jump-none) infinite;
+}
+
+.prayer-chat-error {
+  flex-shrink: 0;
+  border-top: 1px solid rgba(245, 223, 160, 0.12);
+  background: rgba(109, 18, 55, 0.18);
+  color: #fff8e8;
+  padding: 0.65rem 1rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.prayer-chat-error a {
+  color: #f5dfa0;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.prayer-chat-composer {
+  display: grid;
+  flex-shrink: 0;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 0.6rem;
+  border-top: 1px solid rgba(245, 223, 160, 0.14);
+  background: rgba(3, 6, 4, 0.28);
+  padding: 0.75rem;
+}
+
+.prayer-chat-composer textarea {
+  min-height: 3rem;
+  max-height: 8rem;
+  min-width: 0;
+  resize: vertical;
+  border: 1px solid rgba(245, 223, 160, 0.18);
+  background: rgba(255, 248, 232, 0.08);
+  color: #fff8e8;
+  padding: 0.78rem 0.85rem;
+  font-size: 1rem;
+  line-height: 1.45;
+  outline: 0;
+}
+
+.prayer-chat-composer textarea::placeholder {
+  color: rgba(255, 248, 232, 0.55);
+}
+
+.prayer-chat-composer textarea:focus {
+  border-color: rgba(245, 223, 160, 0.62);
+  box-shadow: 0 0 0 4px rgba(207, 180, 95, 0.14);
+}
+
+.prayer-chat-composer button {
+  display: inline-flex;
+  position: relative;
+  min-width: 6.35rem;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  overflow: hidden;
+  border: 1px solid rgba(245, 223, 160, 0.58);
+  border-radius: 0.65rem;
+  background:
+    linear-gradient(135deg, #f5dfa0, #cfb45f 52%, #b99545),
+    #cfb45f;
+  color: #07120d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    opacity 150ms ease,
+    transform 150ms ease;
+}
+
+.prayer-chat-composer button::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 0 28%, rgba(255, 255, 255, 0.42) 44%, transparent 62%);
+  content: "";
+  opacity: 0;
+  transform: translateX(-110%);
+  transition:
+    opacity 180ms ease,
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.prayer-chat-composer button:hover:not(:disabled)::before,
+.prayer-chat-composer button:focus-visible:not(:disabled)::before {
+  opacity: 1;
+  transform: translateX(110%);
+}
+
+.prayer-chat-composer button > svg,
+.prayer-chat-composer button > span {
+  position: relative;
+  z-index: 1;
+}
+
+.prayer-chat-composer button:hover:not(:disabled),
+.prayer-chat-composer button:focus-visible:not(:disabled) {
+  border-color: rgba(245, 223, 160, 0.82);
+  background:
+    linear-gradient(135deg, #fff1bd, #dfc66e 52%, #cfb45f),
+    #f5dfa0;
+  box-shadow: 0 0 0 4px rgba(207, 180, 95, 0.16);
+}
+
+.prayer-chat-composer .prayer-chat-send-button-stop {
+  border-color: rgba(255, 248, 232, 0.22);
+  background:
+    linear-gradient(135deg, #8d1848, #6d1237 55%, #3c071f),
+    #6d1237;
+  color: #fff8e8;
+}
+
+.prayer-chat-composer .prayer-chat-send-button-stop:hover,
+.prayer-chat-composer .prayer-chat-send-button-stop:focus-visible {
+  border-color: rgba(245, 223, 160, 0.42);
+  background:
+    linear-gradient(135deg, #a81e56, #7d1641 55%, #4a0827),
+    #7d1641;
+  box-shadow: 0 0 0 4px rgba(109, 18, 55, 0.24);
+}
+
+.prayer-chat-composer button:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.prayer-chat-composer button svg {
+  flex-shrink: 0;
+}
+
+.prayer-chat-disclaimer {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.4rem;
+  border-top: 1px solid rgba(245, 223, 160, 0.1);
+  color: rgba(255, 248, 232, 0.58);
+  padding: 0.48rem 0.8rem 0.6rem;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.prayer-chat-disclaimer svg {
+  flex-shrink: 0;
+  color: #cfb45f;
+}
+
+@keyframes prayer-chat-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 0.7rem)) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes prayer-chat-mobile-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.55rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes prayer-chat-message-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes prayer-chat-stream {
+  0% {
+    opacity: 0.2;
+    transform: translateX(-110%);
+  }
+
+  45% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.2;
+    transform: translateX(250%);
+  }
+}
+
+@keyframes prayer-chat-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes prayer-chat-dot {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-0.16rem);
+  }
+}
+
+@keyframes prayer-chat-caret {
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  46%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .prayer-chat-collapsed {
+    display: none;
+  }
+
+  .prayer-chat-mobile-trigger {
+    display: inline-flex;
+  }
+
+  .prayer-chat-panel {
+    inset: 0;
+    width: 100%;
+    height: var(--prayer-chat-vh);
+    max-height: none;
+    border-radius: 0;
+    clip-path: none;
+    transform: none;
+    animation: prayer-chat-mobile-enter 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .prayer-chat-header {
+    padding-top: max(0.85rem, env(safe-area-inset-top));
+  }
+
+  .prayer-chat-messages {
+    min-height: 0;
+    padding: 0.85rem;
+  }
+
+  .prayer-chat-message {
+    max-width: 92%;
+  }
+
+  .prayer-chat-message > div {
+    padding: 0.68rem 0.78rem;
+    font-size: 0.9rem;
+    line-height: 1.62;
+  }
+
+  .prayer-chat-empty h3 {
+    max-width: 13ch;
+    font-size: clamp(1.9rem, 9vw, 2.65rem);
+    line-height: 0.98;
+  }
+
+  .prayer-chat-empty p:not(.prayer-chat-kicker) {
+    font-size: 0.88rem;
+    line-height: 1.62;
+  }
+
+  .prayer-chat-brand h2 {
+    font-size: 0.92rem;
+  }
+
+  .prayer-chat-brand p,
+  .prayer-chat-disclaimer {
+    font-size: 0.7rem;
+  }
+
+  .prayer-chat-composer {
+    padding: 0.65rem max(0.65rem, env(safe-area-inset-right)) 0.65rem max(0.65rem, env(safe-area-inset-left));
+  }
+
+  .prayer-chat-composer button {
+    min-width: 3rem;
+    width: 3rem;
+    border-radius: 999px;
+    padding: 0;
+  }
+
+  .prayer-chat-composer button span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .prayer-chat-disclaimer {
+    padding-bottom: max(0.6rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prayer-chat-panel,
+  .prayer-chat-message,
+  .prayer-chat-stream span,
+  .prayer-chat-trigger-ring,
+  .prayer-chat-thinking span,
+  .prayer-chat-caret,
+  .prayer-chat-composer button:disabled svg,
+  .prayer-chat-composer button::before {
+    animation: none;
+  }
+
+  .prayer-chat-collapsed button,
+  .prayer-chat-header button,
+  .prayer-chat-composer button,
+  .prayer-chat-mobile-trigger,
+  .prayer-chat-suggestions button {
+    transition-duration: 1ms;
+  }
+}
+
 /* Reduce floating action sizes on small screens for better hit targets and less visual weight */
 @media (max-width: 639px) {
   .floating-whatsapp,
@@ -5084,6 +5936,11 @@ html {
 .prayer-army-scripture-line span {
   color: #506157;
   line-height: 1.65;
+}
+
+.prayer-watch-page {
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 .support-architecture-list {
@@ -7354,21 +8211,24 @@ html {
   }
 
   .prayer-watch-page .prayer-army-scripture-ribbon {
-    display: flex;
-    overflow-x: auto;
+    display: grid;
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
     gap: 0.55rem;
     border: 0;
     padding: 0 0.65rem 0.3rem;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: none;
   }
 
   .prayer-watch-page .prayer-army-scripture-line {
-    min-width: 78%;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
     border: 1px solid rgba(16, 37, 29, 0.1);
     border-radius: 1.15rem !important;
     background: rgba(255, 253, 248, 0.9);
-    scroll-snap-align: start;
+    scroll-snap-align: none;
     animation: mobile-soft-rise 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
@@ -7788,5 +8648,107 @@ html {
   .support-page .testimony-hero-copy,
   .testimony-index-page .testimony-hero-copy {
     animation: none;
+  }
+}
+
+/* Hero/back-button stability pass: keep the browser-style Back control clear of hero copy. */
+.hero-back-button {
+  top: max(5rem, calc(4.2rem + env(safe-area-inset-top))) !important;
+  bottom: auto !important;
+}
+
+.testimony-hero {
+  min-height: clamp(24rem, 52svh, 38rem);
+}
+
+.testimony-hero-inner {
+  display: grid;
+  min-height: clamp(24rem, 52svh, 38rem);
+  align-content: start;
+  align-items: start;
+  padding-top: max(8.25rem, calc(7rem + env(safe-area-inset-top)));
+  padding-bottom: 2.5rem;
+}
+
+.testimony-hero-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.home-hero {
+  min-height: max(44rem, calc(100svh - 4.75rem));
+}
+
+.home-hero-grid {
+  min-height: max(44rem, calc(100svh - 4.75rem));
+  align-content: start;
+  align-items: start;
+  padding-top: max(8.75rem, calc(7.25rem + env(safe-area-inset-top)));
+}
+
+@media (min-width: 1024px) {
+  .testimony-hero {
+    min-height: clamp(24rem, 48svh, 36rem) !important;
+  }
+
+  .testimony-hero-inner {
+    display: grid !important;
+    min-height: clamp(24rem, 48svh, 36rem) !important;
+    align-content: start !important;
+    align-items: start !important;
+    padding-top: max(8rem, calc(6.75rem + env(safe-area-inset-top))) !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .home-hero-grid {
+    align-content: start !important;
+    align-items: start !important;
+    padding-top: max(8.75rem, calc(7.25rem + env(safe-area-inset-top))) !important;
+  }
+
+  .hero-back-button {
+    top: max(5.3rem, calc(4.45rem + env(safe-area-inset-top))) !important;
+    left: max(1.25rem, env(safe-area-inset-left)) !important;
+  }
+}
+
+@media (max-width: 639px) {
+  .prayer-watch-page {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  .prayer-watch-page :where(section, div, article) {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .prayer-watch-page :where(.prayer-army-remnant-section, .testimony-ledger-section, .ministry-community-cta) {
+    overflow-x: hidden;
+  }
+
+  .hero-back-button {
+    top: max(4.35rem, calc(3.75rem + env(safe-area-inset-top))) !important;
+    left: max(0.72rem, env(safe-area-inset-left)) !important;
+  }
+
+  .testimony-hero,
+  .home-hero,
+  .prayer-watch-page .testimony-hero,
+  .ministry-page .testimony-hero,
+  .support-page .testimony-hero,
+  .testimony-index-page .testimony-hero {
+    min-height: 100svh !important;
+  }
+
+  .testimony-hero-inner,
+  .home-hero-grid,
+  .prayer-watch-page .testimony-hero-inner,
+  .ministry-page .testimony-hero-inner,
+  .support-page .testimony-hero-inner,
+  .testimony-index-page .testimony-hero-inner {
+    min-height: 100svh !important;
+    padding-top: max(8.25rem, calc(7.1rem + env(safe-area-inset-top))) !important;
   }
 }

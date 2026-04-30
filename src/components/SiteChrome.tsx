@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { FloatingActions } from "./FloatingActions";
 import { HeroBackControls } from "./HeroBackControls";
+import { PrayerAssistant } from "./PrayerAssistant";
 
 const headerlessRoutePrefixes = ["/support/give"];
 
@@ -29,6 +30,7 @@ export function SiteChrome({ children, footer, header }: SiteChromeProps) {
       <HeroBackControls />
       {children}
       <FloatingActions />
+      <PrayerAssistant />
       {footer}
     </>
   );
