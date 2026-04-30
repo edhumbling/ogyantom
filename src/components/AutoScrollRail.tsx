@@ -25,6 +25,7 @@ export function AutoScrollRail({
   const focusWithinRef = useRef(false);
   const resumeTimerRef = useRef<number | null>(null);
   const [paused, setPaused] = useState(false);
+  const [isMobileRail, setIsMobileRail] = useState(false);
 
   const syncPausedState = useCallback(() => {
     const nextPaused =
@@ -52,7 +53,7 @@ export function AutoScrollRail({
   const moveByPage = useCallback((direction: -1 | 1) => {
     const rail = railRef.current;
 
-    if (!rail) {
+    if (!rail || isMobileRail) {
       return;
     }
 
@@ -61,12 +62,22 @@ export function AutoScrollRail({
       left: direction * rail.clientWidth * 0.78,
       behavior: "smooth",
     });
-  }, [pauseTemporarily]);
+  }, [isMobileRail, pauseTemporarily]);
+
+  useEffect(() => {
+    const mobileQuery = window.matchMedia("(max-width: 767px), (pointer: coarse)");
+    const updateMobileState = () => setIsMobileRail(mobileQuery.matches);
+
+    updateMobileState();
+    mobileQuery.addEventListener("change", updateMobileState);
+
+    return () => mobileQuery.removeEventListener("change", updateMobileState);
+  }, []);
 
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    if (motionQuery.matches) {
+    if (motionQuery.matches || isMobileRail) {
       return;
     }
 
@@ -100,7 +111,7 @@ export function AutoScrollRail({
     return () => {
       window.cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [isMobileRail]);
 
   useEffect(() => {
     return () => {
@@ -114,15 +125,27 @@ export function AutoScrollRail({
     <div
       className={`auto-scroll-shell ${shellClassName}`}
       onPointerEnter={() => {
+        if (isMobileRail) {
+          return;
+        }
+
         pointerInsideRef.current = true;
         syncPausedState();
       }}
       onPointerLeave={() => {
+        if (isMobileRail) {
+          return;
+        }
+
         pointerInsideRef.current = false;
         pointerHeldRef.current = false;
         syncPausedState();
       }}
       onPointerDown={() => {
+        if (isMobileRail) {
+          return;
+        }
+
         pointerHeldRef.current = true;
         if (resumeTimerRef.current) {
           window.clearTimeout(resumeTimerRef.current);
@@ -131,18 +154,34 @@ export function AutoScrollRail({
         syncPausedState();
       }}
       onPointerUp={() => {
+        if (isMobileRail) {
+          return;
+        }
+
         pointerHeldRef.current = false;
         pauseTemporarily(2400);
       }}
       onPointerCancel={() => {
+        if (isMobileRail) {
+          return;
+        }
+
         pointerHeldRef.current = false;
         pauseTemporarily(1600);
       }}
       onFocusCapture={() => {
+        if (isMobileRail) {
+          return;
+        }
+
         focusWithinRef.current = true;
         syncPausedState();
       }}
       onBlurCapture={() => {
+        if (isMobileRail) {
+          return;
+        }
+
         focusWithinRef.current = false;
         syncPausedState();
       }}

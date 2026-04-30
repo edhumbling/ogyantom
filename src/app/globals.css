@@ -11879,6 +11879,30 @@ html {
 }
 
 @media (max-width: 767px) {
+  .auto-scroll-shell {
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .auto-scroll-shell .home-card-rail,
+  .auto-scroll-shell .home-watch-list,
+  .auto-scroll-shell .testimony-card-grid,
+  .auto-scroll-shell .sanity-square-grid,
+  .auto-scroll-shell .ministry-pillar-rail,
+  .auto-scroll-shell .ministry-value-ribbon,
+  .auto-scroll-shell .support-giving-options,
+  .auto-scroll-shell .support-architecture-list,
+  .auto-scroll-shell .support-social-rail,
+  .auto-scroll-shell .legal-card-grid,
+  .auto-scroll-shell .prayer-army-scripture-ribbon,
+  .auto-scroll-shell .prayer-watch-grid {
+    touch-action: pan-y pinch-zoom !important;
+    overscroll-behavior-inline: auto !important;
+  }
+
+  .auto-scroll-arrow {
+    display: none !important;
+  }
+
   .prayer-chat-header-actions {
     gap: 0 !important;
   }
