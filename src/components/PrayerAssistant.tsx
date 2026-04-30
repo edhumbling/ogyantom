@@ -28,9 +28,9 @@ type Message = {
 
 const logo = "/brand/ogya-ntom-prayer-logo.png";
 const welcomeSuggestions = [
-  "Pray with me for strength",
-  "What are the prayer watch times?",
-  "Help me submit a prayer request",
+  "Pray with me",
+  "Prayer watch times",
+  "Send a prayer request",
 ];
 
 function createMessageId() {
@@ -526,12 +526,9 @@ export function PrayerAssistant() {
               {!hasMessages && (
                 <div className="prayer-chat-empty">
                   <Image src={logo} alt="" width={76} height={76} priority />
-                  <p className="prayer-chat-kicker">Holy Spirit-sensitive support</p>
-                  <h3>How can we pray with you today?</h3>
-                  <p>
-                    Ask for prayer, Bible encouragement, prayer watch times, ministry links,
-                    giving support, or help submitting a confidential prayer request.
-                  </p>
+                  <p className="prayer-chat-kicker">Prayer support</p>
+                  <h3>How can we pray?</h3>
+                  <p>Ask for prayer, Scripture, watch times, or a ministry link.</p>
                   <div className="prayer-chat-suggestions" aria-label="Suggested prompts">
                     {welcomeSuggestions.map((suggestion) => (
                       <button
