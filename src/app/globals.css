@@ -12004,3 +12004,113 @@ html {
     overflow-wrap: anywhere;
   }
 }
+
+/* Mobile menu socials and self-moving card rails. */
+.mobile-menu-socials {
+  display: grid;
+  gap: 0.62rem;
+  padding: 0.82rem 0 max(0.1rem, env(safe-area-inset-bottom));
+}
+
+.mobile-menu-socials p {
+  color: rgba(255, 248, 232, 0.58);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.mobile-menu-socials div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mobile-menu-socials a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  border: 1px solid rgba(245, 223, 160, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 248, 232, 0.075);
+  padding: 0 0.82rem;
+  color: rgba(255, 248, 232, 0.82);
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.mobile-menu-socials a:hover,
+.mobile-menu-socials a:focus-visible {
+  border-color: rgba(245, 223, 160, 0.48);
+  background: rgba(245, 223, 160, 0.14);
+  color: #fff8e8;
+  transform: translateY(-1px);
+}
+
+.mobile-menu-socials a:focus-visible {
+  outline: 2px solid #f5dfa0;
+  outline-offset: 3px;
+}
+
+.mobile-menu-panel-open .mobile-menu-socials {
+  opacity: 0;
+  animation: mobile-menu-step-unveil 520ms cubic-bezier(0.16, 1, 0.3, 1) 500ms both;
+}
+
+@media (max-width: 767px) {
+  .mobile-menu-socials {
+    gap: 0.5rem;
+    padding-top: 0.62rem;
+  }
+
+  .mobile-menu-socials div {
+    gap: 0.42rem;
+  }
+
+  .mobile-menu-socials a {
+    min-height: 2.75rem;
+    padding: 0 0.72rem;
+  }
+
+  .auto-scroll-shell,
+  .auto-scroll-shell .home-card-rail,
+  .auto-scroll-shell .home-watch-list,
+  .auto-scroll-shell .testimony-card-grid,
+  .auto-scroll-shell .sanity-square-grid,
+  .auto-scroll-shell .ministry-pillar-rail,
+  .auto-scroll-shell .ministry-value-ribbon,
+  .auto-scroll-shell .support-giving-options,
+  .auto-scroll-shell .support-architecture-list,
+  .auto-scroll-shell .support-social-rail,
+  .auto-scroll-shell .legal-card-grid,
+  .auto-scroll-shell .prayer-army-scripture-ribbon,
+  .auto-scroll-shell .prayer-watch-grid {
+    touch-action: pan-x pan-y pinch-zoom !important;
+  }
+
+  .auto-scroll-arrow {
+    display: inline-flex !important;
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu-panel-open .mobile-menu-socials {
+    animation: none;
+    filter: none;
+    opacity: 1;
+    transform: none;
+  }
+}

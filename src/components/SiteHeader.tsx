@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, List, X } from "@phosphor-icons/react";
+import { ArrowRight, FacebookLogo, List, TiktokLogo, WhatsappLogo, X } from "@phosphor-icons/react";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { navItems } from "@/lib/site";
+import { contactDetails, navItems } from "@/lib/site";
 import { LogoMark } from "./LogoMark";
 
 export function SiteHeader() {
@@ -194,6 +194,27 @@ export function SiteHeader() {
                   <span>Give / Support</span>
                   <ArrowRight size={15} weight="bold" aria-hidden="true" />
                 </Link>
+              </div>
+              <div
+                className="mobile-menu-socials"
+                role="group"
+                aria-labelledby="mobile-menu-socials-heading"
+              >
+                <p id="mobile-menu-socials-heading">Watchman Opanin Thomas</p>
+                <div>
+                  <a href={contactDetails.whatsapp} onClick={closeMenu} aria-label="Message Watchman Opanin Thomas on WhatsApp">
+                    <WhatsappLogo size={16} weight="bold" aria-hidden="true" />
+                    <span>WhatsApp</span>
+                  </a>
+                  <a href={contactDetails.tiktok} target="_blank" rel="noreferrer" onClick={closeMenu} aria-label="Open Watchman Opanin Thomas on TikTok">
+                    <TiktokLogo size={16} weight="bold" aria-hidden="true" />
+                    <span>TikTok</span>
+                  </a>
+                  <a href={contactDetails.facebook} target="_blank" rel="noreferrer" onClick={closeMenu} aria-label="Open Watchman Opanin Thomas on Facebook">
+                    <FacebookLogo size={16} weight="bold" aria-hidden="true" />
+                    <span>Facebook</span>
+                  </a>
+                </div>
               </div>
             </nav>
           </div>
