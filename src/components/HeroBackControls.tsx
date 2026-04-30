@@ -126,14 +126,25 @@ export function HeroBackControls() {
     <button
       type="button"
       className="hero-back-button"
-      onClick={() => {
-        saveScrollPosition(pathname);
-        if (window.history.length > 1) {
-          router.back();
-        } else {
-          router.push("/");
-        }
-      }}
+        onClick={() => {
+          saveScrollPosition(pathname);
+          try {
+            const referrer = document.referrer ? new URL(document.referrer) : null;
+            const sameOriginReferrer = referrer && referrer.origin === window.location.origin && referrer.pathname !== window.location.pathname;
+
+            if (sameOriginReferrer && window.history.length > 1) {
+              router.back();
+              return;
+            }
+          } catch {
+            // fallthrough to fallback push
+          }
+
+          // Fallback: navigate to a sensible parent path (first segment) or root
+          const segments = pathname.split("/").filter(Boolean);
+          const fallback = segments.length ? `/${segments[0]}` : "/";
+          router.push(fallback);
+        }}
     >
       <ArrowLeft size={16} weight="bold" aria-hidden="true" />
       <span>Back</span>

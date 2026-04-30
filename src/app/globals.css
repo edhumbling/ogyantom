@@ -796,6 +796,13 @@ html {
   background: #07120d;
 }
 
+/* Make large Sanity media blocks less overpowering on small screens */
+@media (max-width: 639px) {
+  .sanity-detail-media {
+    min-height: clamp(12rem, 30vw, 18rem);
+  }
+}
+
 .sanity-detail-media > div,
 .sanity-detail-media > img {
   min-height: inherit;
@@ -3283,6 +3290,34 @@ html {
     border-color 150ms ease,
     background-color 150ms ease,
     box-shadow 150ms ease;
+}
+
+/* Desktop: move back button to the very top of hero and increase hero spacing */
+@media (min-width: 64rem) {
+  .testimony-hero,
+  .home-hero,
+  .prayer-command {
+    min-height: 26rem;
+  }
+
+  .testimony-hero .testimony-hero-inner,
+  .home-hero .home-hero-inner,
+  .prayer-command .testimony-hero-inner {
+    padding-top: 8.5rem; /* create room for the back button at the top */
+  }
+
+  .hero-back-button {
+    top: max(1.25rem, env(safe-area-inset-top));
+    bottom: auto;
+    left: max(1.25rem, env(safe-area-inset-left));
+    z-index: 20;
+  }
+
+  /* Ensure hero copy doesn't overlap the top control */
+  .testimony-hero-copy,
+  .home-hero-copy {
+    margin-top: 0.25rem;
+  }
 }
 
 .hero-back-button:hover {
