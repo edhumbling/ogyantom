@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  ArrowDown,
   ArrowUp,
   HandsPraying,
   Plus,
@@ -274,12 +275,15 @@ export function PrayerAssistant() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [showCollapsedBar, setShowCollapsedBar] = useState(true);
+  const [showScrollBottom, setShowScrollBottom] = useState(false);
   const [viewportHeight, setViewportHeight] = useState<number | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const messagesRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const pendingAssistantScrollIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     const updateViewportHeight = () => {
@@ -298,9 +302,89 @@ export function PrayerAssistant() {
     };
   }, []);
 
+  const scrollMessagesToBottom = useCallback((behavior: ScrollBehavior = "smooth") => {
+    messagesEndRef.current?.scrollIntoView({ block: "end", behavior });
+  }, []);
+
+  const updateScrollBottomVisibility = useCallback(() => {
+    const container = messagesRef.current;
+
+    if (!container) {
+      setShowScrollBottom(false);
+      return;
+    }
+
+    const hasOverflow = container.scrollHeight > container.clientHeight + 24;
+    const hasContentBelow =
+      container.scrollTop + container.clientHeight < container.scrollHeight - 36;
+
+    setShowScrollBottom(hasOverflow && hasContentBelow);
+  }, []);
+
+  const scrollMessageToStart = useCallback((messageId: string) => {
+    const container = messagesRef.current;
+    const message = container?.querySelector<HTMLElement>(
+      `[data-message-id="${messageId}"]`,
+    );
+
+    if (!container || !message) {
+      return false;
+    }
+
+    const containerRect = container.getBoundingClientRect();
+    const messageRect = message.getBoundingClientRect();
+    const nextTop = container.scrollTop + messageRect.top - containerRect.top - 10;
+
+    container.scrollTo({ top: Math.max(0, nextTop), behavior: "auto" });
+
+    return true;
+  }, []);
+
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ block: "end" });
-  }, [messages, isLoading]);
+    const pendingAssistantId = pendingAssistantScrollIdRef.current;
+
+    if (!pendingAssistantId) {
+      return;
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      if (scrollMessageToStart(pendingAssistantId)) {
+        pendingAssistantScrollIdRef.current = null;
+      }
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [messages, scrollMessageToStart]);
+
+  useEffect(() => {
+    let frame = 0;
+
+    if (!isOpen) {
+      frame = window.requestAnimationFrame(() => setShowScrollBottom(false));
+      return () => window.cancelAnimationFrame(frame);
+    }
+
+    const container = messagesRef.current;
+
+    if (!container) {
+      return;
+    }
+
+    const scheduleVisibilityUpdate = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(updateScrollBottomVisibility);
+    };
+
+    scheduleVisibilityUpdate();
+    container.addEventListener("scroll", scheduleVisibilityUpdate, { passive: true });
+    window.addEventListener("resize", scheduleVisibilityUpdate);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      container.removeEventListener("scroll", scheduleVisibilityUpdate);
+      window.removeEventListener("resize", scheduleVisibilityUpdate);
+    };
+  }, [isOpen, isLoading, messages, updateScrollBottomVisibility]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -356,6 +440,7 @@ export function PrayerAssistant() {
     setInput("");
     setError("");
     setIsLoading(false);
+    setShowScrollBottom(false);
     window.setTimeout(() => inputRef.current?.focus(), 0);
   }, []);
 
@@ -467,8 +552,12 @@ export function PrayerAssistant() {
       return;
     }
 
-    setIsOpen(true);
-    setMessages(qaFixtures);
+    const frame = window.requestAnimationFrame(() => {
+      setIsOpen(true);
+      setMessages(qaFixtures);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   const sendMessage = useCallback(
@@ -491,6 +580,7 @@ export function PrayerAssistant() {
       const assistantId = createMessageId();
       const nextMessages = [...messages, userMessage];
 
+      pendingAssistantScrollIdRef.current = assistantId;
       setMessages([
         ...nextMessages,
         { id: assistantId, role: "assistant", content: "" },
@@ -716,7 +806,12 @@ export function PrayerAssistant() {
               <span />
             </div>
 
-            <div className="prayer-chat-messages" aria-live="polite" aria-busy={isLoading}>
+            <div
+              ref={messagesRef}
+              className="prayer-chat-messages"
+              aria-live="polite"
+              aria-busy={isLoading}
+            >
               {!hasMessages && (
                 <div className="prayer-chat-empty">
                   <Image src={logo} alt="" width={76} height={76} priority />
@@ -740,6 +835,7 @@ export function PrayerAssistant() {
               {messages.map((message) => (
                 <article
                   key={message.id}
+                  data-message-id={message.id}
                   className={`prayer-chat-message prayer-chat-message-${message.role}`}
                 >
                   {message.role === "assistant" && (
@@ -772,40 +868,55 @@ export function PrayerAssistant() {
               </p>
             )}
 
-            <form className="prayer-chat-composer" onSubmit={handleSubmit}>
-              <label className="sr-only" htmlFor={inputId}>
-                Message Ogya Ntom Prayer Assistant
-              </label>
-              <textarea
-                ref={inputRef}
-                id={inputId}
-                rows={1}
-                value={input}
-                onChange={(event) => {
-                  setInput(event.target.value);
-                  resizePrayerInput(event.currentTarget);
-                }}
-                onKeyDown={handleInputKeyDown}
-                placeholder="Share what you need prayer or Bible help with…"
-                name="prayer-assistant-message"
-                autoComplete="off"
-              />
-              <button
-                type="submit"
-                disabled={!isLoading && !input.trim()}
-                className={`prayer-chat-send-button ${
-                  isLoading ? "prayer-chat-send-button-stop" : ""
-                }`}
-                aria-label={isLoading ? "Stop prayer assistant response" : "Send message"}
-              >
-                {isLoading ? (
-                  <Stop size={18} weight="fill" aria-hidden="true" />
-                ) : (
-                  <ArrowUp size={18} weight="bold" aria-hidden="true" />
-                )}
-                <span>{isLoading ? "Stop" : "Send"}</span>
-              </button>
-            </form>
+            <div className="prayer-chat-composer-area">
+              {showScrollBottom && (
+                <button
+                  type="button"
+                  className="prayer-chat-scroll-bottom"
+                  onClick={() => scrollMessagesToBottom()}
+                  aria-label="Scroll prayer assistant conversation to the latest message"
+                  title="Scroll to latest message"
+                >
+                  <span className="prayer-chat-scroll-icon" aria-hidden="true">
+                    <ArrowDown size={18} weight="bold" aria-hidden="true" />
+                  </span>
+                </button>
+              )}
+              <form className="prayer-chat-composer" onSubmit={handleSubmit}>
+                <label className="sr-only" htmlFor={inputId}>
+                  Message Ogya Ntom Prayer Assistant
+                </label>
+                <textarea
+                  ref={inputRef}
+                  id={inputId}
+                  rows={1}
+                  value={input}
+                  onChange={(event) => {
+                    setInput(event.target.value);
+                    resizePrayerInput(event.currentTarget);
+                  }}
+                  onKeyDown={handleInputKeyDown}
+                  placeholder="Share what you need prayer or Bible help with…"
+                  name="prayer-assistant-message"
+                  autoComplete="off"
+                />
+                <button
+                  type="submit"
+                  disabled={!isLoading && !input.trim()}
+                  className={`prayer-chat-send-button ${
+                    isLoading ? "prayer-chat-send-button-stop" : ""
+                  }`}
+                  aria-label={isLoading ? "Stop prayer assistant response" : "Send message"}
+                >
+                  {isLoading ? (
+                    <Stop size={18} weight="fill" aria-hidden="true" />
+                  ) : (
+                    <ArrowUp size={18} weight="bold" aria-hidden="true" />
+                  )}
+                  <span>{isLoading ? "Stop" : "Send"}</span>
+                </button>
+              </form>
+            </div>
 
             <p className="prayer-chat-disclaimer">
               <HandsPraying size={14} weight="fill" aria-hidden="true" />

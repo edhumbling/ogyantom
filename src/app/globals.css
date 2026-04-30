@@ -11791,3 +11791,192 @@ html {
     height: 5.2rem !important;
   }
 }
+
+/* Prayer assistant scroll controls: centered above the query bar. */
+.prayer-chat-messages {
+  scroll-padding-block: 0.85rem 4.75rem;
+}
+
+.prayer-chat-message-assistant {
+  scroll-margin-top: 0.85rem;
+}
+
+.prayer-chat-composer-area {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.prayer-chat-scroll-bottom {
+  position: absolute;
+  top: -2.5rem;
+  left: 50%;
+  z-index: 3;
+  display: inline-flex;
+  min-width: 2.45rem;
+  min-height: 2.45rem;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: #032014;
+  padding: 0;
+  transform: translateX(-50%);
+  touch-action: manipulation;
+  transition:
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.prayer-chat-scroll-icon {
+  display: inline-flex;
+  width: 2.08rem;
+  height: 2.08rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(208, 255, 232, 0.5);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 36% 24%, rgba(255, 255, 255, 0.36), transparent 42%),
+    #34f5a4 !important;
+  box-shadow:
+    0 10px 24px rgba(1, 10, 6, 0.24),
+    0 0 22px rgba(52, 245, 164, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.prayer-chat-scroll-bottom:hover,
+.prayer-chat-scroll-bottom:focus-visible {
+  color: #02120b;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.prayer-chat-scroll-bottom:hover .prayer-chat-scroll-icon,
+.prayer-chat-scroll-bottom:focus-visible .prayer-chat-scroll-icon {
+  border-color: rgba(208, 255, 232, 0.72);
+  background:
+    radial-gradient(circle at 36% 24%, rgba(255, 255, 255, 0.44), transparent 42%),
+    #58ffb9;
+  box-shadow:
+    0 0 0 4px rgba(52, 245, 164, 0.12),
+    0 12px 28px rgba(1, 10, 6, 0.28),
+    0 0 30px rgba(52, 245, 164, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+
+.prayer-chat-scroll-bottom:focus-visible {
+  outline: 2px solid #f5dfa0;
+  outline-offset: 1px;
+}
+
+.prayer-chat-scroll-bottom:active {
+  transform: translateX(-50%) scale(0.97);
+}
+
+@media (max-width: 767px) {
+  .prayer-chat-header-actions {
+    gap: 0 !important;
+  }
+
+  .prayer-chat-header-actions button + button {
+    margin-left: -0.16rem;
+  }
+
+  .prayer-chat-scroll-bottom {
+    top: -2.18rem;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+
+  .prayer-chat-scroll-icon {
+    width: 1.74rem;
+    height: 1.74rem;
+    border-color: rgba(208, 255, 232, 0.58);
+    background:
+      radial-gradient(circle at 36% 24%, rgba(255, 255, 255, 0.38), transparent 42%),
+      #34f5a4 !important;
+    box-shadow:
+      0 8px 18px rgba(1, 10, 6, 0.22),
+      0 0 18px rgba(52, 245, 164, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .prayer-chat-scroll-icon svg {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prayer-chat-scroll-bottom,
+  .prayer-chat-scroll-icon {
+    transition-duration: 1ms;
+  }
+}
+
+/* Final legal/mobile and chat-header corrections. */
+.prayer-chat-header-actions {
+  gap: 0.08rem !important;
+}
+
+.prayer-chat-header-actions button + button {
+  margin-left: -0.36rem;
+}
+
+@media (max-width: 767px) {
+  .prayer-chat-header-actions {
+    gap: 0 !important;
+  }
+
+  .prayer-chat-header-actions button + button {
+    margin-left: -0.56rem;
+  }
+
+  .legal-page {
+    max-width: 100vw;
+    overflow-x: clip;
+  }
+
+  .legal-page .auto-scroll-shell {
+    overflow: hidden;
+  }
+
+  .legal-page .auto-scroll-arrow {
+    display: none !important;
+  }
+
+  .legal-page .auto-scroll-shell .legal-card-grid {
+    display: grid !important;
+    grid-auto-flow: row !important;
+    grid-auto-columns: initial !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 0.7rem !important;
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+    scroll-padding-inline: 0 !important;
+    padding: 0 0.72rem 0.72rem !important;
+  }
+
+  .legal-page .auto-scroll-shell .legal-card-grid > * {
+    width: 100% !important;
+    max-width: 100% !important;
+    scroll-snap-align: none !important;
+  }
+
+  .legal-page .legal-document,
+  .legal-page .legal-regulator-panel,
+  .legal-page .legal-closing-band,
+  .legal-page .legal-action-strip,
+  .legal-page .legal-side-panel {
+    width: 100%;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+}
