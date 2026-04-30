@@ -3427,6 +3427,37 @@ html {
   outline-offset: 3px;
 }
 
+/* Reduce floating action sizes on small screens for better hit targets and less visual weight */
+@media (max-width: 639px) {
+  .floating-whatsapp,
+  .floating-scroll-top {
+    width: 2.6rem;
+    height: 2.6rem;
+    min-width: 2.6rem;
+    min-height: 2.6rem;
+    border-radius: 999px;
+  }
+
+  .floating-whatsapp img {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  /* Nudge the stack inward slightly on very small screens */
+  .floating-action-stack {
+    right: max(0.6rem, env(safe-area-inset-right));
+    bottom: max(0.6rem, env(safe-area-inset-bottom));
+    gap: 0.5rem;
+  }
+
+  /* Make the scroll-top button icon a bit smaller so it fits the reduced control */
+  .floating-scroll-top svg,
+  .floating-whatsapp svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
 .testimony-hero-media {
   position: absolute;
   inset: 0;
