@@ -115,17 +115,14 @@ export function SiteFooter() {
         <p>© 2026 Ogya Ntom Prayer Army</p>
         <div className="footer-utility-links">
           <p className="text-[#a7b4ad]">Built for prayer, formation, and faithful covering.</p>
-          <Link href="/sitemap.xml" className="footer-sitemap-link">
+          <Link href="/sitemap" className="footer-sitemap-link">
             Sitemap
-            <ArrowRight size={14} weight="bold" aria-hidden="true" />
           </Link>
           <Link href="/privacy" className="footer-sitemap-link">
             Privacy
-            <ArrowRight size={14} weight="bold" aria-hidden="true" />
           </Link>
           <Link href="/terms" className="footer-sitemap-link">
             Terms
-            <ArrowRight size={14} weight="bold" aria-hidden="true" />
           </Link>
         </div>
       </div>

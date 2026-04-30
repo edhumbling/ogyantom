@@ -384,66 +384,75 @@ html {
 .footer-contact-mesh {
   display: grid;
   max-width: 34rem;
-  gap: 0.55rem;
+  gap: 0.65rem;
 }
 
 .footer-contact-primary {
   display: inline-flex;
-  min-height: 2.75rem;
+  min-height: 2.65rem;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.5rem;
   justify-self: start;
-  border: 1px solid rgba(0, 255, 153, 0.22);
-  background: rgba(0, 255, 153, 0.045);
-  padding: 0 0.75rem;
-  color: #dffef2;
+  max-width: 100%;
+  padding: 0.12rem 0;
+  color: #f4fff9;
   font-size: 0.85rem;
   line-height: 1.2;
-  transition: border-color 150ms ease, background-color 150ms ease;
+  text-decoration: none;
+  transition:
+    color 150ms ease,
+    transform 150ms ease;
 }
 
 .footer-contact-primary svg {
   color: #34f5a4;
+  filter: drop-shadow(0 0 10px rgba(52, 245, 164, 0.28));
+}
+
+.footer-contact-primary span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .footer-contact-mini {
   display: flex;
-  max-width: 31rem;
+  max-width: 33rem;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.2rem 0.78rem;
 }
 
 .footer-contact-mini a {
   display: inline-flex;
-  min-height: 2.25rem;
+  min-height: 2.35rem;
   align-items: center;
-  gap: 0.42rem;
-  border: 1px solid rgba(255, 248, 232, 0.1);
-  background: rgba(255, 248, 232, 0.025);
-  padding: 0 0.58rem;
-  color: rgba(255, 248, 232, 0.72);
+  gap: 0.36rem;
+  padding: 0.1rem 0;
+  color: rgba(255, 248, 232, 0.68);
   font-size: 0.73rem;
   line-height: 1;
-  transition: border-color 150ms ease, color 150ms ease, background-color 150ms ease;
+  text-decoration: none;
+  transition:
+    color 150ms ease,
+    transform 150ms ease;
 }
 
 .footer-contact-mini svg {
   color: #34f5a4;
+  opacity: 0.9;
 }
 
 .footer-contact-primary:hover,
 .footer-contact-primary:focus-visible,
 .footer-contact-mini a:hover,
 .footer-contact-mini a:focus-visible {
-  border-color: rgba(52, 245, 164, 0.48);
-  background: rgba(0, 255, 153, 0.075);
   color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .footer-contact-primary:focus-visible,
 .footer-contact-mini a:focus-visible {
   outline: 2px solid #34f5a4;
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
 
 .sanity-card-browser {
@@ -7315,24 +7324,63 @@ html {
 .contact-architecture-panel,
 .platform-architecture-band {
   display: grid;
-  border: 1px solid rgba(16, 37, 29, 0.12);
-  background: #fbf7ee;
-  box-shadow: 0 18px 46px rgba(14, 34, 25, 0.07);
-  clip-path: polygon(0 0, calc(100% - 1.75rem) 0, 100% 1.75rem, 100% 100%, 0 100%);
+  overflow: hidden;
+  border: 1px solid rgba(16, 37, 29, 0.08);
+  border-radius: 1.6rem;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(255, 248, 232, 0.56)),
+    linear-gradient(120deg, rgba(52, 245, 164, 0.12), rgba(207, 180, 95, 0.14), rgba(109, 18, 55, 0.1));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.78) inset,
+    0 24px 70px rgba(14, 34, 25, 0.1);
+  backdrop-filter: blur(24px);
 }
 
 .contact-arch-line,
 .platform-arch-link {
+  position: relative;
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.2rem 0.85rem;
-  align-items: center;
-  min-height: 4.75rem;
-  border-bottom: 1px solid rgba(16, 37, 29, 0.1);
-  padding: 0.95rem 1rem;
+  min-width: 0;
+  min-height: 5.25rem;
+  align-content: center;
+  gap: 0.35rem;
+  border-bottom: 1px solid rgba(16, 37, 29, 0.08);
+  padding: 1.05rem;
   transition:
-    background-color 150ms ease,
-    transform 150ms ease;
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.contact-arch-line::before,
+.platform-arch-link::before {
+  width: 2.75rem;
+  height: 0.2rem;
+  border-radius: 999px;
+  background: #cfb45f;
+  content: "";
+}
+
+.contact-arch-line:nth-child(2)::before,
+.platform-arch-link:nth-child(2)::before {
+  background: #34f5a4;
+}
+
+.contact-arch-line:nth-child(3)::before,
+.platform-arch-link:nth-child(3)::before {
+  background: #6d1237;
+}
+
+.contact-arch-line:nth-child(4)::before {
+  background: #f1b44c;
+}
+
+.contact-arch-line:nth-child(5)::before {
+  background: #4f8cff;
+}
+
+.contact-arch-line:nth-child(6)::before {
+  background: #8b5cf6;
 }
 
 .contact-arch-line:last-child,
@@ -7342,27 +7390,26 @@ html {
 
 .contact-arch-line > svg,
 .platform-arch-link > img {
-  grid-row: span 2;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1px solid rgba(109, 18, 55, 0.14);
-  background: rgba(109, 18, 55, 0.055);
-  padding: 0.5rem;
+  width: 2.35rem;
+  height: 2.35rem;
+  margin-bottom: 0.45rem;
   color: #6d1237;
+  filter: drop-shadow(0 10px 18px rgba(109, 18, 55, 0.12));
 }
 
 .contact-arch-line strong,
 .platform-arch-link strong {
   color: #10251d;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .contact-arch-line span,
 .platform-arch-link span {
-  color: #506157;
+  color: #405348;
+  font-size: 0.98rem;
   line-height: 1.45;
   overflow-wrap: anywhere;
 }
@@ -7375,13 +7422,14 @@ html {
 .contact-arch-line:focus-visible,
 .platform-arch-link:hover,
 .platform-arch-link:focus-visible {
-  background: rgba(207, 180, 95, 0.12);
+  background: rgba(255, 255, 255, 0.42);
+  transform: translateY(-2px);
 }
 
 .contact-arch-line:focus-visible,
 .platform-arch-link:focus-visible {
   outline: 2px solid #cfb45f;
-  outline-offset: 4px;
+  outline-offset: -5px;
 }
 
 .footer-arch-contacts {
@@ -7507,38 +7555,35 @@ html {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.65rem;
+  gap: 0.35rem 0.85rem;
 }
 
 .footer-sitemap-link {
   display: inline-flex;
-  min-height: 2.35rem;
+  min-height: 2.75rem;
   align-items: center;
-  gap: 0.38rem;
-  border: 1px solid rgba(207, 180, 95, 0.2);
-  background: rgba(207, 180, 95, 0.055);
-  padding: 0 0.7rem;
-  color: #d9c777;
+  padding: 0 0.12rem;
+  color: #cfb45f;
   font-size: 0.78rem;
   font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(207, 180, 95, 0.72);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
   transition:
-    border-color 150ms ease,
-    background-color 150ms ease,
     color 150ms ease,
-    transform 150ms ease;
+    text-decoration-color 150ms ease;
 }
 
 .footer-sitemap-link:hover,
 .footer-sitemap-link:focus-visible {
-  border-color: rgba(207, 180, 95, 0.48);
-  background: rgba(207, 180, 95, 0.1);
   color: #fff8e8;
-  transform: translateY(-1px);
+  text-decoration-color: #fff8e8;
 }
 
 .footer-sitemap-link:focus-visible {
   outline: 2px solid #cfb45f;
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
 
 .prayer-routing {
@@ -7815,28 +7860,40 @@ html {
   }
 
   .contact-architecture-panel {
-    grid-template-columns: 1.2fr 0.82fr 0.82fr 1fr 1fr 0.92fr;
-    transform: skewX(-3deg);
+    grid-template-columns: 1.12fr repeat(2, minmax(0, 0.94fr));
   }
 
   .platform-architecture-band {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    transform: skewX(-3deg);
   }
 
   .contact-arch-line,
   .contact-arch-line:nth-child(2n),
   .platform-arch-link,
   .platform-arch-link:nth-child(2n) {
-    min-height: 8.5rem;
-    align-content: end;
-    border-right: 1px solid rgba(16, 37, 29, 0.1);
+    min-height: 13.5rem;
+    align-content: space-between;
+    border-right: 1px solid rgba(16, 37, 29, 0.08);
+    border-bottom: 1px solid rgba(16, 37, 29, 0.08);
+    padding: 1.35rem;
+  }
+
+  .contact-arch-line:nth-child(3n),
+  .contact-arch-line:last-child,
+  .platform-arch-link:nth-child(3n),
+  .platform-arch-link:last-child {
+    border-right: 0;
+  }
+
+  .contact-arch-line:nth-last-child(-n + 3),
+  .platform-arch-link:nth-last-child(-n + 3) {
     border-bottom: 0;
   }
 
-  .contact-arch-line:last-child,
-  .platform-arch-link:last-child {
-    border-right: 0;
+  .contact-arch-line > svg,
+  .platform-arch-link > img {
+    width: 2.65rem;
+    height: 2.65rem;
   }
 
   .footer-arch-contacts {
@@ -9177,19 +9234,92 @@ html {
   }
 
   .footer-contact-mesh {
-    gap: 0.45rem;
+    max-width: 100%;
+    gap: 0.35rem;
     margin-top: 0.9rem;
   }
 
   .footer-contact-primary,
-  .footer-contact-mini a,
+  .footer-contact-mini a {
+    min-height: 2.75rem;
+    padding: 0;
+  }
+
   .footer-sitemap-link {
     min-height: 2.75rem;
-    padding: 0 0.55rem;
+    padding: 0 0.08rem;
   }
 
   .footer-contact-mini {
-    gap: 0.3rem;
+    gap: 0 0.72rem;
+  }
+
+  .footer-contact-primary {
+    font-size: 0.76rem;
+  }
+
+  .footer-contact-mini a {
+    font-size: 0.7rem;
+  }
+
+  .contact-architecture-panel,
+  .platform-architecture-band {
+    overflow: visible;
+    border: 0;
+    border-radius: 0 !important;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .contact-arch-line,
+  .contact-arch-line:nth-child(2n),
+  .platform-arch-link,
+  .platform-arch-link:nth-child(2n) {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    min-height: 4.2rem;
+    gap: 0.18rem 0.65rem;
+    border-right: 0;
+    border-bottom: 1px solid rgba(16, 37, 29, 0.09);
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, 0.62), rgba(255, 248, 232, 0.28));
+    padding: 0.7rem 0.55rem !important;
+    transform: none;
+  }
+
+  .contact-arch-line::before,
+  .platform-arch-link::before {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    width: 0.22rem;
+    height: 2.5rem;
+    border-radius: 999px;
+  }
+
+  .contact-arch-line > svg,
+  .platform-arch-link > img {
+    grid-column: 2;
+    grid-row: 1;
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  .contact-arch-line strong,
+  .platform-arch-link strong {
+    grid-column: 2;
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+  }
+
+  .contact-arch-line span,
+  .platform-arch-link span {
+    grid-column: 2;
+    margin-top: 0;
+    font-size: 0.78rem;
+    line-height: 1.35;
   }
 
   .footer-support-arc {
