@@ -65,6 +65,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     route("/events", 0.78, "weekly"),
     route("/philanthropy", 0.76, "weekly"),
     route("/contact", 0.62, "monthly"),
+    route("/privacy", 0.44, "yearly"),
+    route("/terms", 0.44, "yearly"),
     route("/prayer-watch", 0.52, "yearly"),
     ...coreValues.map((value) => route(`/core-values/${value.slug}`, 0.68, "monthly")),
     ...armyPillars.map((pillar) => route(`/pillars/${pillar.slug}`, 0.68, "monthly")),

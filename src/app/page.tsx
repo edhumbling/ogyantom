@@ -33,6 +33,44 @@ const facetIcons = [
   HandHeart,
 ];
 
+const homeFaqs = [
+  {
+    question: "What does Ogya Ntom Prayer Army actually do?",
+    answer:
+      "Ogya Ntom Prayer Army is an online ministry that gathers people for disciplined morning and evening prayer, receives prayer requests, shares testimonies, teaches prayer culture, and supports people through spiritual covering and practical compassion.",
+  },
+  {
+    question: "How do I join the prayer army?",
+    answer:
+      "Use the Join Prayer Army link to contact the ministry on WhatsApp. A ministry administrator can guide you into the right channel, explain the watch rhythm, and share any current group instructions.",
+  },
+  {
+    question: "Are prayer requests confidential?",
+    answer:
+      "Prayer requests are treated with care and are shared only for prayer, pastoral follow-up, moderation, safety, administration, or legal compliance. Sensitive details may be summarized or withheld to protect dignity and privacy.",
+  },
+  {
+    question: "When does the prayer watch meet?",
+    answer:
+      "The ministry rhythm is Monday to Saturday, with a morning watch at 6:30am and an evening watch at 8:00pm. Current meeting links and channel instructions are shared through the official ministry contact paths.",
+  },
+  {
+    question: "Can I send a testimony?",
+    answer:
+      "Yes. Testimonies are reviewed before publication so the ministry can protect privacy, remove unnecessary personal details, avoid exposing third parties, and keep public stories truthful and respectful.",
+  },
+  {
+    question: "Does the ministry provide professional advice?",
+    answer:
+      "No. The ministry prays, encourages, teaches, and offers spiritual support, but it does not replace emergency services, medical care, counselling, legal advice, financial advice, or child protection services.",
+  },
+  {
+    question: "How is giving handled?",
+    answer:
+      "Giving is voluntary and should be sent only through official ministry channels. Support may be used for prayer work, digital ministry, events, care outreach, and other ministry needs, with records kept for stewardship and compliance.",
+  },
+];
+
 export default function Home() {
   return (
     <main className="home-stage">
@@ -256,6 +294,37 @@ export default function Home() {
             <Link href="/prayer-request" className="home-secondary-action">
               Send Prayer Request
             </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="home-faq-section home-reveal" aria-labelledby="home-faq-title">
+        <div className="home-faq-shell">
+          <div className="home-section-head">
+            <div>
+              <p className="home-kicker home-kicker-dark">FAQ</p>
+              <h2 id="home-faq-title" className="home-section-title">
+                Questions before you join the watch.
+              </h2>
+            </div>
+            <p>
+              Clear answers for prayer requests, testimony, giving, privacy,
+              and the online prayer rhythm.
+            </p>
+          </div>
+
+          <div className="home-faq-list">
+            {homeFaqs.map((item) => (
+              <details className="home-faq-item" key={item.question}>
+                <summary>
+                  <span>{item.question}</span>
+                  <span className="home-faq-cue" aria-hidden="true" />
+                </summary>
+                <div className="home-faq-answer">
+                  <p>{item.answer}</p>
+                </div>
+              </details>
+            ))}
           </div>
         </div>
       </section>

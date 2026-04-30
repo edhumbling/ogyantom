@@ -86,6 +86,12 @@ export function SiteFooter() {
               <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/testimonies">
                 Answered Prayer
               </Link>
+              <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/privacy">
+                Privacy Policy
+              </Link>
+              <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/terms">
+                Terms of Use
+              </Link>
             </div>
           </div>
         </div>
@@ -111,6 +117,14 @@ export function SiteFooter() {
           <p className="text-[#a7b4ad]">Built for prayer, formation, and faithful covering.</p>
           <Link href="/sitemap.xml" className="footer-sitemap-link">
             Sitemap
+            <ArrowRight size={14} weight="bold" aria-hidden="true" />
+          </Link>
+          <Link href="/privacy" className="footer-sitemap-link">
+            Privacy
+            <ArrowRight size={14} weight="bold" aria-hidden="true" />
+          </Link>
+          <Link href="/terms" className="footer-sitemap-link">
+            Terms
             <ArrowRight size={14} weight="bold" aria-hidden="true" />
           </Link>
         </div>
