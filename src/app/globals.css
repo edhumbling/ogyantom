@@ -4454,6 +4454,266 @@ html {
   }
 }
 
+/* Final assistant/homepage corrections: keep later overrides from changing this pass. */
+.prayer-chat-composer {
+  align-items: flex-end;
+}
+
+.prayer-chat-composer textarea {
+  height: auto;
+  max-height: calc((0.94rem * 1.62 * 5) + 1.04rem);
+  overflow-x: hidden;
+  scrollbar-color: rgba(1, 10, 6, 0.54) transparent;
+  scrollbar-width: thin;
+}
+
+.prayer-chat-composer textarea::-webkit-scrollbar {
+  width: 0.38rem;
+}
+
+.prayer-chat-composer textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.prayer-chat-composer textarea::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(1, 10, 6, 0.12), rgba(1, 10, 6, 0.62), rgba(1, 10, 6, 0.12));
+}
+
+.prayer-chat-composer button {
+  overflow: visible;
+}
+
+.prayer-chat-composer button span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.prayer-chat-composer .prayer-chat-send-button-stop {
+  position: relative;
+}
+
+.prayer-chat-composer .prayer-chat-send-button-stop::after {
+  position: absolute;
+  inset: -0.36rem;
+  border: 1px solid rgba(245, 223, 160, 0.5);
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 1px rgba(52, 245, 164, 0.08),
+    0 0 24px rgba(245, 223, 160, 0.16);
+  content: "";
+  opacity: 0.68;
+  pointer-events: none;
+  transform: scale(0.94);
+  animation: prayer-chat-stop-ring 1.45s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prayer-chat-composer .prayer-chat-send-button-stop::after {
+    opacity: 0.42;
+    transform: none;
+    animation: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .home-hero {
+    min-height: max(44rem, calc(100svh - 4.75rem)) !important;
+  }
+
+  .home-hero-grid {
+    min-height: max(44rem, calc(100svh - 4.75rem)) !important;
+    align-content: start !important;
+    align-items: start !important;
+    padding-top: max(8.75rem, calc(7.25rem + env(safe-area-inset-top))) !important;
+    padding-bottom: 2.5rem !important;
+  }
+}
+
+/* Final assistant/homepage corrections: keep later overrides from changing this pass. */
+.prayer-chat-composer {
+  align-items: flex-end;
+}
+
+.prayer-chat-composer textarea {
+  height: auto;
+  max-height: calc((0.94rem * 1.62 * 5) + 1.04rem);
+  overflow-x: hidden;
+  scrollbar-color: rgba(1, 10, 6, 0.54) transparent;
+  scrollbar-width: thin;
+}
+
+.prayer-chat-composer textarea::-webkit-scrollbar {
+  width: 0.38rem;
+}
+
+.prayer-chat-composer textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.prayer-chat-composer textarea::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(1, 10, 6, 0.12), rgba(1, 10, 6, 0.62), rgba(1, 10, 6, 0.12));
+}
+
+.prayer-chat-composer button {
+  overflow: visible;
+}
+
+.prayer-chat-composer button span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.prayer-chat-composer .prayer-chat-send-button-stop {
+  position: relative;
+}
+
+.prayer-chat-composer .prayer-chat-send-button-stop::after {
+  position: absolute;
+  inset: -0.36rem;
+  border: 1px solid rgba(245, 223, 160, 0.5);
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 1px rgba(52, 245, 164, 0.08),
+    0 0 24px rgba(245, 223, 160, 0.16);
+  content: "";
+  opacity: 0.68;
+  pointer-events: none;
+  transform: scale(0.94);
+  animation: prayer-chat-stop-ring 1.45s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prayer-chat-composer .prayer-chat-send-button-stop::after {
+    opacity: 0.42;
+    transform: none;
+    animation: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .home-hero {
+    min-height: max(44rem, calc(100svh - 4.75rem)) !important;
+  }
+
+  .home-hero-grid {
+    min-height: max(44rem, calc(100svh - 4.75rem)) !important;
+    align-content: start !important;
+    align-items: start !important;
+    padding-top: max(8.75rem, calc(7.25rem + env(safe-area-inset-top))) !important;
+    padding-bottom: 2.5rem !important;
+  }
+}
+
+/* Chat composer refinement: five-line growth, subtle scroll, icon-only desktop send. */
+.prayer-chat-composer {
+  align-items: flex-end;
+  border-radius: 1.55rem;
+}
+
+.prayer-chat-composer textarea {
+  height: auto;
+  max-height: calc((0.94rem * 1.62 * 5) + 1.04rem);
+  scrollbar-color: rgba(1, 10, 6, 0.54) transparent;
+  scrollbar-width: thin;
+}
+
+.prayer-chat-composer textarea::-webkit-scrollbar {
+  width: 0.38rem;
+}
+
+.prayer-chat-composer textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.prayer-chat-composer textarea::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(1, 10, 6, 0.12), rgba(1, 10, 6, 0.62), rgba(1, 10, 6, 0.12));
+}
+
+.prayer-chat-composer button {
+  overflow: visible;
+}
+
+.prayer-chat-composer button span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.prayer-chat-composer .prayer-chat-send-button-stop {
+  position: relative;
+}
+
+.prayer-chat-composer .prayer-chat-send-button-stop::after {
+  position: absolute;
+  inset: -0.36rem;
+  border: 1px solid rgba(245, 223, 160, 0.5);
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 1px rgba(52, 245, 164, 0.08),
+    0 0 24px rgba(245, 223, 160, 0.16);
+  content: "";
+  opacity: 0.68;
+  pointer-events: none;
+  transform: scale(0.94);
+  animation: prayer-chat-stop-ring 1.45s ease-in-out infinite;
+}
+
+@keyframes prayer-chat-stop-ring {
+  0% {
+    opacity: 0.68;
+    transform: scale(0.94);
+  }
+
+  70% {
+    opacity: 0.12;
+    transform: scale(1.16);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prayer-chat-composer .prayer-chat-send-button-stop::after {
+    opacity: 0.42;
+    transform: none;
+    animation: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .home-hero {
+    min-height: max(44rem, calc(100svh - 4.75rem)) !important;
+  }
+
+  .home-hero-grid {
+    min-height: max(44rem, calc(100svh - 4.75rem)) !important;
+    align-content: start !important;
+    align-items: start !important;
+    padding-top: max(8.75rem, calc(7.25rem + env(safe-area-inset-top))) !important;
+    padding-bottom: 2.5rem !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .prayer-chat-panel,
   .prayer-chat-message,
@@ -9560,6 +9820,87 @@ html {
   color: rgba(213, 255, 235, 0.42);
   font-size: 0.64rem;
   text-align: center;
+}
+
+/* Final assistant/homepage corrections: keep later overrides from changing this pass. */
+.prayer-chat-composer {
+  align-items: flex-end;
+}
+
+.prayer-chat-composer textarea {
+  height: auto;
+  max-height: calc((0.94rem * 1.62 * 5) + 1.04rem);
+  overflow-x: hidden;
+  scrollbar-color: rgba(1, 10, 6, 0.54) transparent;
+  scrollbar-width: thin;
+}
+
+.prayer-chat-composer textarea::-webkit-scrollbar {
+  width: 0.38rem;
+}
+
+.prayer-chat-composer textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.prayer-chat-composer textarea::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(1, 10, 6, 0.12), rgba(1, 10, 6, 0.62), rgba(1, 10, 6, 0.12));
+}
+
+.prayer-chat-composer button {
+  overflow: visible;
+}
+
+.prayer-chat-composer button span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.prayer-chat-composer .prayer-chat-send-button-stop {
+  position: relative;
+}
+
+.prayer-chat-composer .prayer-chat-send-button-stop::after {
+  position: absolute;
+  inset: -0.36rem;
+  border: 1px solid rgba(245, 223, 160, 0.5);
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 1px rgba(52, 245, 164, 0.08),
+    0 0 24px rgba(245, 223, 160, 0.16);
+  content: "";
+  opacity: 0.68;
+  pointer-events: none;
+  transform: scale(0.94);
+  animation: prayer-chat-stop-ring 1.45s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prayer-chat-composer .prayer-chat-send-button-stop::after {
+    opacity: 0.42;
+    transform: none;
+    animation: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .home-hero {
+    min-height: max(44rem, calc(100svh - 4.75rem)) !important;
+  }
+
+  .home-hero-grid {
+    min-height: max(44rem, calc(100svh - 4.75rem)) !important;
+    align-content: start !important;
+    align-items: start !important;
+    padding-top: max(8.75rem, calc(7.25rem + env(safe-area-inset-top))) !important;
+    padding-bottom: 2.5rem !important;
+  }
 }
 
 @media (max-width: 767px) {

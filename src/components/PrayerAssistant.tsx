@@ -32,6 +32,7 @@ const welcomeSuggestions = [
   "Prayer watch times",
   "Send a prayer request",
 ];
+const maxInputLines = 5;
 
 function createMessageId() {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
@@ -39,6 +40,23 @@ function createMessageId() {
   }
 
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function resizePrayerInput(textarea: HTMLTextAreaElement | null) {
+  if (!textarea) {
+    return;
+  }
+
+  const styles = window.getComputedStyle(textarea);
+  const lineHeight = Number.parseFloat(styles.lineHeight) || 24;
+  const paddingTop = Number.parseFloat(styles.paddingTop) || 0;
+  const paddingBottom = Number.parseFloat(styles.paddingBottom) || 0;
+  const maxHeight = lineHeight * maxInputLines + paddingTop + paddingBottom;
+
+  textarea.style.height = "auto";
+  const nextHeight = Math.min(textarea.scrollHeight, maxHeight);
+  textarea.style.height = `${nextHeight}px`;
+  textarea.style.overflowY = textarea.scrollHeight > maxHeight + 1 ? "auto" : "hidden";
 }
 
 function renderInlineMarkdown(text: string) {
@@ -134,6 +152,14 @@ export function PrayerAssistant() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ block: "end" });
   }, [messages, isLoading]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    resizePrayerInput(inputRef.current);
+  }, [input, isOpen]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -587,7 +613,10 @@ export function PrayerAssistant() {
                 id={inputId}
                 rows={1}
                 value={input}
-                onChange={(event) => setInput(event.target.value)}
+                onChange={(event) => {
+                  setInput(event.target.value);
+                  resizePrayerInput(event.currentTarget);
+                }}
                 onKeyDown={handleInputKeyDown}
                 placeholder="Share what you need prayer or Bible help with…"
                 name="prayer-assistant-message"
