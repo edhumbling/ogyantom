@@ -1,9 +1,16 @@
-import { CHAT_SYSTEM_PROMPT, getChatContext, GROQ_TEXT_MODELS } from "@/lib/chat-context";
+import {
+  CHAT_SYSTEM_PROMPT,
+  getChatContext,
+  GROQ_TEXT_MODELS,
+  OPENROUTER_FREE_TEXT_MODELS,
+} from "@/lib/chat-context";
+import { SITE_NAME, SITE_URL } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 type ChatMessage = {
   role: "user" | "assistant" | "system";
@@ -39,6 +46,10 @@ function normalizeMessages(messages: unknown): ChatMessage[] {
 }
 
 async function tryGroqModel(model: string, messages: ChatMessage[]) {
+  if (!process.env.GROQ_API_KEY) {
+    return null;
+  }
+
   const response = await fetch(GROQ_API_URL, {
     method: "POST",
     headers: {
@@ -63,7 +74,40 @@ async function tryGroqModel(model: string, messages: ChatMessage[]) {
   return null;
 }
 
-function transformGroqStream(body: ReadableStream<Uint8Array>) {
+async function tryOpenRouterFreeModels(messages: ChatMessage[]) {
+  if (!process.env.OPENROUTER_API_KEY) {
+    return null;
+  }
+
+  const [primaryModel, ...fallbackModels] = OPENROUTER_FREE_TEXT_MODELS;
+  const response = await fetch(OPENROUTER_API_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+      "Content-Type": "application/json",
+      "HTTP-Referer": SITE_URL,
+      "X-Title": SITE_NAME,
+    },
+    body: JSON.stringify({
+      model: primaryModel,
+      models: fallbackModels,
+      messages,
+      max_tokens: 1200,
+      temperature: 0.72,
+      top_p: 0.95,
+      stream: true,
+    }),
+  });
+
+  if (response.ok && response.body) {
+    return response;
+  }
+
+  console.warn(`OpenRouter free model fallback chain failed (${response.status})`);
+  return null;
+}
+
+function transformOpenAICompatibleStream(body: ReadableStream<Uint8Array>) {
   const decoder = new TextDecoder();
   const encoder = new TextEncoder();
   let buffer = "";
@@ -117,7 +161,7 @@ function transformGroqStream(body: ReadableStream<Uint8Array>) {
 }
 
 export async function POST(request: Request) {
-  if (!process.env.GROQ_API_KEY) {
+  if (!process.env.GROQ_API_KEY && !process.env.OPENROUTER_API_KEY) {
     return Response.json(
       { error: "The chat assistant is not configured yet." },
       { status: 503 },
@@ -139,7 +183,7 @@ export async function POST(request: Request) {
   }
 
   const chatContext = await getChatContext();
-  const groqMessages: ChatMessage[] = [
+  const providerMessages: ChatMessage[] = [
     {
       role: "system",
       content: `${CHAT_SYSTEM_PROMPT}\n\nUse this ministry context as your source of truth:\n\n${chatContext}`,
@@ -149,10 +193,10 @@ export async function POST(request: Request) {
 
   for (const model of GROQ_TEXT_MODELS) {
     try {
-      const response = await tryGroqModel(model, groqMessages);
+      const response = await tryGroqModel(model, providerMessages);
 
       if (response?.body) {
-        return new Response(transformGroqStream(response.body), {
+        return new Response(transformOpenAICompatibleStream(response.body), {
           headers: {
             "Cache-Control": "no-cache, no-transform",
             Connection: "keep-alive",
@@ -164,6 +208,23 @@ export async function POST(request: Request) {
     } catch (error) {
       console.warn(`Groq chatbot model error: ${model}`, error);
     }
+  }
+
+  try {
+    const response = await tryOpenRouterFreeModels(providerMessages);
+
+    if (response?.body) {
+      return new Response(transformOpenAICompatibleStream(response.body), {
+        headers: {
+          "Cache-Control": "no-cache, no-transform",
+          Connection: "keep-alive",
+          "Content-Type": "text/event-stream; charset=utf-8",
+          "X-Accel-Buffering": "no",
+        },
+      });
+    }
+  } catch (error) {
+    console.warn("OpenRouter chatbot fallback error", error);
   }
 
   return Response.json(

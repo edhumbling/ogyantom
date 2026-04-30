@@ -1,4 +1,4 @@
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
+import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -20,6 +20,9 @@ Discovery:
 - ${SITE_URL}/sitemap.xml
 - ${SITE_URL}/llms.txt
 - ${SITE_URL}/robots.txt
+
+Entity topics:
+${SITE_KEYWORDS.slice(0, 30).map((keyword) => `- ${keyword}`).join("\n")}
 `;
 
   return new Response(body, {

@@ -5,6 +5,8 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import {
   SITE_DESCRIPTION,
+  SITE_LOGO_PATH,
+  SITE_OG_IMAGE_PATH,
   SITE_KEYWORDS,
   SITE_NAME,
   SITE_URL,
@@ -26,6 +28,10 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "Online prayer ministry",
   keywords: SITE_KEYWORDS,
   alternates: {
     canonical: "/",
@@ -42,9 +48,13 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/icon.png",
-    apple: "/apple-icon.png",
+    icon: [
+      { url: "/icon.png", sizes: "512x512", type: "image/png" },
+      { url: "/icon.png", rel: "shortcut icon" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
+  manifest: "/manifest.webmanifest",
   openGraph: {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
@@ -54,10 +64,16 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/brand/ogya-ntom-prayer-logo.png",
-        width: 1039,
-        height: 719,
-        alt: "Ogya Ntom Prayer Army logo",
+        url: SITE_OG_IMAGE_PATH,
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} online prayer ministry`,
+      },
+      {
+        url: SITE_LOGO_PATH,
+        width: 512,
+        height: 512,
+        alt: `${SITE_NAME} logo`,
       },
     ],
   },
@@ -65,10 +81,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
-    images: ["/brand/ogya-ntom-prayer-logo.png"],
+    images: [SITE_OG_IMAGE_PATH],
   },
   other: {
     "og:site_name": SITE_NAME,
+    "apple-mobile-web-app-title": SITE_NAME,
+    "application-name": SITE_NAME,
+    "msapplication-TileImage": SITE_LOGO_PATH,
+    "msapplication-TileColor": "#052616",
   },
 };
 

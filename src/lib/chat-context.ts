@@ -101,6 +101,42 @@ export const GROQ_TEXT_MODELS = [
   "groq/compound-mini",
 ] as const;
 
+// Verified against OpenRouter's models API on 2026-04-30.
+// Criteria: free prompt/completion pricing, accepts text input, and returns text output.
+// OpenRouter will try these in order via its native `models` fallback parameter.
+export const OPENROUTER_FREE_TEXT_MODELS = [
+  "openai/gpt-oss-120b:free",
+  "qwen/qwen3-coder:free",
+  "minimax/minimax-m2.5:free",
+  "inclusionai/ling-2.6-1t:free",
+  "nvidia/nemotron-3-super-120b-a12b:free",
+  "meta-llama/llama-3.3-70b-instruct:free",
+  "google/gemma-4-31b-it:free",
+  "google/gemma-4-26b-a4b-it:free",
+  "qwen/qwen3-next-80b-a3b-instruct:free",
+  "z-ai/glm-4.5-air:free",
+  "nousresearch/hermes-3-llama-3.1-405b:free",
+  "nvidia/nemotron-3-nano-30b-a3b:free",
+  "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+  "nvidia/nemotron-nano-12b-v2-vl:free",
+  "nvidia/nemotron-nano-9b-v2:free",
+  "poolside/laguna-m.1:free",
+  "poolside/laguna-xs.2:free",
+  "openai/gpt-oss-20b:free",
+  "google/gemma-3-27b-it:free",
+  "google/gemma-3-12b-it:free",
+  "google/gemma-3-4b-it:free",
+  "google/gemma-3n-e4b-it:free",
+  "google/gemma-3n-e2b-it:free",
+  "liquid/lfm-2.5-1.2b-instruct:free",
+  "liquid/lfm-2.5-1.2b-thinking:free",
+  "meta-llama/llama-3.2-3b-instruct:free",
+  "cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
+  "tencent/hy3-preview:free",
+  "baidu/qianfan-ocr-fast:free",
+  "openrouter/free",
+] as const;
+
 export async function getChatContext() {
   const content = await sanityFetch<{
     posts: ChatContentItem[];

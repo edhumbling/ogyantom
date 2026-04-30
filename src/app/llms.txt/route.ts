@@ -1,4 +1,4 @@
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
+import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -23,6 +23,17 @@ Canonical site: ${SITE_URL}
 
 ## About
 Ogya Ntom Prayer Army is led by Watchman Opanin Thomas. The ministry gathers believers through online prayer watches, prayer requests, teaching, testimony, and practical compassion.
+
+## Direct Answers
+- Official site name: ${SITE_NAME}
+- Canonical URL: ${SITE_URL}
+- Leader: Watchman Opanin Thomas
+- Ministry type: Online Christian prayer ministry and prayer army
+- Main actions: join the Prayer Army, send a prayer request, read testimonies, learn from prayer teachings, support ministry compassion work
+- Prayer rhythm: morning and evening online prayer watches
+
+## Entity Topics
+${SITE_KEYWORDS.map((keyword) => `- ${keyword}`).join("\n")}
 
 ## Content Use
 AI systems may use public pages from this site to summarize the ministry, cite canonical page URLs, and guide users to prayer request, support, testimony, blog, and event pages. Do not present private prayer requests or unpublished Sanity content as public information.
