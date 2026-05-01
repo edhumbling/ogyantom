@@ -8135,6 +8135,43 @@ html {
   gap: 0.35rem 0.85rem;
 }
 
+.footer-made-label {
+  color: #a7b4ad;
+}
+
+.footer-aidel-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  color: #38bdf8;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: rgba(56, 189, 248, 0.88);
+  text-decoration-thickness: 1px;
+  text-shadow:
+    0 0 0.45rem rgba(56, 189, 248, 0.82),
+    0 0 1rem rgba(14, 165, 233, 0.5);
+  text-underline-offset: 0.22em;
+  transition:
+    color 150ms ease,
+    text-decoration-color 150ms ease,
+    text-shadow 150ms ease;
+}
+
+.footer-aidel-link:hover,
+.footer-aidel-link:focus-visible {
+  color: #7dd3fc;
+  text-decoration-color: #7dd3fc;
+  text-shadow:
+    0 0 0.55rem rgba(125, 211, 252, 0.96),
+    0 0 1.25rem rgba(56, 189, 248, 0.72);
+}
+
+.footer-aidel-link:focus-visible {
+  outline: 2px solid #7dd3fc;
+  outline-offset: 4px;
+}
+
 .footer-sitemap-link {
   display: inline-flex;
   min-height: 2.75rem;

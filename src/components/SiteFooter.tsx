@@ -115,6 +115,17 @@ export function SiteFooter() {
         <p>© 2026 Ogya Ntom Prayer Army</p>
         <div className="footer-utility-links">
           <p className="text-[#a7b4ad]">Built for prayer, formation, and faithful covering.</p>
+          <p className="footer-made-label">
+            Made with eternal love ❤️ by{" "}
+            <a
+              href="https://www.linkedin.com/in/edhumbling"
+              className="footer-aidel-link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              AIDEL
+            </a>
+          </p>
           <Link href="/sitemap" className="footer-sitemap-link">
             Sitemap
           </Link>
