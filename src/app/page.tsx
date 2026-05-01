@@ -75,11 +75,31 @@ export default function Home() {
   return (
     <main className="home-stage">
       <section className="home-hero">
+        <video
+          className="home-hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+        >
+          <source
+            src="https://ik.imagekit.io/humbling/hero%20video.mp4"
+            type="video/mp4"
+            media="(min-width: 1024px)"
+          />
+        </video>
         <div className="home-hero-backdrop" />
         <div className="home-hero-grid">
           <div className="home-hero-copy">
             <p className="home-kicker">Fire here! Fire there!</p>
-            <h1>Ogya Ntom Prayer Army</h1>
+            <h1>
+              <span className="home-title-lock">
+                Ogya <span className="home-title-fire" aria-hidden="true">🔥</span> Ntom
+              </span>{" "}
+              Prayer&nbsp;Army
+            </h1>
             <p>
               A disciplined online prayer community for morning and evening
               intercession, spiritual covering, testimony, and formation under
