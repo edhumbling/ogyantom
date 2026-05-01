@@ -128,15 +128,17 @@ export function SiteFooter() {
               AIDEL
             </a>
           </p>
-          <Link href="/sitemap" className="footer-sitemap-link">
-            Sitemap
-          </Link>
-          <Link href="/privacy" className="footer-sitemap-link">
-            Privacy
-          </Link>
-          <Link href="/terms" className="footer-sitemap-link">
-            Terms
-          </Link>
+          <div className="footer-policy-links" aria-label="Footer policy links">
+            <Link href="/sitemap" className="footer-sitemap-link">
+              Sitemap
+            </Link>
+            <Link href="/privacy" className="footer-sitemap-link">
+              Privacy
+            </Link>
+            <Link href="/terms" className="footer-sitemap-link">
+              Terms
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

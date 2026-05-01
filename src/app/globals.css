@@ -8139,6 +8139,14 @@ html {
   color: #a7b4ad;
 }
 
+.footer-policy-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem 0.85rem;
+}
+
 .footer-aidel-link {
   display: inline-flex;
   min-height: 2.75rem;
@@ -8198,6 +8206,17 @@ html {
 .footer-sitemap-link:focus-visible {
   outline: 2px solid #cfb45f;
   outline-offset: 4px;
+}
+
+@media (min-width: 768px) {
+  .footer-made-label {
+    order: 2;
+    width: 100%;
+  }
+
+  .footer-policy-links {
+    order: 1;
+  }
 }
 
 .prayer-routing {
@@ -9862,6 +9881,17 @@ html {
   .footer-sitemap-link {
     min-height: 2.75rem;
     padding: 0 0.08rem;
+  }
+
+  .footer-made-label {
+    width: 100%;
+    margin-top: 0.1rem;
+  }
+
+  .footer-policy-links {
+    width: 100%;
+    flex-wrap: nowrap;
+    gap: 0.9rem;
   }
 
   .footer-contact-mini {
