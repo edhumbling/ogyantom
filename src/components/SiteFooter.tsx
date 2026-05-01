@@ -13,6 +13,8 @@ import { ArmyMarquee } from "./ArmyMarquee";
 import { LogoMark } from "./LogoMark";
 
 export function SiteFooter() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="bg-[#030604] text-white">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-14 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:px-10">
@@ -112,7 +114,7 @@ export function SiteFooter() {
       </div>
 
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-2 px-5 py-6 text-center text-sm text-[#8d9a93] sm:px-8 lg:px-10">
-        <p>© 2026 Ogya Ntom Prayer Army</p>
+        <p>© {currentYear} Ogya Ntom Prayer Army</p>
         <div className="footer-utility-links">
           <p className="text-[#a7b4ad]">Built for prayer, formation, and faithful covering.</p>
           <p className="footer-made-label">
