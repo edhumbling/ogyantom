@@ -183,7 +183,7 @@ export function SiteHeader() {
                   onClick={closeMenu}
                   className="mobile-glow-action mobile-glow-action-prayer"
                 >
-                  <span>Request Prayer</span>
+                  <span>Prayer Request</span>
                   <ArrowRight size={15} weight="bold" aria-hidden="true" />
                 </Link>
                 <Link

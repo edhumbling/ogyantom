@@ -12475,3 +12475,66 @@ html {
     display: none;
   }
 }
+
+/* Prayer request nav callout: text-only glow on desktop and mobile. */
+@keyframes prayer-request-text-glow {
+  0%,
+  100% {
+    color: #ffffff;
+    text-shadow:
+      0 0 0.28rem rgba(255, 255, 255, 0.68),
+      0 0 0.7rem rgba(255, 255, 255, 0.34);
+  }
+
+  50% {
+    color: #f5dfa0;
+    text-shadow:
+      0 0 0.32rem rgba(245, 223, 160, 0.82),
+      0 0 0.86rem rgba(207, 180, 95, 0.5);
+  }
+}
+
+.nav-prayer-link {
+  border: 0 !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  animation: prayer-request-text-glow 2.8s ease-in-out infinite;
+}
+
+.nav-prayer-link::after {
+  content: none;
+}
+
+.nav-prayer-link:hover,
+.nav-prayer-link:focus-visible,
+.nav-prayer-link-active {
+  background: transparent !important;
+  color: #f5dfa0 !important;
+}
+
+.nav-prayer-link:focus-visible {
+  outline: 2px solid #f5dfa0;
+  outline-offset: 4px;
+}
+
+.mobile-glow-action-prayer span {
+  color: #ffffff;
+  animation: prayer-request-text-glow 2.8s ease-in-out infinite;
+}
+
+.mobile-glow-action-prayer:hover span,
+.mobile-glow-action-prayer:focus-visible span {
+  color: #f5dfa0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-prayer-link,
+  .mobile-glow-action-prayer span {
+    animation: none;
+    color: #f5dfa0 !important;
+    text-shadow:
+      0 0 0.28rem rgba(245, 223, 160, 0.72),
+      0 0 0.72rem rgba(207, 180, 95, 0.42);
+  }
+}
