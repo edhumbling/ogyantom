@@ -6,9 +6,14 @@ import { flushSync } from "react-dom";
 import {
   ArrowDown,
   ArrowUp,
+  CopySimple,
+  GitFork,
   HandsPraying,
+  PencilSimple,
   Plus,
   Stop,
+  ThumbsDown,
+  ThumbsUp,
   X,
 } from "@phosphor-icons/react";
 import {
@@ -31,6 +36,13 @@ type Message = {
 type ViewportMetrics = {
   height: number;
   offsetTop: number;
+};
+
+type MessageFeedback = "like" | "dislike";
+
+type ChatToast = {
+  id: number;
+  message: string;
 };
 
 const logo = "/brand/ogya-ntom-prayer-logo.png";
@@ -283,6 +295,10 @@ export function PrayerAssistant() {
   const [showCollapsedBar, setShowCollapsedBar] = useState(true);
   const [showScrollBottom, setShowScrollBottom] = useState(false);
   const [viewportMetrics, setViewportMetrics] = useState<ViewportMetrics | null>(null);
+  const [messageFeedback, setMessageFeedback] = useState<
+    Record<string, MessageFeedback | undefined>
+  >({});
+  const [toast, setToast] = useState<ChatToast | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -290,6 +306,7 @@ export function PrayerAssistant() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
   const pendingAssistantScrollIdRef = useRef<string | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const updateViewportMetrics = () => {
@@ -444,6 +461,116 @@ export function PrayerAssistant() {
     resizePrayerInput(textarea);
   }, []);
 
+  const showChatToast = useCallback((message: string) => {
+    if (toastTimerRef.current) {
+      window.clearTimeout(toastTimerRef.current);
+    }
+
+    setToast({ id: Date.now(), message });
+    toastTimerRef.current = window.setTimeout(() => {
+      setToast(null);
+      toastTimerRef.current = null;
+    }, 2200);
+  }, []);
+
+  const cancelActiveStream = useCallback(() => {
+    abortRef.current?.abort();
+    abortRef.current = null;
+    setIsLoading(false);
+  }, []);
+
+  const copyToClipboard = useCallback(
+    async (text: string) => {
+      const trimmedText = text.trim();
+
+      if (!trimmedText) {
+        showChatToast("Nothing to copy yet.");
+        return;
+      }
+
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(trimmedText);
+        } else {
+          const copyArea = document.createElement("textarea");
+          copyArea.value = trimmedText;
+          copyArea.setAttribute("readonly", "");
+          copyArea.style.position = "fixed";
+          copyArea.style.top = "-9999px";
+          document.body.appendChild(copyArea);
+          copyArea.select();
+          document.execCommand("copy");
+          copyArea.remove();
+        }
+
+        showChatToast("Copied to clipboard.");
+      } catch {
+        showChatToast("Copy failed. Please try again.");
+      }
+    },
+    [showChatToast],
+  );
+
+  const editUserMessage = useCallback(
+    (message: Message) => {
+      cancelActiveStream();
+      setError("");
+      setInput(message.content);
+      setMessages((currentMessages) => {
+        const messageIndex = currentMessages.findIndex(
+          (currentMessage) => currentMessage.id === message.id,
+        );
+
+        if (messageIndex < 0) {
+          return currentMessages;
+        }
+
+        return currentMessages.slice(0, messageIndex);
+      });
+      showChatToast("Question ready to edit.");
+      window.setTimeout(focusInput, 0);
+    },
+    [cancelActiveStream, focusInput, showChatToast],
+  );
+
+  const rateAssistantMessage = useCallback(
+    (messageId: string, feedback: MessageFeedback) => {
+      setMessageFeedback((currentFeedback) => {
+        const nextFeedback =
+          currentFeedback[messageId] === feedback ? undefined : feedback;
+
+        return {
+          ...currentFeedback,
+          [messageId]: nextFeedback,
+        };
+      });
+      showChatToast(feedback === "like" ? "Marked as helpful." : "Marked as not helpful.");
+    },
+    [showChatToast],
+  );
+
+  const forkAssistantMessage = useCallback(
+    (message: Message) => {
+      cancelActiveStream();
+      setError("");
+      setMessages((currentMessages) => {
+        const messageIndex = currentMessages.findIndex(
+          (currentMessage) => currentMessage.id === message.id,
+        );
+
+        if (messageIndex < 0) {
+          return currentMessages;
+        }
+
+        return currentMessages.slice(0, messageIndex + 1);
+      });
+      setInput("");
+      showChatToast("Forked from this response.");
+      window.setTimeout(focusInput, 0);
+    },
+    [cancelActiveStream, focusInput, showChatToast],
+  );
+
   const openChat = useCallback(() => {
     flushSync(() => setIsOpen(true));
     focusInput();
@@ -480,12 +607,14 @@ export function PrayerAssistant() {
     abortRef.current?.abort();
     abortRef.current = null;
     setMessages([]);
+    setMessageFeedback({});
     setInput("");
     setError("");
     setIsLoading(false);
     setShowScrollBottom(false);
+    showChatToast("Started a new chat.");
     window.setTimeout(() => inputRef.current?.focus(), 0);
-  }, []);
+  }, [showChatToast]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -543,7 +672,13 @@ export function PrayerAssistant() {
   }, [openChat]);
 
   useEffect(() => {
-    return () => abortRef.current?.abort();
+    return () => {
+      abortRef.current?.abort();
+
+      if (toastTimerRef.current) {
+        window.clearTimeout(toastTimerRef.current);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -878,34 +1013,133 @@ export function PrayerAssistant() {
                 </div>
               )}
 
-              {messages.map((message) => (
-                <article
-                  key={message.id}
-                  data-message-id={message.id}
-                  className={`prayer-chat-message prayer-chat-message-${message.role}`}
-                >
-                  {message.role === "assistant" && (
-                    <Image src={logo} alt="" width={32} height={32} />
-                  )}
-                  <div>
-                    {message.content ? (
-                      <MessageContent content={message.content} />
-                    ) : (
-                      <span className="prayer-chat-thinking">
-                        <span />
-                        <span />
-                        <span />
-                      </span>
+              {messages.map((message) => {
+                const feedback = messageFeedback[message.id];
+                const hasContent = Boolean(message.content.trim());
+
+                return (
+                  <article
+                    key={message.id}
+                    data-message-id={message.id}
+                    className={`prayer-chat-message prayer-chat-message-${message.role}`}
+                  >
+                    {message.role === "assistant" && (
+                      <Image src={logo} alt="" width={32} height={32} />
                     )}
-                    {isLoading && message.id === messages[messages.length - 1]?.id && (
-                      <span className="prayer-chat-caret" aria-hidden="true" />
-                    )}
-                  </div>
-                </article>
-              ))}
+                    <div className="prayer-chat-message-stack">
+                      <div className="prayer-chat-message-bubble">
+                        {hasContent ? (
+                          <MessageContent content={message.content} />
+                        ) : (
+                          <span className="prayer-chat-thinking">
+                            <span />
+                            <span />
+                            <span />
+                          </span>
+                        )}
+                        {isLoading && message.id === messages[messages.length - 1]?.id && (
+                          <span className="prayer-chat-caret" aria-hidden="true" />
+                        )}
+                      </div>
+
+                      {hasContent && (
+                        <div
+                          className="prayer-chat-message-actions"
+                          role="group"
+                          aria-label={
+                            message.role === "user"
+                              ? "User message controls"
+                              : "Assistant response controls"
+                          }
+                        >
+                          <button
+                            type="button"
+                            onClick={() => void copyToClipboard(message.content)}
+                            aria-label={
+                              message.role === "user"
+                                ? "Copy your question"
+                                : "Copy assistant response"
+                            }
+                            title="Copy"
+                          >
+                            <CopySimple size={14} weight="bold" aria-hidden="true" />
+                          </button>
+
+                          {message.role === "user" ? (
+                            <button
+                              type="button"
+                              onClick={() => editUserMessage(message)}
+                              aria-label="Edit your question"
+                              title="Edit"
+                            >
+                              <PencilSimple size={14} weight="bold" aria-hidden="true" />
+                            </button>
+                          ) : (
+                            <>
+                              <button
+                                type="button"
+                                onClick={() => rateAssistantMessage(message.id, "like")}
+                                aria-label="Mark response as helpful"
+                                aria-pressed={feedback === "like"}
+                                className={
+                                  feedback === "like" ? "prayer-chat-action-active" : undefined
+                                }
+                                title="Helpful"
+                              >
+                                <ThumbsUp
+                                  size={14}
+                                  weight={feedback === "like" ? "fill" : "bold"}
+                                  aria-hidden="true"
+                                />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => rateAssistantMessage(message.id, "dislike")}
+                                aria-label="Mark response as not helpful"
+                                aria-pressed={feedback === "dislike"}
+                                className={
+                                  feedback === "dislike"
+                                    ? "prayer-chat-action-active"
+                                    : undefined
+                                }
+                                title="Not helpful"
+                              >
+                                <ThumbsDown
+                                  size={14}
+                                  weight={feedback === "dislike" ? "fill" : "bold"}
+                                  aria-hidden="true"
+                                />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => forkAssistantMessage(message)}
+                                aria-label="Fork conversation from this response"
+                                title="Fork"
+                              >
+                                <GitFork size={14} weight="bold" aria-hidden="true" />
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                );
+              })}
 
               <div ref={messagesEndRef} />
             </div>
+
+            {toast && (
+              <p
+                key={toast.id}
+                className="prayer-chat-toast"
+                role="status"
+                aria-live="polite"
+              >
+                {toast.message}
+              </p>
+            )}
 
             {error && (
               <p className="prayer-chat-error" role="status">
