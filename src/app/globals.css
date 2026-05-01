@@ -4249,7 +4249,10 @@ html {
   }
 
   .prayer-chat-panel {
-    inset: 0;
+    top: var(--prayer-chat-top, 0);
+    right: 0;
+    bottom: auto;
+    left: 0;
     width: 100%;
     height: var(--prayer-chat-vh);
     max-height: none;
@@ -12008,8 +12011,10 @@ html {
 /* Mobile menu socials and self-moving card rails. */
 .mobile-menu-socials {
   display: grid;
+  justify-items: center;
   gap: 0.62rem;
   padding: 0.82rem 0 max(0.1rem, env(safe-area-inset-bottom));
+  text-align: center;
 }
 
 .mobile-menu-socials p {
@@ -12024,19 +12029,21 @@ html {
 .mobile-menu-socials div {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.5rem;
 }
 
 .mobile-menu-socials a {
+  position: relative;
   display: inline-flex;
+  width: 2.75rem;
   min-height: 2.75rem;
   align-items: center;
   justify-content: center;
-  gap: 0.42rem;
-  border: 1px solid rgba(245, 223, 160, 0.18);
-  border-radius: 999px;
-  background: rgba(255, 248, 232, 0.075);
-  padding: 0 0.82rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
   color: rgba(255, 248, 232, 0.82);
   font-size: 0.74rem;
   font-weight: 700;
@@ -12050,10 +12057,22 @@ html {
     transform 150ms ease;
 }
 
+.mobile-menu-socials a svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.mobile-menu-socials a span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 .mobile-menu-socials a:hover,
 .mobile-menu-socials a:focus-visible {
-  border-color: rgba(245, 223, 160, 0.48);
-  background: rgba(245, 223, 160, 0.14);
   color: #fff8e8;
   transform: translateY(-1px);
 }
@@ -12080,7 +12099,6 @@ html {
 
   .mobile-menu-socials a {
     min-height: 2.75rem;
-    padding: 0 0.72rem;
   }
 
   .auto-scroll-shell,

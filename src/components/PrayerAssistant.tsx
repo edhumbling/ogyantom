@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { flushSync } from "react-dom";
 import {
   ArrowDown,
   ArrowUp,
@@ -25,6 +26,11 @@ type Message = {
   id: string;
   role: "user" | "assistant";
   content: string;
+};
+
+type ViewportMetrics = {
+  height: number;
+  offsetTop: number;
 };
 
 const logo = "/brand/ogya-ntom-prayer-logo.png";
@@ -276,7 +282,7 @@ export function PrayerAssistant() {
   const [error, setError] = useState("");
   const [showCollapsedBar, setShowCollapsedBar] = useState(true);
   const [showScrollBottom, setShowScrollBottom] = useState(false);
-  const [viewportHeight, setViewportHeight] = useState<number | null>(null);
+  const [viewportMetrics, setViewportMetrics] = useState<ViewportMetrics | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -286,19 +292,34 @@ export function PrayerAssistant() {
   const pendingAssistantScrollIdRef = useRef<string | null>(null);
 
   useEffect(() => {
-    const updateViewportHeight = () => {
-      setViewportHeight(window.visualViewport?.height ?? window.innerHeight);
+    const updateViewportMetrics = () => {
+      const viewport = window.visualViewport;
+      const nextMetrics = {
+        height: Math.round(viewport?.height ?? window.innerHeight),
+        offsetTop: Math.max(0, Math.round(viewport?.offsetTop ?? 0)),
+      };
+
+      setViewportMetrics((currentMetrics) => {
+        if (
+          currentMetrics?.height === nextMetrics.height &&
+          currentMetrics.offsetTop === nextMetrics.offsetTop
+        ) {
+          return currentMetrics;
+        }
+
+        return nextMetrics;
+      });
     };
 
-    updateViewportHeight();
-    window.visualViewport?.addEventListener("resize", updateViewportHeight);
-    window.visualViewport?.addEventListener("scroll", updateViewportHeight);
-    window.addEventListener("resize", updateViewportHeight);
+    updateViewportMetrics();
+    window.visualViewport?.addEventListener("resize", updateViewportMetrics);
+    window.visualViewport?.addEventListener("scroll", updateViewportMetrics);
+    window.addEventListener("resize", updateViewportMetrics);
 
     return () => {
-      window.visualViewport?.removeEventListener("resize", updateViewportHeight);
-      window.visualViewport?.removeEventListener("scroll", updateViewportHeight);
-      window.removeEventListener("resize", updateViewportHeight);
+      window.visualViewport?.removeEventListener("resize", updateViewportMetrics);
+      window.visualViewport?.removeEventListener("scroll", updateViewportMetrics);
+      window.removeEventListener("resize", updateViewportMetrics);
     };
   }, []);
 
@@ -401,7 +422,10 @@ export function PrayerAssistant() {
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const focusTimer = window.setTimeout(() => inputRef.current?.focus(), 80);
+    const focusTimer = window.setTimeout(
+      () => inputRef.current?.focus({ preventScroll: true }),
+      80,
+    );
 
     return () => {
       window.clearTimeout(focusTimer);
@@ -409,7 +433,26 @@ export function PrayerAssistant() {
     };
   }, [isOpen]);
 
+  const focusInput = useCallback(() => {
+    const textarea = inputRef.current;
+
+    if (!textarea) {
+      return;
+    }
+
+    textarea.focus({ preventScroll: true });
+    resizePrayerInput(textarea);
+  }, []);
+
+  const openChat = useCallback(() => {
+    flushSync(() => setIsOpen(true));
+    focusInput();
+    window.requestAnimationFrame(focusInput);
+    window.setTimeout(focusInput, 90);
+  }, [focusInput]);
+
   const closeChat = useCallback(() => {
+    inputRef.current?.blur();
     setIsOpen(false);
     window.setTimeout(() => triggerRef.current?.focus(), 0);
   }, []);
@@ -491,13 +534,13 @@ export function PrayerAssistant() {
     const handleShortcut = (event: globalThis.KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "i") {
         event.preventDefault();
-        setIsOpen(true);
+        openChat();
       }
     };
 
     document.addEventListener("keydown", handleShortcut);
     return () => document.removeEventListener("keydown", handleShortcut);
-  }, []);
+  }, [openChat]);
 
   useEffect(() => {
     return () => abortRef.current?.abort();
@@ -688,7 +731,7 @@ export function PrayerAssistant() {
     }
 
     if (!input.trim()) {
-      setIsOpen(true);
+      openChat();
       return;
     }
 
@@ -731,7 +774,7 @@ export function PrayerAssistant() {
             rows={1}
             value={input}
             onChange={(event) => setInput(event.target.value)}
-            onFocus={() => setIsOpen(true)}
+            onFocus={openChat}
             placeholder="Ask for prayer, Bible help, or ministry support…"
             name="collapsed-prayer-assistant-message"
             autoComplete="off"
@@ -747,7 +790,7 @@ export function PrayerAssistant() {
         ref={triggerRef}
         type="button"
         className={`prayer-chat-mobile-trigger ${isOpen ? "hidden" : ""}`}
-        onClick={() => setIsOpen(true)}
+        onClick={openChat}
         aria-label="Open Ogya Ntom prayer assistant"
       >
         <span className="prayer-chat-trigger-ring" aria-hidden="true" />
@@ -769,8 +812,11 @@ export function PrayerAssistant() {
             aria-modal="true"
             aria-labelledby={`${inputId}-title`}
             style={
-              viewportHeight
-                ? ({ "--prayer-chat-vh": `${viewportHeight}px` } as CSSProperties)
+              viewportMetrics
+                ? ({
+                    "--prayer-chat-vh": `${viewportMetrics.height}px`,
+                    "--prayer-chat-top": `${viewportMetrics.offsetTop}px`,
+                  } as CSSProperties)
                 : undefined
             }
           >
