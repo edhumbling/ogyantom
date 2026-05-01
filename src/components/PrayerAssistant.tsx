@@ -289,7 +289,8 @@ export function PrayerAssistant() {
   const inputId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [chatId, setChatId] = useState(() => createMessageId());
+  const [messages, setMessagesState] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [showCollapsedBar, setShowCollapsedBar] = useState(true);
@@ -304,9 +305,37 @@ export function PrayerAssistant() {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const messagesRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const latestMessagesRef = useRef<Message[]>([]);
   const abortRef = useRef<AbortController | null>(null);
   const pendingAssistantScrollIdRef = useRef<string | null>(null);
   const toastTimerRef = useRef<number | null>(null);
+
+  const setMessages = useCallback(
+    (updater: Message[] | ((currentMessages: Message[]) => Message[])) => {
+      setMessagesState((currentMessages) => {
+        const nextMessages =
+          typeof updater === "function" ? updater(currentMessages) : updater;
+        latestMessagesRef.current = nextMessages;
+
+        return nextMessages;
+      });
+    },
+    [],
+  );
+
+  const pruneMessageFeedback = useCallback((nextMessages: Message[]) => {
+    const keptMessageIds = new Set(nextMessages.map((message) => message.id));
+
+    setMessageFeedback((currentFeedback) => {
+      const nextFeedback = Object.fromEntries(
+        Object.entries(currentFeedback).filter(([messageId]) =>
+          keptMessageIds.has(messageId),
+        ),
+      ) as Record<string, MessageFeedback | undefined>;
+
+      return nextFeedback;
+    });
+  }, []);
 
   useEffect(() => {
     const updateViewportMetrics = () => {
@@ -339,6 +368,10 @@ export function PrayerAssistant() {
       window.removeEventListener("resize", updateViewportMetrics);
     };
   }, []);
+
+  useEffect(() => {
+    latestMessagesRef.current = messages;
+  }, [messages]);
 
   const scrollMessagesToBottom = useCallback((behavior: ScrollBehavior = "smooth") => {
     messagesEndRef.current?.scrollIntoView({ block: "end", behavior });
@@ -516,21 +549,22 @@ export function PrayerAssistant() {
       cancelActiveStream();
       setError("");
       setInput(message.content);
-      setMessages((currentMessages) => {
-        const messageIndex = currentMessages.findIndex(
-          (currentMessage) => currentMessage.id === message.id,
-        );
+      const messageIndex = latestMessagesRef.current.findIndex(
+        (currentMessage) => currentMessage.id === message.id,
+      );
 
-        if (messageIndex < 0) {
-          return currentMessages;
-        }
+      if (messageIndex < 0) {
+        return;
+      }
 
-        return currentMessages.slice(0, messageIndex);
-      });
+      const nextMessages = latestMessagesRef.current.slice(0, messageIndex);
+      latestMessagesRef.current = nextMessages;
+      setMessages(nextMessages);
+      pruneMessageFeedback(nextMessages);
       showChatToast("Question ready to edit.");
       window.setTimeout(focusInput, 0);
     },
-    [cancelActiveStream, focusInput, showChatToast],
+    [cancelActiveStream, focusInput, pruneMessageFeedback, setMessages, showChatToast],
   );
 
   const rateAssistantMessage = useCallback(
@@ -553,22 +587,32 @@ export function PrayerAssistant() {
     (message: Message) => {
       cancelActiveStream();
       setError("");
-      setMessages((currentMessages) => {
-        const messageIndex = currentMessages.findIndex(
-          (currentMessage) => currentMessage.id === message.id,
-        );
+      const messageIndex = latestMessagesRef.current.findIndex(
+        (currentMessage) => currentMessage.id === message.id,
+      );
 
-        if (messageIndex < 0) {
-          return currentMessages;
-        }
+      if (messageIndex < 0) {
+        return;
+      }
 
-        return currentMessages.slice(0, messageIndex + 1);
-      });
+      const forkedMessages = latestMessagesRef.current
+        .slice(0, messageIndex + 1)
+        .map((currentMessage) => ({
+          ...currentMessage,
+          id: createMessageId(),
+        }));
+
+      latestMessagesRef.current = forkedMessages;
+      setChatId(createMessageId());
+      setMessages(forkedMessages);
+      setMessageFeedback({});
+      pendingAssistantScrollIdRef.current = null;
+      setShowScrollBottom(false);
       setInput("");
-      showChatToast("Forked from this response.");
+      showChatToast("New chat forked from this response.");
       window.setTimeout(focusInput, 0);
     },
-    [cancelActiveStream, focusInput, showChatToast],
+    [cancelActiveStream, focusInput, setMessages, showChatToast],
   );
 
   const openChat = useCallback(() => {
@@ -601,11 +645,13 @@ export function PrayerAssistant() {
           : message,
       );
     });
-  }, []);
+  }, [setMessages]);
 
   const startNewChat = useCallback(() => {
     abortRef.current?.abort();
     abortRef.current = null;
+    latestMessagesRef.current = [];
+    setChatId(createMessageId());
     setMessages([]);
     setMessageFeedback({});
     setInput("");
@@ -614,7 +660,7 @@ export function PrayerAssistant() {
     setShowScrollBottom(false);
     showChatToast("Started a new chat.");
     window.setTimeout(() => inputRef.current?.focus(), 0);
-  }, [showChatToast]);
+  }, [setMessages, showChatToast]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -732,11 +778,16 @@ export function PrayerAssistant() {
 
     const frame = window.requestAnimationFrame(() => {
       setIsOpen(true);
-      setMessages(qaFixtures);
+      const nextMessages = qaFixtures.map((message) => ({
+        ...message,
+        id: createMessageId(),
+      }));
+      latestMessagesRef.current = nextMessages;
+      setMessages(nextMessages);
     });
 
     return () => window.cancelAnimationFrame(frame);
-  }, []);
+  }, [setMessages]);
 
   const sendMessage = useCallback(
     async (rawMessage: string) => {
@@ -756,9 +807,13 @@ export function PrayerAssistant() {
         content: trimmedMessage,
       };
       const assistantId = createMessageId();
-      const nextMessages = [...messages, userMessage];
+      const nextMessages = [...latestMessagesRef.current, userMessage];
 
       pendingAssistantScrollIdRef.current = assistantId;
+      latestMessagesRef.current = [
+        ...nextMessages,
+        { id: assistantId, role: "assistant", content: "" },
+      ];
       setMessages([
         ...nextMessages,
         { id: assistantId, role: "assistant", content: "" },
@@ -854,7 +909,7 @@ export function PrayerAssistant() {
         abortRef.current = null;
       }
     },
-    [isLoading, messages],
+    [isLoading, setMessages],
   );
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -943,6 +998,7 @@ export function PrayerAssistant() {
           <section
             ref={panelRef}
             className="prayer-chat-panel"
+            data-chat-id={chatId}
             role="dialog"
             aria-modal="true"
             aria-labelledby={`${inputId}-title`}
