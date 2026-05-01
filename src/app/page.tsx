@@ -15,7 +15,6 @@ import {
   ministryFacets,
   missionStatement,
   ministryType,
-  opaninFullName,
   onlinePlatforms,
   prayerWatches,
   visionStatement,
@@ -76,7 +75,21 @@ export default function Home() {
     <main className="home-stage">
       <section className="home-hero">
         <video
-          className="home-hero-video"
+          className="home-hero-video home-hero-video-mobile"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+        >
+          <source
+            src="https://ik.imagekit.io/humbling/hero%20vid%20mobile.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <video
+          className="home-hero-video home-hero-video-desktop"
           autoPlay
           muted
           loop
@@ -87,7 +100,6 @@ export default function Home() {
           <source
             src="https://ik.imagekit.io/humbling/hero%20video.mp4"
             type="video/mp4"
-            media="(min-width: 1024px)"
           />
         </video>
         <div className="home-hero-backdrop" />
@@ -118,23 +130,6 @@ export default function Home() {
               </Link>
             </div>
           </div>
-
-          <div className="home-hero-portrait" aria-label={opaninFullName}>
-            <Image
-              src="/brand/watchman-opanin-thomas.png"
-              alt={`Chief Prayer Warrior ${opaninFullName}`}
-              width={853}
-              height={1280}
-              sizes="(min-width: 1024px) 42vw, 92vw"
-              className="home-hero-image"
-              priority
-            />
-            <div className="home-portrait-caption">
-              <span>Chief Prayer Warrior</span>
-              <strong>{opaninFullName}</strong>
-            </div>
-          </div>
-
         </div>
       </section>
 

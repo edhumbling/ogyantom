@@ -12661,3 +12661,198 @@ html {
     max-width: 12.5ch !important;
   }
 }
+
+/* Homepage hero video focus: no portrait, small low content, visible mobile/desktop video. */
+.home-hero {
+  background: #030604 !important;
+}
+
+.home-hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0 !important;
+  display: block !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+.home-hero-backdrop {
+  z-index: 1 !important;
+  background:
+    linear-gradient(180deg, rgba(3, 6, 4, 0.08), rgba(3, 6, 4, 0.28) 58%, rgba(3, 6, 4, 0.58)),
+    linear-gradient(90deg, rgba(3, 6, 4, 0.48), rgba(3, 6, 4, 0.08) 58%, rgba(3, 6, 4, 0.34)) !important;
+}
+
+.home-hero::before,
+.home-hero::after,
+.home-hero-backdrop::before,
+.home-hero-backdrop::after {
+  display: none !important;
+}
+
+.home-hero-grid {
+  position: relative;
+  z-index: 2;
+}
+
+.home-hero-copy {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+  backdrop-filter: none !important;
+}
+
+@media (min-width: 1024px) {
+  .home-hero-grid {
+    align-content: end !important;
+    align-items: end !important;
+    padding-bottom: clamp(1.6rem, 4.5svh, 3.5rem) !important;
+  }
+
+  .home-hero-copy {
+    max-width: min(39rem, 45vw) !important;
+    padding: 0 !important;
+  }
+
+  .home-hero-copy .home-kicker {
+    min-height: 1.48rem;
+    padding: 0 0.48rem;
+    font-size: 0.54rem;
+    letter-spacing: 0.12em;
+  }
+
+  .home-hero-copy h1 {
+    max-width: 11.5ch !important;
+    margin-top: 0.45rem;
+    font-size: clamp(3.2rem, 4.1vw, 4.35rem) !important;
+    line-height: 0.88 !important;
+  }
+
+  .home-hero-copy > p {
+    max-width: min(35rem, 40vw) !important;
+    margin-top: 0.62rem;
+    font-size: 0.84rem !important;
+    line-height: 1.48 !important;
+  }
+
+  .home-hero-actions {
+    flex-wrap: nowrap;
+    gap: 0.42rem;
+    margin-top: 0.78rem;
+  }
+
+  .home-primary-action,
+  .home-secondary-action {
+    min-height: 2.12rem;
+    gap: 0.32rem;
+    padding: 0 0.62rem;
+    font-size: 0.56rem;
+    letter-spacing: 0.07em;
+  }
+}
+
+@media (max-width: 1023px) {
+  .home-hero {
+    min-height: 100svh !important;
+  }
+
+  .home-hero-grid {
+    min-height: 100svh !important;
+    align-content: end !important;
+    align-items: end !important;
+    padding:
+      max(4.35rem, calc(3.75rem + env(safe-area-inset-top)))
+      max(0.72rem, env(safe-area-inset-right))
+      max(0.82rem, env(safe-area-inset-bottom))
+      max(0.72rem, env(safe-area-inset-left)) !important;
+  }
+
+  .home-hero-copy {
+    width: min(100%, 22.5rem);
+    max-width: 22.5rem !important;
+    padding: 0 !important;
+  }
+
+  .home-hero-copy .home-kicker {
+    min-height: 1.38rem;
+    padding: 0 0.42rem;
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+  }
+
+  .home-hero-copy h1 {
+    max-width: 12.6ch !important;
+    margin-top: 0.4rem;
+    font-size: clamp(1.68rem, 7.4vw, 2.24rem) !important;
+    line-height: 0.92 !important;
+  }
+
+  .home-hero-copy > p {
+    max-width: 20rem !important;
+    margin-top: 0.48rem;
+    font-size: 0.7rem !important;
+    line-height: 1.36 !important;
+  }
+
+  .home-hero-actions {
+    display: flex !important;
+    width: 100%;
+    flex-wrap: nowrap !important;
+    gap: 0.34rem;
+    margin-top: 0.62rem;
+  }
+
+  .home-primary-action,
+  .home-secondary-action {
+    width: auto !important;
+    min-width: 0;
+    min-height: 2rem !important;
+    flex: 1 1 0;
+    gap: 0.22rem;
+    padding: 0 0.38rem;
+    font-size: clamp(0.46rem, 2.25vw, 0.56rem) !important;
+    letter-spacing: 0.035em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .home-primary-action svg,
+  .home-secondary-action svg {
+    width: 0.72rem;
+    height: 0.72rem;
+    flex-shrink: 0;
+  }
+}
+
+/* Explicit device split for homepage hero videos. */
+.home-hero-video-mobile,
+.home-hero-video-desktop {
+  display: none !important;
+}
+
+@media (max-width: 1023px) {
+  .home-hero-video-mobile {
+    display: block !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-hero-video-desktop {
+    display: block !important;
+  }
+
+  .home-hero-grid {
+    padding-bottom: clamp(3.25rem, 9svh, 6.5rem) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-video-mobile,
+  .home-hero-video-desktop {
+    display: none !important;
+  }
+}
