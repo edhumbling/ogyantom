@@ -3,9 +3,7 @@ import { CalendarBlank } from "@phosphor-icons/react/dist/ssr";
 import { SanityCardGrid, type SanityCardGridItem } from "@/components/SanityCardGrid";
 import {
   buildSearchIndex,
-  filterSanityCards,
   normalizeListSearchParams,
-  paginateSanityCards,
 } from "@/lib/sanity-browser";
 import { sanityFetch } from "@/sanity/client";
 import { eventsQuery } from "@/sanity/queries";
@@ -59,9 +57,6 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
       formatDate(event.startDate),
     ]),
   }));
-  const filteredCards = filterSanityCards(cards, query);
-  const pagedCards = paginateSanityCards(filteredCards, page);
-
   return (
     <main className="testimony-page">
       <section className="testimony-hero">
@@ -102,7 +97,7 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
             </div>
           ) : (
             <SanityCardGrid
-              items={pagedCards.pageItems}
+              items={cards}
               ariaLabel="upcoming events"
               search={{
                 basePath: "/events",
@@ -110,11 +105,11 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
                 placeholder: "Search online watches…",
                 query,
                 resultLabel: "events",
-                totalCount: filteredCards.length,
+                totalCount: cards.length,
+                quickSearches: ["Online", "Vigil", "WhatsApp", "Google Meet"],
               }}
               pagination={{
-                page: pagedCards.page,
-                pageCount: pagedCards.pageCount,
+                page,
               }}
             />
           )}

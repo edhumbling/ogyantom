@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowRight, CaretLeft, CaretRight, MagnifyingGlass, X } from "@phosphor-icons/react/dist/ssr";
-import { AutoScrollRail } from "@/components/AutoScrollRail";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
+import { ArrowRight, MagnifyingGlass, X } from "@phosphor-icons/react";
 import { SanityImage } from "@/components/SanityImage";
 import type { SanityImage as SanityImageType } from "@/sanity/types";
+
+const mobilePageSize = 10;
+const desktopPageSize = 20;
 
 export type SanityCardGridItem = {
   id: string;
@@ -26,35 +31,48 @@ type SanityCardGridProps = {
     query: string;
     resultLabel: string;
     totalCount: number;
+    quickSearches?: string[];
   };
   pagination: {
     page: number;
-    pageCount: number;
   };
 };
 
-function pageHref(basePath: string, query: string, page: number) {
-  const params = new URLSearchParams();
+function normalizeSearch(value: string) {
+  return value.trim().replace(/\s+/g, " ").slice(0, 80);
+}
 
-  if (query) params.set("q", query);
-  if (page > 1) params.set("page", String(page));
+function matchesSearch(item: SanityCardGridItem, query: string) {
+  const terms = normalizeSearch(query).toLowerCase().split(/\s+/).filter(Boolean);
 
-  const suffix = params.toString();
-  return suffix ? `${basePath}?${suffix}` : basePath;
+  if (terms.length === 0) {
+    return true;
+  }
+
+  const haystack = [
+    item.title,
+    item.eyebrow,
+    item.summary,
+    item.meta,
+    item.searchText,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  return terms.every((term) => haystack.includes(term));
 }
 
 function PaginationControls({
   ariaLabel,
-  basePath,
+  onPageChange,
   page,
   pageCount,
-  query,
 }: {
   ariaLabel: string;
-  basePath: string;
+  onPageChange: (page: number) => void;
   page: number;
   pageCount: number;
-  query: string;
 }) {
   if (pageCount <= 1) return null;
 
@@ -64,24 +82,22 @@ function PaginationControls({
         Page {page} of {pageCount}
       </span>
       <div>
-        {page > 1 ? (
-          <Link href={pageHref(basePath, query, page - 1)} aria-label={`Previous ${ariaLabel}`}>
-            <CaretLeft size={17} weight="bold" aria-hidden="true" />
-          </Link>
-        ) : (
-          <span aria-hidden="true" className="sanity-card-pagination-disabled">
-            <CaretLeft size={17} weight="bold" />
-          </span>
-        )}
-        {page < pageCount ? (
-          <Link href={pageHref(basePath, query, page + 1)} aria-label={`Next ${ariaLabel}`}>
-            <CaretRight size={17} weight="bold" aria-hidden="true" />
-          </Link>
-        ) : (
-          <span aria-hidden="true" className="sanity-card-pagination-disabled">
-            <CaretRight size={17} weight="bold" />
-          </span>
-        )}
+        <button
+          type="button"
+          onClick={() => onPageChange(page - 1)}
+          disabled={page <= 1}
+          aria-label={`Previous page of ${ariaLabel}`}
+        >
+          Previous
+        </button>
+        <button
+          type="button"
+          onClick={() => onPageChange(page + 1)}
+          disabled={page >= pageCount}
+          aria-label={`Next page of ${ariaLabel}`}
+        >
+          Next
+        </button>
       </div>
     </nav>
   );
@@ -93,58 +109,133 @@ export function SanityCardGrid({
   pagination,
   search,
 }: SanityCardGridProps) {
-  const showSearchEmpty = search.totalCount === 0 && search.query;
+  const [query, setQuery] = useState(search.query);
+  const deferredQuery = useDeferredValue(query);
+  const [page, setPage] = useState(Math.max(1, pagination.page));
+  const [pageSize, setPageSize] = useState(mobilePageSize);
+
+  const filteredItems = useMemo(
+    () => items.filter((item) => matchesSearch(item, deferredQuery)),
+    [deferredQuery, items],
+  );
+  const pageCount = Math.max(1, Math.ceil(filteredItems.length / pageSize));
+  const safePage = Math.min(page, pageCount);
+  const start = (safePage - 1) * pageSize;
+  const pageItems = filteredItems.slice(start, start + pageSize);
+  const activeQuery = normalizeSearch(deferredQuery);
+  const showSearchEmpty = filteredItems.length === 0 && activeQuery;
+  const inputId = `${ariaLabel.replace(/\s+/g, "-")}-search`;
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    const syncPageSize = () => {
+      setPageSize(mediaQuery.matches ? desktopPageSize : mobilePageSize);
+    };
+
+    syncPageSize();
+    mediaQuery.addEventListener("change", syncPageSize);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncPageSize);
+    };
+  }, []);
+
+  const updateQuery = (value: string) => {
+    setQuery(value);
+    setPage(1);
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    const normalizedQuery = normalizeSearch(query);
+
+    if (normalizedQuery) params.set("q", normalizedQuery);
+    if (safePage > 1) params.set("page", String(safePage));
+
+    const suffix = params.toString();
+    const nextUrl = suffix ? `${search.basePath}?${suffix}` : search.basePath;
+
+    if (`${window.location.pathname}${window.location.search}` !== nextUrl) {
+      window.history.replaceState(null, "", nextUrl);
+    }
+  }, [query, safePage, search.basePath]);
 
   return (
     <div className="sanity-card-browser" aria-label={ariaLabel}>
-      <form className="sanity-search-bar" action={search.basePath} role="search">
-        <label className="sr-only" htmlFor={`${ariaLabel.replace(/\s+/g, "-")}-search`}>
+      <form
+        className="sanity-search-bar"
+        action={search.basePath}
+        role="search"
+        onSubmit={(event) => event.preventDefault()}
+      >
+        <label className="sr-only" htmlFor={inputId}>
           {search.label}
         </label>
         <MagnifyingGlass size={18} weight="bold" aria-hidden="true" />
         <input
-          id={`${ariaLabel.replace(/\s+/g, "-")}-search`}
+          id={inputId}
           name="q"
           type="search"
-          defaultValue={search.query}
+          value={query}
+          onChange={(event) => updateQuery(event.target.value)}
           placeholder={search.placeholder}
           autoComplete="off"
           spellCheck={false}
         />
-        {search.query ? (
-          <Link href={search.basePath} aria-label={`Clear ${search.label}`} className="sanity-search-clear">
+        {query ? (
+          <button
+            type="button"
+            aria-label={`Clear ${search.label}`}
+            className="sanity-search-clear"
+            onClick={() => updateQuery("")}
+          >
             <X size={16} weight="bold" aria-hidden="true" />
-          </Link>
+          </button>
         ) : null}
-        <button type="submit">Search</button>
       </form>
 
+      {search.quickSearches?.length ? (
+        <div className="sanity-quick-searches" aria-label={`Quick ${search.label}`}>
+          <button type="button" onClick={() => updateQuery("")} data-active={!normalizeSearch(query)}>
+            All
+          </button>
+          {search.quickSearches.map((term) => (
+            <button
+              key={term}
+              type="button"
+              onClick={() => updateQuery(term)}
+              data-active={normalizeSearch(query).toLowerCase() === term.toLowerCase()}
+            >
+              {term}
+            </button>
+          ))}
+        </div>
+      ) : null}
+
       <p className="sanity-search-status" aria-live="polite">
-        {search.query
-          ? `${search.totalCount} ${search.resultLabel} for "${search.query}"`
-          : `${search.totalCount} ${search.resultLabel}`}
+        {activeQuery
+          ? `${filteredItems.length} ${search.resultLabel} for "${activeQuery}"`
+          : `${items.length} ${search.resultLabel}`}
       </p>
 
       <PaginationControls
         ariaLabel={ariaLabel}
-        basePath={search.basePath}
-        page={pagination.page}
-        pageCount={pagination.pageCount}
-        query={search.query}
+        page={safePage}
+        pageCount={pageCount}
+        onPageChange={setPage}
       />
 
       {showSearchEmpty ? (
         <div className="sanity-search-empty">
           <p>No {search.resultLabel} matched this search.</p>
-          <Link href={search.basePath}>View all {search.resultLabel}</Link>
+          <button type="button" onClick={() => updateQuery("")}>
+            View all {search.resultLabel}
+          </button>
         </div>
       ) : null}
 
-      <AutoScrollRail
-        ariaLabel={ariaLabel}
-        className="sanity-square-grid sanity-square-rail"
-      >
-        {items.map((item, index) => {
+      <div className="sanity-square-grid" aria-label={ariaLabel}>
+        {pageItems.map((item, index) => {
           const content = (
             <>
               <div className="sanity-square-cover">
@@ -153,7 +244,7 @@ export function SanityCardGrid({
                   altFallback={item.title}
                   width={900}
                   height={900}
-                  priority={pagination.page === 1 && index < 4}
+                  priority={safePage === 1 && index < 4}
                 />
                 <div className="sanity-square-cover-shade" />
               </div>
@@ -183,14 +274,13 @@ export function SanityCardGrid({
             </article>
           );
         })}
-      </AutoScrollRail>
+      </div>
 
       <PaginationControls
         ariaLabel={ariaLabel}
-        basePath={search.basePath}
-        page={pagination.page}
-        pageCount={pagination.pageCount}
-        query={search.query}
+        page={safePage}
+        pageCount={pageCount}
+        onPageChange={setPage}
       />
     </div>
   );

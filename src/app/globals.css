@@ -12132,3 +12132,346 @@ html {
     transform: none;
   }
 }
+
+/* Sanity listing and detail sharing: static grids, instant filtering, compact controls. */
+.sanity-card-browser {
+  position: relative;
+  z-index: 2;
+  gap: 0.72rem;
+  margin-top: clamp(-2.1rem, -2.8vw, -1rem);
+}
+
+.sanity-search-bar {
+  width: min(100%, 34rem);
+  min-height: 2.85rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.38rem;
+  border-color: rgba(16, 37, 29, 0.16);
+  border-radius: 0.58rem;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(245, 242, 235, 0.96));
+  padding: 0.25rem 0.28rem 0.25rem 0.78rem;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 14px 32px rgba(14, 34, 25, 0.08);
+}
+
+.sanity-search-bar:focus-within {
+  border-color: rgba(207, 180, 95, 0.62);
+  box-shadow:
+    0 0 0 4px rgba(207, 180, 95, 0.14),
+    0 16px 36px rgba(14, 34, 25, 0.1);
+}
+
+.sanity-search-bar input {
+  font-size: 1rem;
+}
+
+.sanity-search-clear {
+  min-width: 2.35rem;
+  min-height: 2.35rem;
+  border: 0;
+  border-radius: 0.45rem;
+  background: transparent;
+}
+
+.sanity-search-empty button,
+.sanity-quick-searches button,
+.sanity-card-pagination button {
+  touch-action: manipulation;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.sanity-quick-searches {
+  display: flex;
+  width: min(100%, 44rem);
+  flex-wrap: wrap;
+  gap: 0.38rem;
+}
+
+.sanity-quick-searches button {
+  display: inline-flex;
+  min-height: 2.25rem;
+  align-items: center;
+  border: 1px solid rgba(16, 37, 29, 0.12);
+  border-radius: 0.45rem;
+  background: rgba(255, 253, 248, 0.62);
+  padding: 0 0.75rem;
+  color: #31473d;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sanity-quick-searches button:hover,
+.sanity-quick-searches button:focus-visible,
+.sanity-quick-searches button[data-active="true"] {
+  border-color: rgba(109, 18, 55, 0.3);
+  background: #fff8e8;
+  color: #6d1237;
+  box-shadow: 0 0 0 3px rgba(207, 180, 95, 0.12);
+}
+
+.sanity-quick-searches button:focus-visible,
+.sanity-search-empty button:focus-visible,
+.sanity-card-pagination button:focus-visible {
+  outline: 2px solid #6d1237;
+  outline-offset: 3px;
+}
+
+.sanity-search-status {
+  padding-inline: 0.08rem;
+}
+
+.sanity-card-pagination {
+  border-radius: 0.55rem;
+  background: rgba(255, 253, 248, 0.7);
+}
+
+.sanity-card-pagination div {
+  gap: 0.42rem;
+}
+
+.sanity-card-pagination button {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(16, 37, 29, 0.14);
+  border-radius: 0.48rem;
+  background: #10251d;
+  padding: 0 0.78rem;
+  color: #fff8e8;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sanity-card-pagination button:hover,
+.sanity-card-pagination button:focus-visible {
+  border-color: rgba(207, 180, 95, 0.55);
+  background: #cfb45f;
+  color: #07120d;
+}
+
+.sanity-card-pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.sanity-card-pagination button:active:not(:disabled),
+.sanity-search-empty button:active,
+.sanity-quick-searches button:active {
+  transform: scale(0.97);
+}
+
+.sanity-search-empty button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  border: 1px solid rgba(109, 18, 55, 0.18);
+  border-radius: 0.48rem;
+  background: #fffdf8;
+  padding: 0 0.9rem;
+  color: #6d1237;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sanity-square-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.48rem, 1.3vw, 1rem);
+  overflow: visible;
+  padding: 0;
+}
+
+.sanity-square-card {
+  aspect-ratio: 4 / 5;
+  border-radius: 0.42rem;
+}
+
+.sanity-share-grid {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.7rem;
+  border: 1px solid rgba(16, 37, 29, 0.12);
+  border-radius: 0.62rem;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.86), rgba(245, 242, 235, 0.78));
+  padding: 0.45rem;
+  box-shadow: 0 12px 28px rgba(14, 34, 25, 0.06);
+}
+
+.sanity-share-grid > p {
+  flex: 0 0 auto;
+  padding-inline: 0.35rem;
+  color: #53635a;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.sanity-share-grid > div {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  gap: 0.36rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.sanity-share-grid > div::-webkit-scrollbar {
+  display: none;
+}
+
+.sanity-share-grid a,
+.sanity-share-grid button {
+  display: inline-flex;
+  min-height: 2.35rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 0.34rem;
+  border: 1px solid rgba(16, 37, 29, 0.12);
+  border-radius: 0.48rem;
+  background: rgba(255, 253, 248, 0.78);
+  padding: 0 0.62rem;
+  color: #10251d;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.sanity-share-grid a:hover,
+.sanity-share-grid a:focus-visible,
+.sanity-share-grid button:hover,
+.sanity-share-grid button:focus-visible {
+  border-color: rgba(207, 180, 95, 0.52);
+  background: #10251d;
+  color: #fff8e8;
+  box-shadow: 0 0 0 3px rgba(207, 180, 95, 0.12);
+}
+
+.sanity-share-grid a:focus-visible,
+.sanity-share-grid button:focus-visible {
+  outline: 2px solid #cfb45f;
+  outline-offset: 3px;
+}
+
+.sanity-share-grid a:active,
+.sanity-share-grid button:active {
+  transform: scale(0.97);
+}
+
+@media (min-width: 1024px) {
+  .sanity-square-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .sanity-card-browser {
+    gap: 0.5rem;
+    margin-top: -1.35rem;
+  }
+
+  .sanity-search-bar {
+    width: calc(100% - 0.2rem);
+    min-height: 2.9rem;
+  }
+
+  .sanity-search-clear,
+  .sanity-quick-searches button,
+  .sanity-card-pagination button,
+  .sanity-share-grid a,
+  .sanity-share-grid button {
+    min-height: 2.75rem;
+  }
+
+  .sanity-search-clear {
+    min-width: 2.75rem;
+  }
+
+  .sanity-quick-searches {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.1rem;
+    scrollbar-width: none;
+  }
+
+  .sanity-quick-searches::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sanity-card-pagination {
+    align-items: start;
+  }
+
+  .sanity-card-pagination div {
+    flex-wrap: nowrap;
+  }
+
+  .sanity-card-pagination button {
+    padding-inline: 0.62rem;
+    font-size: 0.6rem;
+  }
+
+  .sanity-square-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.42rem;
+  }
+
+  .sanity-square-content h2 {
+    font-size: clamp(0.88rem, 4vw, 1.05rem);
+  }
+
+  .sanity-share-grid {
+    align-items: start;
+    gap: 0.4rem;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+  }
+
+  .sanity-share-grid > p {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sanity-search-clear,
+  .sanity-search-empty button,
+  .sanity-quick-searches button,
+  .sanity-card-pagination button,
+  .sanity-share-grid a,
+  .sanity-share-grid button {
+    transition-duration: 1ms;
+  }
+}
+
+@media print {
+  .sanity-share-grid {
+    display: none;
+  }
+}

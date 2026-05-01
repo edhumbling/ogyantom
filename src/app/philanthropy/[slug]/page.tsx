@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowLeft, HandHeart, MapPin } from "@phosphor-icons/react/dist/ssr";
 import { RichPortableText } from "@/components/RichPortableText";
 import { SanityImage } from "@/components/SanityImage";
+import { SanityShareGrid } from "@/components/SanityShareGrid";
+import { absoluteUrl } from "@/lib/seo";
 import { sanityFetch } from "@/sanity/client";
 import { buildContentMetadata } from "@/sanity/metadata";
 import { philanthropyBySlugQuery } from "@/sanity/queries";
@@ -72,6 +74,7 @@ export default async function PhilanthropyUpdatePage({ params }: PhilanthropyUpd
   }
 
   const title = update.title || "Untitled philanthropy update";
+  const updateUrl = absoluteUrl(`/philanthropy/${slug}`);
 
   return (
     <main className="testimony-page">
@@ -116,6 +119,12 @@ export default async function PhilanthropyUpdatePage({ params }: PhilanthropyUpd
         <section className="sanity-detail-section">
           <div className="sanity-detail-shell">
             <div className="sanity-detail-main">
+              <SanityShareGrid
+                title={title}
+                text={update.summary}
+                url={updateUrl}
+              />
+
               <figure className="sanity-detail-media">
                 <SanityImage
                   image={update.image}

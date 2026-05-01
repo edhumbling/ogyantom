@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { RichPortableText } from "@/components/RichPortableText";
 import { SanityImage } from "@/components/SanityImage";
+import { SanityShareGrid } from "@/components/SanityShareGrid";
+import { absoluteUrl } from "@/lib/seo";
 import { sanityFetch } from "@/sanity/client";
 import { buildContentMetadata } from "@/sanity/metadata";
 import { postBySlugQuery } from "@/sanity/queries";
@@ -63,6 +65,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     );
   }
 
+  const postUrl = absoluteUrl(`/blog/${slug}`);
+
   return (
     <main className="testimony-page">
       <article>
@@ -97,6 +101,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <section className="sanity-detail-section">
           <div className="sanity-detail-shell sanity-detail-shell-single">
+            <SanityShareGrid
+              title={post.title}
+              text={post.excerpt}
+              url={postUrl}
+            />
+
             <figure className="sanity-detail-media">
               <SanityImage
                 image={post.mainImage}

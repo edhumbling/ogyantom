@@ -3,9 +3,7 @@ import { HandHeart } from "@phosphor-icons/react/dist/ssr";
 import { SanityCardGrid, type SanityCardGridItem } from "@/components/SanityCardGrid";
 import {
   buildSearchIndex,
-  filterSanityCards,
   normalizeListSearchParams,
-  paginateSanityCards,
 } from "@/lib/sanity-browser";
 import { sanityFetch } from "@/sanity/client";
 import { philanthropyQuery } from "@/sanity/queries";
@@ -57,9 +55,6 @@ export default async function PhilanthropyPage({ searchParams }: PhilanthropyPag
       formatDate(item.publishedAt),
     ]),
   }));
-  const filteredCards = filterSanityCards(cards, query);
-  const pagedCards = paginateSanityCards(filteredCards, page);
-
   return (
     <main className="testimony-page">
       <section className="testimony-hero">
@@ -100,7 +95,7 @@ export default async function PhilanthropyPage({ searchParams }: PhilanthropyPag
             </div>
           ) : (
             <SanityCardGrid
-              items={pagedCards.pageItems}
+              items={cards}
               ariaLabel="philanthropy updates"
               search={{
                 basePath: "/philanthropy",
@@ -108,11 +103,11 @@ export default async function PhilanthropyPage({ searchParams }: PhilanthropyPag
                 placeholder: "Search giving updates…",
                 query,
                 resultLabel: "updates",
-                totalCount: filteredCards.length,
+                totalCount: cards.length,
+                quickSearches: ["Widows", "Orphans", "Food", "Community"],
               }}
               pagination={{
-                page: pagedCards.page,
-                pageCount: pagedCards.pageCount,
+                page,
               }}
             />
           )}

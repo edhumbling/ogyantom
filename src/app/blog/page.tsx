@@ -3,9 +3,7 @@ import { BookOpenText } from "@phosphor-icons/react/dist/ssr";
 import { SanityCardGrid, type SanityCardGridItem } from "@/components/SanityCardGrid";
 import {
   buildSearchIndex,
-  filterSanityCards,
   normalizeListSearchParams,
-  paginateSanityCards,
 } from "@/lib/sanity-browser";
 import { sanityFetch } from "@/sanity/client";
 import { postsQuery } from "@/sanity/queries";
@@ -52,9 +50,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       formatDate(post.publishedAt),
     ]),
   }));
-  const filteredCards = filterSanityCards(cards, query);
-  const pagedCards = paginateSanityCards(filteredCards, page);
-
   return (
     <main className="testimony-page">
       <section className="testimony-hero">
@@ -95,7 +90,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             </div>
           ) : (
             <SanityCardGrid
-              items={pagedCards.pageItems}
+              items={cards}
               ariaLabel="blog posts"
               search={{
                 basePath: "/blog",
@@ -103,11 +98,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 placeholder: "Search prayer teachings…",
                 query,
                 resultLabel: "teachings",
-                totalCount: filteredCards.length,
+                totalCount: cards.length,
+                quickSearches: ["Prayer", "Devotional", "Teaching", "Ministry"],
               }}
               pagination={{
-                page: pagedCards.page,
-                pageCount: pagedCards.pageCount,
+                page,
               }}
             />
           )}

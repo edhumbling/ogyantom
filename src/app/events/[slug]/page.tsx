@@ -10,6 +10,8 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { RichPortableText } from "@/components/RichPortableText";
 import { SanityImage } from "@/components/SanityImage";
+import { SanityShareGrid } from "@/components/SanityShareGrid";
+import { absoluteUrl } from "@/lib/seo";
 import { sanityFetch } from "@/sanity/client";
 import { buildContentMetadata } from "@/sanity/metadata";
 import { eventBySlugQuery } from "@/sanity/queries";
@@ -82,6 +84,7 @@ export default async function EventPage({ params }: EventPageProps) {
 
   const title = event.title || "Untitled event";
   const PlatformIcon = platformIcons[event.platform || "Online"] || LinkSimple;
+  const eventUrl = absoluteUrl(`/events/${slug}`);
 
   return (
     <main className="testimony-page">
@@ -136,6 +139,12 @@ export default async function EventPage({ params }: EventPageProps) {
         <section className="sanity-detail-section">
           <div className="sanity-detail-shell">
             <div className="sanity-detail-main">
+              <SanityShareGrid
+                title={title}
+                text={event.summary}
+                url={eventUrl}
+              />
+
               <figure className="sanity-detail-media">
                 <SanityImage
                   image={event.image}
