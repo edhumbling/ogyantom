@@ -12846,7 +12846,9 @@ html {
   }
 
   .home-hero-grid {
-    padding-bottom: clamp(4.25rem, 11svh, 7.75rem) !important;
+    align-content: center !important;
+    align-items: center !important;
+    padding-bottom: clamp(2.5rem, 5svh, 4rem) !important;
   }
 }
 
