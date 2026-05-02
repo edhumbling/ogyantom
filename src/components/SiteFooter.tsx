@@ -79,6 +79,9 @@ export function SiteFooter() {
               <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/prayer-army">
                 Evening Watch
               </Link>
+              <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/global-prayer-coverage">
+                Global Prayer Coverage
+              </Link>
               <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/prayer-request">
                 Prayer Request
               </Link>

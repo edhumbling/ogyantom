@@ -1,6 +1,7 @@
 export const navItems = [
   { href: "/", label: "Home" },
   { href: "/prayer-army", label: "Prayer Army" },
+  { href: "/global-prayer-coverage", label: "Global Prayer Coverage" },
   { href: "/testimonies", label: "Testimonies" },
   { href: "/ministry", label: "Ministry" },
   { href: "/philanthropy", label: "Philanthropy" },

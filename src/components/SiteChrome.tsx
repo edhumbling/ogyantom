@@ -6,7 +6,7 @@ import { FloatingActions } from "./FloatingActions";
 import { HeroBackControls } from "./HeroBackControls";
 import { PrayerAssistant } from "./PrayerAssistant";
 
-const headerlessRoutePrefixes = ["/support/give"];
+const headerlessRoutePrefixes = ["/global-prayer-coverage", "/support/give"];
 
 type SiteChromeProps = {
   children: ReactNode;

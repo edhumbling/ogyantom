@@ -41,6 +41,11 @@ const mainRoutes: SitemapLink[] = [
     text: "Morning and evening watch details for the online prayer army.",
   },
   {
+    href: "/global-prayer-coverage",
+    label: "Global Prayer Coverage",
+    text: "Interactive OpenFreeMap coverage view of prayer pings across represented nations.",
+  },
+  {
     href: "/prayer-request",
     label: "Prayer Request",
     text: "Submit a prayer request for careful ministry covering.",

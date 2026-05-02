@@ -12,7 +12,9 @@ import {
   SITE_URL,
 } from "@/lib/seo";
 import { Great_Vibes } from "next/font/google";
+import "maplibre-gl/dist/maplibre-gl.css";
 import "./globals.css";
+import "./global-prayer-coverage/coverage.css";
 
 const greatVibes = Great_Vibes({
   weight: "400",

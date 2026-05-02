@@ -1,0 +1,535 @@
+.global-prayer-page {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(13, 58, 39, 0.18), transparent 42rem),
+    #030604;
+  color: #fff8e8;
+  isolation: isolate;
+}
+
+.global-prayer-skip {
+  position: fixed;
+  top: max(0.75rem, env(safe-area-inset-top));
+  left: max(0.75rem, env(safe-area-inset-left));
+  z-index: 50;
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  border: 1px solid rgba(207, 180, 95, 0.55);
+  border-radius: 0.42rem;
+  background: #fff8e8;
+  padding: 0 0.9rem;
+  color: #07120d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transform: translateY(-5rem);
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.global-prayer-skip:focus-visible {
+  outline: 2px solid #34f5a4;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(52, 245, 164, 0.18);
+  transform: translateY(0);
+}
+
+.global-prayer-map-shell,
+.global-prayer-map {
+  position: absolute;
+  inset: 0;
+}
+
+.global-prayer-map {
+  z-index: 1;
+  background: #07120d;
+}
+
+.global-prayer-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 48%, transparent 0, transparent 42%, rgba(3, 6, 4, 0.1) 72%, rgba(3, 6, 4, 0.5) 100%),
+    linear-gradient(180deg, rgba(3, 6, 4, 0.3), transparent 26%, rgba(3, 6, 4, 0.38));
+}
+
+.global-prayer-fivefold {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  width: min(42rem, 56vw);
+  aspect-ratio: 1;
+  pointer-events: none;
+  border: 1px solid rgba(207, 180, 95, 0.17);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 56%, 79% 91%, 50% 69%, 21% 91%, 32% 56%, 2% 35%, 39% 35%);
+  opacity: 0.28;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  filter: drop-shadow(0 0 1.1rem rgba(207, 180, 95, 0.12));
+}
+
+.global-prayer-back {
+  position: fixed;
+  top: max(0.9rem, env(safe-area-inset-top));
+  left: max(0.9rem, env(safe-area-inset-left));
+  z-index: 25;
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 1px solid rgba(255, 248, 232, 0.22);
+  border-radius: 0.48rem;
+  background: rgba(3, 6, 4, 0.72);
+  padding: 0 0.86rem;
+  color: #fff8e8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  backdrop-filter: blur(16px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 14px 34px rgba(0, 0, 0, 0.24);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.global-prayer-back:hover,
+.global-prayer-back:focus-visible {
+  border-color: rgba(207, 180, 95, 0.72);
+  background: #fff8e8;
+  color: #07120d;
+  box-shadow:
+    0 0 0 4px rgba(207, 180, 95, 0.17),
+    0 18px 42px rgba(0, 0, 0, 0.3);
+}
+
+.global-prayer-back:focus-visible {
+  outline: 2px solid #34f5a4;
+  outline-offset: 3px;
+}
+
+.global-prayer-back:active {
+  transform: scale(0.97);
+}
+
+.global-prayer-command {
+  position: fixed;
+  top: max(1rem, env(safe-area-inset-top));
+  left: 50%;
+  z-index: 15;
+  display: grid;
+  justify-items: center;
+  gap: 0.42rem;
+  width: min(26rem, calc(100vw - 8rem));
+  pointer-events: none;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.global-prayer-kicker {
+  display: inline-flex;
+  min-height: 1.6rem;
+  align-items: center;
+  gap: 0.34rem;
+  border: 1px solid rgba(207, 180, 95, 0.28);
+  border-radius: 999px;
+  background: rgba(3, 6, 4, 0.52);
+  padding: 0 0.58rem;
+  color: #f5dfa0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  backdrop-filter: blur(12px);
+}
+
+.global-prayer-command h1 {
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  color: #fff8e8;
+  font-size: 2.35rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 0.92;
+  text-shadow:
+    0 0 0.8rem rgba(207, 180, 95, 0.18),
+    0 0.16rem 0.28rem rgba(0, 0, 0, 0.42);
+  text-wrap: balance;
+}
+
+.global-prayer-live {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(4rem, calc(env(safe-area-inset-bottom) + 4rem));
+  z-index: 16;
+  min-height: 1.85rem;
+  max-width: 16rem;
+  border: 1px solid rgba(52, 245, 164, 0.18);
+  border-radius: 999px;
+  background: rgba(3, 6, 4, 0.62);
+  padding: 0.38rem 0.66rem;
+  color: rgba(255, 248, 232, 0.82);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  backdrop-filter: blur(12px);
+}
+
+.global-prayer-live:empty {
+  display: none;
+}
+
+.global-prayer-ledger {
+  position: fixed;
+  right: max(0.9rem, env(safe-area-inset-right));
+  bottom: max(0.9rem, env(safe-area-inset-bottom));
+  left: max(0.9rem, env(safe-area-inset-left));
+  z-index: 15;
+  display: grid;
+  gap: 0.34rem;
+  pointer-events: none;
+}
+
+.global-prayer-ledger-head {
+  display: flex;
+  min-height: 1rem;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 248, 232, 0.62);
+}
+
+.global-prayer-ledger h2 {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.global-prayer-ledger ul {
+  display: flex;
+  gap: 0.32rem;
+  justify-content: center;
+  overflow-x: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0 0.05rem 0.18rem;
+  pointer-events: auto;
+  scrollbar-width: none;
+}
+
+.global-prayer-ledger ul::-webkit-scrollbar {
+  display: none;
+}
+
+.global-prayer-ledger li {
+  flex: 0 0 auto;
+}
+
+.global-prayer-ledger button {
+  display: inline-flex;
+  min-height: 2.1rem;
+  max-width: 8.3rem;
+  align-items: center;
+  gap: 0.34rem;
+  border: 1px solid rgba(255, 248, 232, 0.13);
+  border-radius: 999px;
+  background: rgba(3, 6, 4, 0.5);
+  padding: 0.22rem 0.48rem;
+  color: rgba(255, 248, 232, 0.82);
+  text-align: left;
+  touch-action: manipulation;
+  backdrop-filter: blur(12px);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.global-prayer-ledger button svg {
+  width: 0.7rem;
+  height: 0.7rem;
+  flex: 0 0 auto;
+  color: #cfb45f;
+}
+
+.global-prayer-ledger button span {
+  display: grid;
+  min-width: 0;
+  gap: 0.08rem;
+}
+
+.global-prayer-ledger button strong,
+.global-prayer-ledger button small {
+  overflow: hidden;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.global-prayer-ledger button strong {
+  color: inherit;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.global-prayer-ledger button small {
+  color: rgba(255, 248, 232, 0.52);
+  font-size: 0.58rem;
+}
+
+.global-prayer-ledger button:hover,
+.global-prayer-ledger button:focus-visible,
+.global-prayer-ledger button[aria-pressed="true"] {
+  border-color: rgba(52, 245, 164, 0.42);
+  background: rgba(52, 245, 164, 0.12);
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(52, 245, 164, 0.1);
+}
+
+.global-prayer-ledger button:focus-visible {
+  outline: 2px solid #34f5a4;
+  outline-offset: 3px;
+}
+
+.global-prayer-ledger button:active {
+  transform: scale(0.98);
+}
+
+.global-prayer-ledger > p {
+  margin: 0;
+  color: rgba(255, 248, 232, 0.5);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.global-prayer-marker {
+  position: relative;
+  display: block;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.global-prayer-marker::before,
+.global-prayer-marker::after {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  border-radius: 999px;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.global-prayer-marker::before {
+  width: 2.1rem;
+  height: 2.1rem;
+  border: 1px solid rgba(255, 248, 232, 0.66);
+  opacity: 0.72;
+  animation: global-prayer-pulse 2.4s ease-out infinite;
+}
+
+.global-prayer-marker::after {
+  width: 0.72rem;
+  height: 0.72rem;
+  border: 2px solid #fff8e8;
+  background: #34f5a4;
+  box-shadow:
+    0 0 0 0.28rem rgba(52, 245, 164, 0.14),
+    0 0 1.1rem rgba(52, 245, 164, 0.82);
+}
+
+.global-prayer-marker-origin::after {
+  background: #ff7a1a;
+  box-shadow:
+    0 0 0 0.34rem rgba(255, 122, 26, 0.18),
+    0 0 1.35rem rgba(255, 122, 26, 0.86);
+}
+
+.global-prayer-marker-watch::after {
+  background: #cfb45f;
+  box-shadow:
+    0 0 0 0.3rem rgba(207, 180, 95, 0.16),
+    0 0 1.18rem rgba(207, 180, 95, 0.8);
+}
+
+.global-prayer-marker:hover::after,
+.global-prayer-marker:focus-visible::after {
+  background: #ffffff;
+  box-shadow:
+    0 0 0 0.34rem rgba(207, 180, 95, 0.24),
+    0 0 1.35rem rgba(255, 248, 232, 0.86);
+}
+
+.global-prayer-marker:focus-visible {
+  outline: 2px solid #fff8e8;
+  outline-offset: 0.25rem;
+}
+
+.global-prayer-page .maplibregl-ctrl-group {
+  overflow: hidden;
+  border: 1px solid rgba(255, 248, 232, 0.16);
+  border-radius: 0.48rem;
+  background: rgba(3, 6, 4, 0.58);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+}
+
+.global-prayer-page .maplibregl-ctrl-group button {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  color: #fff8e8;
+}
+
+.global-prayer-page .maplibregl-ctrl-group button:hover,
+.global-prayer-page .maplibregl-ctrl-group button:focus-visible {
+  background-color: rgba(207, 180, 95, 0.2);
+}
+
+.global-prayer-page .maplibregl-ctrl-group button:focus-visible {
+  outline: 2px solid #34f5a4;
+  outline-offset: -2px;
+}
+
+.global-prayer-page .maplibregl-ctrl-attrib {
+  border-radius: 0.35rem;
+  background: rgba(3, 6, 4, 0.55);
+  color: rgba(255, 248, 232, 0.82);
+}
+
+.global-prayer-page .maplibregl-ctrl-attrib a {
+  color: #f5dfa0;
+}
+
+@keyframes global-prayer-pulse {
+  0% {
+    opacity: 0.78;
+    transform: translate(-50%, -50%) scale(0.55);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.75);
+  }
+}
+
+@media (max-width: 1023px) {
+  .global-prayer-vignette {
+    background:
+      radial-gradient(circle at 50% 45%, transparent 0, transparent 45%, rgba(3, 6, 4, 0.15) 80%, rgba(3, 6, 4, 0.58) 100%),
+      linear-gradient(180deg, rgba(3, 6, 4, 0.36), transparent 30%, rgba(3, 6, 4, 0.46));
+  }
+
+  .global-prayer-command {
+    top: calc(max(0.8rem, env(safe-area-inset-top)) + 3.1rem);
+    width: min(19rem, calc(100vw - 1.6rem));
+  }
+
+  .global-prayer-command h1 {
+    font-size: 1.38rem;
+  }
+
+  .global-prayer-kicker {
+    min-height: 1.42rem;
+    font-size: 0.54rem;
+  }
+
+  .global-prayer-live {
+    right: max(0.72rem, env(safe-area-inset-right));
+    bottom: calc(max(0.72rem, env(safe-area-inset-bottom)) + 3.35rem);
+    max-width: 10rem;
+    min-height: 1.5rem;
+    padding: 0.25rem 0.46rem;
+    font-size: 0.58rem;
+  }
+
+  .global-prayer-ledger {
+    right: max(0.55rem, env(safe-area-inset-right));
+    bottom: max(0.55rem, env(safe-area-inset-bottom));
+    left: max(0.55rem, env(safe-area-inset-left));
+    gap: 0.22rem;
+  }
+
+  .global-prayer-ledger-head {
+    min-height: 0.6rem;
+  }
+
+  .global-prayer-ledger h2,
+  .global-prayer-ledger > p {
+    font-size: 0.48rem;
+  }
+
+  .global-prayer-ledger ul {
+    justify-content: flex-start;
+    gap: 0.24rem;
+  }
+
+  .global-prayer-ledger button {
+    min-height: 1.75rem;
+    max-width: 6.9rem;
+    gap: 0.24rem;
+    padding: 0.18rem 0.36rem;
+  }
+
+  .global-prayer-ledger button strong {
+    font-size: 0.56rem;
+  }
+
+  .global-prayer-ledger button small {
+    font-size: 0.48rem;
+  }
+
+  .global-prayer-page .maplibregl-ctrl-bottom-right {
+    bottom: calc(max(0.55rem, env(safe-area-inset-bottom)) + 3.1rem);
+  }
+}
+
+@media (max-width: 639px) {
+  .global-prayer-command h1 {
+    display: none;
+  }
+
+  .global-prayer-page .maplibregl-ctrl-attrib {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .global-prayer-skip,
+  .global-prayer-back,
+  .global-prayer-ledger button {
+    transition-duration: 1ms;
+  }
+
+  .global-prayer-marker::before {
+    animation: none;
+    opacity: 0.56;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

@@ -58,6 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     route("/", 1, "weekly"),
     route("/prayer-army", 0.92, "weekly"),
+    route("/global-prayer-coverage", 0.88, "weekly"),
     route("/prayer-request", 0.9, "monthly"),
     route("/support", 0.86, "monthly"),
     route("/ministry", 0.84, "monthly"),
