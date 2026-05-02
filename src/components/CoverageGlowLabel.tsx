@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type CoverageTheme = {
   color: string;
@@ -64,11 +64,9 @@ type CoverageGlowLabelProps = {
 };
 
 export function CoverageGlowLabel({ label = "Global Prayer Coverage" }: CoverageGlowLabelProps) {
-  const [theme, setTheme] = useState<CoverageTheme>(defaultTheme);
-
-  useEffect(() => {
-    setTheme(detectCoverageTheme());
-  }, []);
+  const [theme] = useState<CoverageTheme>(() =>
+    typeof window === "undefined" ? defaultTheme : detectCoverageTheme(),
+  );
 
   return (
     <span
