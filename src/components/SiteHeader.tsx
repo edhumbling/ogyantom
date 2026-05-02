@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, FacebookLogo, List, TiktokLogo, WhatsappLogo, X } from "@phosphor-icons/react";
+import { ArrowRight, CaretDown, FacebookLogo, List, TiktokLogo, WhatsappLogo, X } from "@phosphor-icons/react";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { contactDetails, navItems } from "@/lib/site";
+import { CoverageGlowLabel } from "./CoverageGlowLabel";
 import { LogoMark } from "./LogoMark";
 
 export function SiteHeader() {
@@ -96,13 +97,15 @@ export function SiteHeader() {
                     <Link
                       href={item.href}
                       className={
-                        "header-nav-link font-sans " +
+                        "header-nav-link header-nav-link-menu-trigger font-sans " +
                         (active
                           ? "header-nav-link-active"
                           : "text-white/74")
                       }
+                      aria-haspopup="true"
                     >
-                      {item.label}
+                      <span>{item.label}</span>
+                      <CaretDown className="header-nav-caret" size={13} weight="bold" aria-hidden="true" />
                     </Link>
                     <div className="header-nav-submenu" aria-label="Prayer Army submenu">
                       <Link
@@ -112,7 +115,7 @@ export function SiteHeader() {
                           (pathname === "/global-prayer-coverage" ? "header-nav-submenu-link-active" : "")
                         }
                       >
-                        Global Prayer Coverage
+                        <CoverageGlowLabel />
                       </Link>
                     </div>
                   </div>

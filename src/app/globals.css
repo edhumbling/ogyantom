@@ -988,6 +988,20 @@ html {
   color: #f1d98c;
 }
 
+.header-nav-link-menu-trigger {
+  gap: 0.26rem;
+  padding-right: 0.54rem;
+}
+
+.header-nav-caret {
+  flex: 0 0 auto;
+  opacity: 0.72;
+  transform: translateY(0.03rem);
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
+}
+
 .header-nav-menu {
   position: relative;
   display: inline-flex;
@@ -996,17 +1010,18 @@ html {
 
 .header-nav-submenu {
   position: absolute;
-  top: calc(100% + 0.42rem);
-  left: 50%;
+  top: calc(100% + 0.36rem);
+  left: 0;
   z-index: 95;
-  min-width: 13.5rem;
+  min-width: 14.25rem;
   border: 1px solid rgba(207, 180, 95, 0.22);
-  border-radius: 0.48rem;
-  background: rgba(3, 6, 4, 0.9);
-  padding: 0.36rem;
+  border-radius: 0.52rem;
+  background:
+    linear-gradient(180deg, rgba(8, 20, 15, 0.96), rgba(3, 6, 4, 0.94));
+  padding: 0.34rem;
   opacity: 0;
   pointer-events: none;
-  transform: translateX(-50%) translateY(-0.18rem);
+  transform: translateY(-0.18rem);
   transition:
     opacity 150ms ease,
     transform 150ms ease,
@@ -1018,20 +1033,42 @@ html {
     0 18px 42px rgba(0, 0, 0, 0.34);
 }
 
+.header-nav-submenu::before {
+  position: absolute;
+  top: -0.38rem;
+  left: 1.25rem;
+  width: 0.72rem;
+  height: 0.72rem;
+  border-top: 1px solid rgba(207, 180, 95, 0.22);
+  border-left: 1px solid rgba(207, 180, 95, 0.22);
+  background: rgba(8, 20, 15, 0.96);
+  content: "";
+  transform: rotate(45deg);
+}
+
 .header-nav-menu:hover .header-nav-submenu,
 .header-nav-menu:focus-within .header-nav-submenu {
   opacity: 1;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
   visibility: visible;
 }
 
+.header-nav-menu:hover .header-nav-caret,
+.header-nav-menu:focus-within .header-nav-caret {
+  opacity: 1;
+  transform: translateY(0.08rem);
+}
+
 .header-nav-submenu-link {
-  display: flex;
-  min-height: 2.5rem;
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  min-height: 2.65rem;
   align-items: center;
-  border-radius: 0.35rem;
-  padding: 0 0.68rem;
+  border: 1px solid transparent;
+  border-radius: 0.42rem;
+  padding: 0 0.72rem;
   color: rgba(255, 248, 232, 0.76);
   font-size: 0.74rem;
   font-weight: 700;
@@ -1046,7 +1083,10 @@ html {
 .header-nav-submenu-link:hover,
 .header-nav-submenu-link:focus-visible,
 .header-nav-submenu-link-active {
-  background: rgba(207, 180, 95, 0.14);
+  border-color: rgba(207, 180, 95, 0.18);
+  background:
+    radial-gradient(circle at 1.15rem 50%, color-mix(in srgb, var(--coverage-glow, #cfb45f) 22%, transparent), transparent 3.2rem),
+    rgba(207, 180, 95, 0.1);
   color: #fff8e8;
 }
 
@@ -1054,6 +1094,67 @@ html {
   outline: 2px solid #cfb45f;
   outline-offset: 3px;
   box-shadow: 0 0 0 4px rgba(207, 180, 95, 0.12);
+}
+
+.coverage-glow-label {
+  --coverage-glow: #cfb45f;
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.42rem;
+  color: var(--coverage-glow);
+  text-shadow:
+    0 0 0.38rem color-mix(in srgb, var(--coverage-glow) 58%, transparent),
+    0 0 0.9rem color-mix(in srgb, var(--coverage-glow) 34%, transparent);
+  transition:
+    color 150ms ease,
+    text-shadow 150ms ease;
+}
+
+.coverage-glow-label[data-coverage-match="false"] {
+  color: #f5dfa0;
+  text-shadow:
+    0 0 0.3rem rgba(207, 180, 95, 0.34),
+    0 0 0.78rem rgba(207, 180, 95, 0.22);
+}
+
+.coverage-glow-ping {
+  position: relative;
+  display: inline-flex;
+  width: 0.48rem;
+  height: 0.48rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--coverage-glow);
+  box-shadow:
+    0 0 0 0.18rem color-mix(in srgb, var(--coverage-glow) 16%, transparent),
+    0 0 0.85rem color-mix(in srgb, var(--coverage-glow) 88%, transparent);
+}
+
+.coverage-glow-ping::before {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1px solid var(--coverage-glow);
+  border-radius: inherit;
+  content: "";
+  opacity: 0.56;
+  transform: translate(-50%, -50%) scale(0.5);
+  animation: coverage-glow-pulse 2s ease-out infinite;
+}
+
+.footer-coverage-link {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+}
+
+@keyframes coverage-glow-pulse {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.55);
+  }
 }
 
 .mobile-menu-trigger {

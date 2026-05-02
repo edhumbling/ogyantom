@@ -10,6 +10,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { contactDetails, navItems } from "@/lib/site";
 import { ArmyMarquee } from "./ArmyMarquee";
+import { CoverageGlowLabel } from "./CoverageGlowLabel";
 import { LogoMark } from "./LogoMark";
 
 export function SiteFooter() {
@@ -79,8 +80,8 @@ export function SiteFooter() {
               <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/prayer-army">
                 Evening Watch
               </Link>
-              <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/global-prayer-coverage">
-                Global Prayer Coverage
+              <Link className="footer-coverage-link transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/global-prayer-coverage">
+                <CoverageGlowLabel />
               </Link>
               <Link className="transition duration-[150ms] ease-out hover:text-[var(--gold)]" href="/prayer-request">
                 Prayer Request
