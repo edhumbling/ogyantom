@@ -296,6 +296,7 @@ export function PrayerAssistant() {
   const [showCollapsedBar, setShowCollapsedBar] = useState(true);
   const [showScrollBottom, setShowScrollBottom] = useState(false);
   const [viewportMetrics, setViewportMetrics] = useState<ViewportMetrics | null>(null);
+  const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [messageFeedback, setMessageFeedback] = useState<
     Record<string, MessageFeedback | undefined>
   >({});
@@ -561,7 +562,8 @@ export function PrayerAssistant() {
       latestMessagesRef.current = nextMessages;
       setMessages(nextMessages);
       pruneMessageFeedback(nextMessages);
-      showChatToast("Question ready to edit.");
+      setEditingMessageId(message.id);
+      showChatToast("Edit your question, then press Send.");
       window.setTimeout(focusInput, 0);
     },
     [cancelActiveStream, focusInput, pruneMessageFeedback, setMessages, showChatToast],
@@ -609,6 +611,7 @@ export function PrayerAssistant() {
       pendingAssistantScrollIdRef.current = null;
       setShowScrollBottom(false);
       setInput("");
+      setEditingMessageId(null);
       showChatToast("New chat forked from this response.");
       window.setTimeout(focusInput, 0);
     },
@@ -655,6 +658,7 @@ export function PrayerAssistant() {
     setMessages([]);
     setMessageFeedback({});
     setInput("");
+    setEditingMessageId(null);
     setError("");
     setIsLoading(false);
     setShowScrollBottom(false);
@@ -800,6 +804,8 @@ export function PrayerAssistant() {
       setIsOpen(true);
       setError("");
       setInput("");
+      const isResendingEdit = Boolean(editingMessageId);
+      setEditingMessageId(null);
 
       const userMessage: Message = {
         id: createMessageId(),
@@ -819,6 +825,7 @@ export function PrayerAssistant() {
         { id: assistantId, role: "assistant", content: "" },
       ]);
       setIsLoading(true);
+      showChatToast(isResendingEdit ? "Edited question resent." : "Question sent.");
 
       const controller = new AbortController();
       abortRef.current = controller;
@@ -909,7 +916,7 @@ export function PrayerAssistant() {
         abortRef.current = null;
       }
     },
-    [isLoading, setMessages],
+    [editingMessageId, isLoading, setMessages, showChatToast],
   );
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -1235,6 +1242,7 @@ export function PrayerAssistant() {
                   placeholder="Share what you need prayer or Bible help with…"
                   name="prayer-assistant-message"
                   autoComplete="off"
+                  data-editing={editingMessageId ? "true" : undefined}
                 />
                 <button
                   type="submit"
@@ -1242,7 +1250,13 @@ export function PrayerAssistant() {
                   className={`prayer-chat-send-button ${
                     isLoading ? "prayer-chat-send-button-stop" : ""
                   }`}
-                  aria-label={isLoading ? "Stop prayer assistant response" : "Send message"}
+                  aria-label={
+                    isLoading
+                      ? "Stop prayer assistant response"
+                      : editingMessageId
+                        ? "Resend edited question"
+                        : "Send message"
+                  }
                 >
                   {isLoading ? (
                     <Stop size={18} weight="fill" aria-hidden="true" />
@@ -1252,6 +1266,11 @@ export function PrayerAssistant() {
                   <span>{isLoading ? "Stop" : "Send"}</span>
                 </button>
               </form>
+              {editingMessageId && (
+                <p className="prayer-chat-editing-status" role="status">
+                  Editing question. Press Send to resend.
+                </p>
+              )}
             </div>
 
             <p className="prayer-chat-disclaimer">

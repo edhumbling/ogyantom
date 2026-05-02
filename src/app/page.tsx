@@ -21,6 +21,7 @@ import {
   contactDetails,
 } from "@/lib/site";
 import { AutoScrollRail } from "@/components/AutoScrollRail";
+import { HeroDesktopVideoPlaylist } from "@/components/HeroDesktopVideoPlaylist";
 
 const facetIcons = [
   Broadcast,
@@ -88,20 +89,7 @@ export default function Home() {
             type="video/mp4"
           />
         </video>
-        <video
-          className="home-hero-video home-hero-video-desktop"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        >
-          <source
-            src="https://ik.imagekit.io/humbling/hero%20video.mp4"
-            type="video/mp4"
-          />
-        </video>
+        <HeroDesktopVideoPlaylist />
         <div className="home-hero-backdrop" />
         <div className="home-hero-grid">
           <div className="home-hero-copy">

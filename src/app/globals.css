@@ -12163,6 +12163,19 @@ html {
   transform: translateY(0) scale(0.94);
 }
 
+.prayer-chat-composer textarea[data-editing="true"] {
+  color: #fff7df;
+}
+
+.prayer-chat-editing-status {
+  margin: -0.12rem 1rem 0.42rem;
+  color: rgba(245, 223, 160, 0.82);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+}
+
 .prayer-chat-toast {
   position: absolute;
   right: 1rem;
@@ -12219,9 +12232,9 @@ html {
 .prayer-chat-table th,
 .prayer-chat-table td,
 .prayer-chat-table .prayer-chat-inline-link {
-  overflow-wrap: normal;
-  white-space: nowrap;
-  word-break: normal;
+  overflow-wrap: normal !important;
+  white-space: nowrap !important;
+  word-break: normal !important;
 }
 
 @keyframes prayer-chat-toast-in {
