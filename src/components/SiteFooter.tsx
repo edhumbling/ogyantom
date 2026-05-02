@@ -58,7 +58,7 @@ export function SiteFooter() {
           <div>
             <h2 className="text-sm font-semibold tracking-[0.01em] text-[var(--gold)]">Ministry</h2>
             <div className="mt-5 grid gap-3">
-              {navItems.map((item) => (
+              {navItems.filter((item) => item.href !== "/global-prayer-coverage").map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}

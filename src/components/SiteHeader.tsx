@@ -13,7 +13,10 @@ export function SiteHeader() {
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const desktopNavItems = navItems.filter(
-    (item) => item.href !== "/contact" && item.href !== "/support",
+    (item) =>
+      item.href !== "/contact" &&
+      item.href !== "/global-prayer-coverage" &&
+      item.href !== "/support",
   );
   const mobileNavItems = navItems.filter((item) => item.href !== "/support");
 
@@ -83,7 +86,39 @@ export function SiteHeader() {
 
           <nav className="header-nav ml-auto hidden items-center lg:flex" aria-label="Primary navigation">
             {desktopNavItems.map((item) => {
-              const active = pathname === item.href;
+              const active =
+                pathname === item.href ||
+                (item.href === "/prayer-army" && pathname === "/global-prayer-coverage");
+
+              if (item.href === "/prayer-army") {
+                return (
+                  <div key={item.href} className="header-nav-menu">
+                    <Link
+                      href={item.href}
+                      className={
+                        "header-nav-link font-sans " +
+                        (active
+                          ? "header-nav-link-active"
+                          : "text-white/74")
+                      }
+                    >
+                      {item.label}
+                    </Link>
+                    <div className="header-nav-submenu" aria-label="Prayer Army submenu">
+                      <Link
+                        href="/global-prayer-coverage"
+                        className={
+                          "header-nav-submenu-link " +
+                          (pathname === "/global-prayer-coverage" ? "header-nav-submenu-link-active" : "")
+                        }
+                      >
+                        Global Prayer Coverage
+                      </Link>
+                    </div>
+                  </div>
+                );
+              }
+
               return (
                 <Link
                   key={item.href}
