@@ -7093,6 +7093,122 @@ html {
   color: #6d1237;
 }
 
+.prayer-request-success-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 170;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.prayer-request-success-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(8, 20, 15, 0.48);
+  backdrop-filter: blur(12px) saturate(1.08);
+  cursor: pointer;
+}
+
+.prayer-request-success-modal {
+  position: relative;
+  width: min(100%, 40rem);
+  border: 1px solid rgba(109, 18, 55, 0.22);
+  background:
+    radial-gradient(98% 68% at 11% 0%, rgba(212, 175, 93, 0.2), transparent 56%),
+    linear-gradient(160deg, #fffdf8 0%, #f7f1e5 100%);
+  padding: clamp(1.2rem, 2.8vw, 2rem);
+  color: #10251d;
+  box-shadow:
+    0 0 0 1px rgba(109, 18, 55, 0.08),
+    0 26px 56px rgba(8, 20, 15, 0.35);
+  animation: prayer-request-modal-in 220ms ease-out both;
+}
+
+.prayer-request-success-kicker {
+  color: #6d1237;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.prayer-request-success-modal h2 {
+  margin-top: 0.55rem;
+  color: #0b1d16;
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  font-size: clamp(1.6rem, 2.8vw, 2.1rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+}
+
+.prayer-request-success-modal p {
+  margin-top: 0.75rem;
+  color: #31453c;
+  line-height: 1.7;
+}
+
+.prayer-request-success-actions {
+  margin-top: 1.3rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.prayer-request-success-button {
+  min-width: 8.4rem;
+  min-height: 2.9rem;
+  border: 1px solid #6d1237;
+  background: #6d1237;
+  padding: 0.45rem 1.1rem;
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    background-color 150ms ease-out,
+    transform 120ms ease-out,
+    box-shadow 150ms ease-out;
+}
+
+.prayer-request-success-button:hover {
+  background: #541028;
+}
+
+.prayer-request-success-button:active {
+  transform: scale(0.98);
+}
+
+.prayer-request-success-button:focus-visible {
+  outline: 3px solid rgba(207, 180, 95, 0.86);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 1px rgba(109, 18, 55, 0.38);
+}
+
+@keyframes prayer-request-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prayer-request-success-modal {
+    animation: none;
+  }
+
+  .prayer-request-success-button {
+    transition: none;
+  }
+}
+
 .awesome-prayer-page {
   --prayer-ink: #fff8e8;
   --prayer-dark: #030604;
