@@ -6,6 +6,7 @@ export const navItems = [
   { href: "/ministry", label: "Ministry" },
   { href: "/philanthropy", label: "Philanthropy" },
   { href: "/blog", label: "Blog" },
+  { href: "/Daily-Devotionals", label: "Daily Fire" },
   { href: "/events", label: "Upcoming Events" },
   { href: "/support", label: "Give / Support" },
   { href: "/contact", label: "Contact" },
@@ -49,6 +50,11 @@ export const ministryFacets = [
     href: "/blog",
     title: "Prayer Teachings",
     text: "Written exhortations, devotionals, and ministry notes from the prayer army.",
+  },
+  {
+    href: "/Daily-Devotionals",
+    title: "Daily Fire",
+    text: "Automated daily Scripture, reflection, prayer, and practice for the watch.",
   },
   {
     href: "/philanthropy",

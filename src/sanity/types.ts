@@ -41,6 +41,27 @@ export type Post = {
   body?: RichContentBlock[];
 };
 
+export type DailyDevotional = {
+  _id: string;
+  title: string;
+  slug: string;
+  devotionalDate?: string;
+  publishedAt?: string;
+  theme?: string;
+  scripture?: string;
+  scriptureText?: string;
+  excerpt?: string;
+  shareLine?: string;
+  coAuthor?: string;
+  readTime?: string;
+  actionSteps?: string[];
+  prayer?: string;
+  generationStatus?: "aiGenerated" | "fallback" | "edited";
+  modelUsed?: string;
+  mainImage?: SanityImage;
+  body?: RichContentBlock[];
+};
+
 export type Event = {
   _id: string;
   title?: string;

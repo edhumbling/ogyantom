@@ -2,9 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { armyPillars, coreValues } from "@/lib/site";
 import { givingOptions } from "@/lib/giving";
+import { seededDailyDevotionals } from "@/lib/dailyDevotionalSeed";
 import { sanityFetch } from "@/sanity/client";
-import { eventsQuery, philanthropyQuery, postsQuery } from "@/sanity/queries";
-import type { Event, PhilanthropyUpdate, Post } from "@/sanity/types";
+import {
+  dailyDevotionalsQuery,
+  eventsQuery,
+  philanthropyQuery,
+  postsQuery,
+} from "@/sanity/queries";
+import type { DailyDevotional, Event, PhilanthropyUpdate, Post } from "@/sanity/types";
 
 export const metadata: Metadata = {
   title: "HTML Sitemap",
@@ -69,6 +75,11 @@ const mainRoutes: SitemapLink[] = [
     href: "/blog",
     label: "Blog",
     text: "Prayer teachings, devotionals, and ministry notes.",
+  },
+  {
+    href: "/Daily-Devotionals",
+    label: "Daily Fire",
+    text: "Daily Scripture, reflection, prayer, and practice.",
   },
   {
     href: "/events",
@@ -176,11 +187,14 @@ function renderGroup(group: SitemapGroup) {
 }
 
 export default async function HtmlSitemapPage() {
-  const [posts, events, philanthropy] = await Promise.all([
+  const [posts, dailyDevotionalsResult, events, philanthropy] = await Promise.all([
     sanityFetch<Post[]>(postsQuery, {}, []),
+    sanityFetch<DailyDevotional[]>(dailyDevotionalsQuery, {}, []),
     sanityFetch<Event[]>(eventsQuery, {}, []),
     sanityFetch<PhilanthropyUpdate[]>(philanthropyQuery, {}, []),
   ]);
+  const dailyDevotionals =
+    dailyDevotionalsResult.length > 0 ? dailyDevotionalsResult : seededDailyDevotionals;
 
   const groups: SitemapGroup[] = [
     {
@@ -216,6 +230,17 @@ export default async function HtmlSitemapPage() {
         href: `/blog/${post.slug}`,
         label: post.title,
         text: [formatDate(post.publishedAt), post.excerpt].filter(Boolean).join(" - "),
+      })),
+    },
+    {
+      title: "Daily Fire",
+      description: "Automated daily Scripture, reflection, prayer, and practice routes.",
+      links: dailyDevotionals.map((devotional) => ({
+        href: `/Daily-Devotionals/${devotional.slug}`,
+        label: devotional.title,
+        text: [formatDate(devotional.devotionalDate), devotional.excerpt]
+          .filter(Boolean)
+          .join(" - "),
       })),
     },
     {

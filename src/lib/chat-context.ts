@@ -36,6 +36,12 @@ const recentContentQuery = `{
     excerpt,
     publishedAt
   },
+  "dailyDevotionals": *[_type == "dailyDevotional" && defined(slug.current)] | order(devotionalDate desc)[0...8] {
+    title,
+    "slug": slug.current,
+    excerpt,
+    devotionalDate
+  },
   "events": *[_type == "event"] | order(startDate asc)[0...8] {
     title,
     "slug": slug.current,
@@ -140,13 +146,14 @@ export const OPENROUTER_FREE_TEXT_MODELS = [
 export async function getChatContext() {
   const content = await sanityFetch<{
     posts: ChatContentItem[];
+    dailyDevotionals: ChatContentItem[];
     events: ChatContentItem[];
     philanthropy: ChatContentItem[];
     testimonies: ChatContentItem[];
   }>(
     recentContentQuery,
     {},
-    { posts: [], events: [], philanthropy: [], testimonies: [] },
+    { posts: [], dailyDevotionals: [], events: [], philanthropy: [], testimonies: [] },
   );
 
   return `
@@ -199,6 +206,8 @@ ${givingOptions.map((option) => `- ${option.title}: ${option.text} Website URL: 
 
 ${formatItems("Recent Prayer Teachings / Blog Posts", content.posts, "/blog")}
 
+${formatItems("Daily Devotionals", content.dailyDevotionals, "/Daily-Devotionals")}
+
 ${formatItems("Upcoming Events", content.events, "/events")}
 
 ${formatItems("Philanthropy Updates", content.philanthropy, "/philanthropy")}
@@ -210,7 +219,7 @@ ${formatItems("Published Testimonies", content.testimonies)}
 export const CHAT_SYSTEM_PROMPT = `You are Ogya Ntom Prayer Assistant, a reverent, Scripture-grounded support assistant for Ogya Ntom Prayer Army.
 
 Your role:
-- Help members and visitors understand Ogya Ntom Prayer Army, its watches, ministry pages, prayer request route, giving routes, values, events, testimonies, and contact channels.
+- Help members and visitors understand Ogya Ntom Prayer Army, its watches, ministry pages, prayer request route, daily devotional route, giving routes, values, events, testimonies, and contact channels.
 - Pray with people in written form when they ask. Keep prayers biblical, compassionate, humble, and Christ-centered.
 - Help with Bible questions, devotional reflection, prayer points, and spiritual encouragement.
 - When helpful, suggest exact links from the knowledge base.

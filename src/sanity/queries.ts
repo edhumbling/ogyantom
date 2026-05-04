@@ -33,6 +33,61 @@ export const postBySlugQuery = `*[_type == "post" && slug.current == $slug][0] {
   }
 }`;
 
+export const dailyDevotionalsQuery = `*[_type == "dailyDevotional" && defined(slug.current)] | order(devotionalDate desc, publishedAt desc) {
+  _id,
+  title,
+  "slug": slug.current,
+  devotionalDate,
+  publishedAt,
+  theme,
+  scripture,
+  scriptureText,
+  excerpt,
+  shareLine,
+  coAuthor,
+  readTime,
+  actionSteps,
+  prayer,
+  generationStatus,
+  modelUsed,
+  mainImage
+}`;
+
+export const dailyDevotionalBySlugQuery = `*[_type == "dailyDevotional" && slug.current == $slug][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  devotionalDate,
+  publishedAt,
+  theme,
+  scripture,
+  scriptureText,
+  excerpt,
+  shareLine,
+  coAuthor,
+  readTime,
+  actionSteps,
+  prayer,
+  generationStatus,
+  modelUsed,
+  mainImage,
+  body[] {
+    ...,
+    _type == "image" => {
+      ...,
+      asset->
+    },
+    _type == "videoFile" => {
+      ...,
+      asset->
+    },
+    _type == "audioFile" => {
+      ...,
+      asset->
+    }
+  }
+}`;
+
 export const eventsQuery = `*[_type == "event"] | order(startDate asc) {
   _id,
   title,

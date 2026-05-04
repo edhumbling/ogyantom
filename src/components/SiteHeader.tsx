@@ -17,6 +17,7 @@ export function SiteHeader() {
     (item) =>
       item.href !== "/contact" &&
       item.href !== "/global-prayer-coverage" &&
+      item.href !== "/blog" &&
       item.href !== "/support",
   );
   const mobileNavItems = navItems.filter((item) => item.href !== "/support");
@@ -122,6 +123,37 @@ export function SiteHeader() {
                 );
               }
 
+              if (item.href === "/Daily-Devotionals") {
+                return (
+                  <div key={item.href} className="header-nav-menu">
+                    <Link
+                      href={item.href}
+                      className={
+                        "header-nav-link header-nav-link-menu-trigger font-sans " +
+                        ((pathname === item.href || pathname === "/blog")
+                          ? "header-nav-link-active"
+                          : "text-white/74")
+                      }
+                      aria-haspopup="true"
+                    >
+                      <span>{item.label}</span>
+                      <CaretDown className="header-nav-caret" size={13} weight="bold" aria-hidden="true" />
+                    </Link>
+                    <div className="header-nav-submenu" aria-label="Daily Fire submenu">
+                      <Link
+                        href="/blog"
+                        className={
+                          "header-nav-submenu-link " +
+                          (pathname === "/blog" ? "header-nav-submenu-link-active" : "")
+                        }
+                      >
+                        Blog
+                      </Link>
+                    </div>
+                  </div>
+                );
+              }
+
               return (
                 <Link
                   key={item.href}
@@ -133,7 +165,7 @@ export function SiteHeader() {
                       : "text-white/74")
                   }
                 >
-                  {item.label}
+                  {item.href === "/events" ? "Events" : item.label}
                 </Link>
               );
             })}

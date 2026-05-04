@@ -746,6 +746,11 @@ html {
   display: none;
 }
 
+.sanity-square-detail-strip,
+.sanity-square-coauthor {
+  display: none;
+}
+
 .sanity-square-content strong {
   display: inline-flex;
   align-items: center;
@@ -7199,6 +7204,38 @@ html {
   }
 }
 
+.sanity-square-card-devotional .sanity-square-content {
+  gap: 0.3rem;
+}
+
+.sanity-square-card-devotional .sanity-square-detail-strip,
+.sanity-square-card-devotional .sanity-square-coauthor {
+  display: block;
+  overflow: hidden;
+  color: rgba(255, 248, 232, 0.84);
+  font-size: 0.58rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sanity-square-card-devotional .sanity-square-detail-strip {
+  margin-top: 0.08rem;
+  border-top: 1px solid rgba(255, 248, 232, 0.2);
+  padding-top: 0.38rem;
+  color: #f0d98a;
+}
+
+.sanity-square-card-devotional .sanity-square-coauthor {
+  color: rgba(255, 248, 232, 0.72);
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .prayer-request-success-modal {
     animation: none;
@@ -12935,6 +12972,17 @@ html {
 .sanity-share-grid a:active,
 .sanity-share-grid button:active {
   transform: scale(0.97);
+}
+
+.daily-devotional-coauthor {
+  border: 1px solid rgba(16, 37, 29, 0.12);
+  background: #fffdf8;
+  padding: 0.78rem 0.95rem;
+  color: #6d1237;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 @media (min-width: 1024px) {

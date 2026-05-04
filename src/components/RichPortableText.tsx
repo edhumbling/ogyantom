@@ -4,6 +4,7 @@ import type { TypedObject } from "@portabletext/types";
 import { urlFor } from "@/sanity/image";
 import type {
   Event,
+  DailyDevotional,
   PhilanthropyUpdate,
   Post,
   SanityImage as SanityImageType,
@@ -12,7 +13,7 @@ import type {
 } from "@/sanity/types";
 
 type RichPortableTextProps = {
-  value?: Event["body"] | PhilanthropyUpdate["body"] | Post["body"];
+  value?: DailyDevotional["body"] | Event["body"] | PhilanthropyUpdate["body"] | Post["body"];
   emptyText: string;
 };
 

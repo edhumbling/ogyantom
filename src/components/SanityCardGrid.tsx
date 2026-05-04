@@ -16,6 +16,8 @@ export type SanityCardGridItem = {
   eyebrow: string;
   summary?: string;
   meta?: string;
+  detailStrip?: string;
+  coAuthor?: string;
   actionLabel: string;
   cover?: SanityImageType;
   searchText?: string;
@@ -54,6 +56,8 @@ function matchesSearch(item: SanityCardGridItem, query: string) {
     item.eyebrow,
     item.summary,
     item.meta,
+    item.detailStrip,
+    item.coAuthor,
     item.searchText,
   ]
     .filter(Boolean)
@@ -254,6 +258,12 @@ export function SanityCardGrid({
                 <h2>{item.title}</h2>
                 {item.summary ? <span>{item.summary}</span> : null}
                 {item.meta ? <small>{item.meta}</small> : null}
+                {item.detailStrip ? (
+                  <em className="sanity-square-detail-strip">{item.detailStrip}</em>
+                ) : null}
+                {item.coAuthor ? (
+                  <b className="sanity-square-coauthor">Co-Written with {item.coAuthor}</b>
+                ) : null}
                 {item.href ? (
                   <strong>
                     {item.actionLabel}
@@ -265,11 +275,26 @@ export function SanityCardGrid({
           );
 
           return item.href ? (
-            <Link key={item.id} href={item.href} className="sanity-square-card" data-search-index={item.searchText}>
+            <Link
+              key={item.id}
+              href={item.href}
+              className={
+                "sanity-square-card " +
+                (item.detailStrip || item.coAuthor ? "sanity-square-card-devotional" : "")
+              }
+              data-search-index={item.searchText}
+            >
               {content}
             </Link>
           ) : (
-            <article key={item.id} className="sanity-square-card" data-search-index={item.searchText}>
+            <article
+              key={item.id}
+              className={
+                "sanity-square-card " +
+                (item.detailStrip || item.coAuthor ? "sanity-square-card-devotional" : "")
+              }
+              data-search-index={item.searchText}
+            >
               {content}
             </article>
           );

@@ -2,18 +2,24 @@ import type { MetadataRoute } from "next";
 import { sanityFetch } from "@/sanity/client";
 import { coreValues, armyPillars } from "@/lib/site";
 import { givingOptions } from "@/lib/giving";
+import { seededDailyDevotionals } from "@/lib/dailyDevotionalSeed";
 import { SITE_URL, absoluteUrl } from "@/lib/seo";
 
 type SitemapContentItem = {
   slug?: string;
   publishedAt?: string;
   startDate?: string;
+  devotionalDate?: string;
 };
 
 const contentSitemapQuery = `{
   "posts": *[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
     "slug": slug.current,
     publishedAt
+  },
+  "dailyDevotionals": *[_type == "dailyDevotional" && defined(slug.current)] | order(devotionalDate desc) {
+    "slug": slug.current,
+    devotionalDate
   },
   "events": *[_type == "event" && defined(slug.current)] | order(startDate desc) {
     "slug": slug.current,
@@ -51,9 +57,17 @@ function datedRoute(
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const content = await sanityFetch<{
     posts: SitemapContentItem[];
+    dailyDevotionals: SitemapContentItem[];
     events: SitemapContentItem[];
     philanthropy: SitemapContentItem[];
-  }>(contentSitemapQuery, {}, { posts: [], events: [], philanthropy: [] });
+  }>(contentSitemapQuery, {}, { posts: [], dailyDevotionals: [], events: [], philanthropy: [] });
+  const dailyDevotionals =
+    content.dailyDevotionals.length > 0
+      ? content.dailyDevotionals
+      : seededDailyDevotionals.map((item) => ({
+          slug: item.slug,
+          devotionalDate: item.devotionalDate,
+        }));
 
   return [
     route("/", 1, "weekly"),
@@ -64,6 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     route("/ministry", 0.84, "monthly"),
     route("/testimonies", 0.82, "weekly"),
     route("/blog", 0.8, "weekly"),
+    route("/Daily-Devotionals", 0.82, "daily"),
     route("/events", 0.78, "weekly"),
     route("/philanthropy", 0.76, "weekly"),
     route("/contact", 0.62, "monthly"),
@@ -77,6 +92,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...armyPillars.map((pillar) => route(`/pillars/${pillar.slug}`, 0.68, "monthly")),
     ...content.posts.map((post) =>
       datedRoute(`/blog/${post.slug}`, post.publishedAt, 0.7, "monthly"),
+    ),
+    ...dailyDevotionals.map((devotional) =>
+      datedRoute(
+        `/Daily-Devotionals/${devotional.slug}`,
+        devotional.devotionalDate,
+        0.74,
+        "weekly",
+      ),
     ),
     ...content.events.map((event) =>
       datedRoute(`/events/${event.slug}`, event.startDate, 0.68, "weekly"),

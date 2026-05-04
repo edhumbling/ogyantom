@@ -7,6 +7,7 @@ import {
   CalendarBlank,
   HandHeart,
   HandsPraying,
+  Fire,
   Megaphone,
   ShieldCheck,
 } from "@phosphor-icons/react/dist/ssr";
@@ -30,8 +31,9 @@ const facetIcons = [
   ShieldCheck,
   HandsPraying,
   BookOpenText,
-  CalendarBlank,
+  Fire,
   HandHeart,
+  CalendarBlank,
 ];
 
 const homeFaqs = [

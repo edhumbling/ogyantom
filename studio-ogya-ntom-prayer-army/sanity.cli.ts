@@ -10,7 +10,7 @@ function getRequiredEnv(name: string): string {
   return value;
 }
 
-const deploymentAppId = process.env.SANITY_DEPLOYMENT_APP_ID;
+const deploymentAppId = process.env.SANITY_DEPLOYMENT_APP_ID || "ujmoyuvnhald7lpgieffd2ht";
 
 export default defineCliConfig({
   api: {
