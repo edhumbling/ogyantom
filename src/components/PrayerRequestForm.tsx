@@ -89,7 +89,13 @@ export function PrayerRequestForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const result = (await response.json()) as { message?: string };
+      let result: { message?: string } = {};
+
+      try {
+        result = (await response.json()) as { message?: string };
+      } catch {
+        result = {};
+      }
 
       if (!response.ok) {
         throw new Error(result.message || "Could not submit prayer request.");

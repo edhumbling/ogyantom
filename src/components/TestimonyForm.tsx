@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { ArrowRight } from "@phosphor-icons/react";
 
 type SubmitState = {
@@ -13,12 +13,52 @@ export function TestimonyForm() {
     status: "idle",
     message: "",
   });
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const confirmationTitleId = useId();
+  const submitButtonRef = useRef<HTMLButtonElement | null>(null);
+  const confirmationButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (!isConfirmationOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    confirmationButtonRef.current?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setIsConfirmationOpen(false);
+        submitButtonRef.current?.focus();
+      }
+
+      if (event.key === "Tab") {
+        event.preventDefault();
+        confirmationButtonRef.current?.focus();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isConfirmationOpen]);
+
+  function closeConfirmation() {
+    setIsConfirmationOpen(false);
+    submitButtonRef.current?.focus();
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
 
+    setIsConfirmationOpen(false);
     setState({ status: "submitting", message: "Sending your testimony…" });
 
     const payload = {
@@ -37,7 +77,13 @@ export function TestimonyForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const result = (await response.json()) as { message?: string };
+      let result: { message?: string } = {};
+
+      try {
+        result = (await response.json()) as { message?: string };
+      } catch {
+        result = {};
+      }
 
       if (!response.ok) {
         throw new Error(result.message || "Could not submit testimony.");
@@ -48,6 +94,7 @@ export function TestimonyForm() {
         status: "success",
         message: result.message || "Thank you. Your testimony has been received.",
       });
+      setIsConfirmationOpen(true);
     } catch (error) {
       setState({
         status: "error",
@@ -107,6 +154,7 @@ export function TestimonyForm() {
 
       <div className="testimony-form-footer">
         <button
+          ref={submitButtonRef}
           type="submit"
           disabled={state.status === "submitting"}
           className="testimony-submit-button"
@@ -116,17 +164,51 @@ export function TestimonyForm() {
         </button>
       </div>
 
-      {state.message ? (
-        <p
-          className={
-            "testimony-form-message " +
-            (state.status === "success"
-              ? "testimony-form-message-success"
-              : "testimony-form-message-error")
-          }
-        >
+      {state.message ? <p className="sr-only" aria-live="polite">{state.message}</p> : null}
+
+      {state.status === "error" && state.message ? (
+        <p aria-live="polite" className="testimony-form-message testimony-form-message-error">
           {state.message}
         </p>
+      ) : null}
+
+      {isConfirmationOpen ? (
+        <div className="prayer-request-success-layer" role="presentation">
+          <button
+            type="button"
+            className="prayer-request-success-backdrop"
+            onClick={closeConfirmation}
+            aria-label="Close testimony confirmation"
+          />
+          <section
+            className="prayer-request-success-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={`${confirmationTitleId}-title`}
+            aria-describedby={`${confirmationTitleId}-description`}
+          >
+            <p className="prayer-request-success-kicker">Testimony Received</p>
+            <h2 id={`${confirmationTitleId}-title`}>Thank you for sharing what God has done.</h2>
+            <p id={`${confirmationTitleId}-description`}>
+              Your testimony has been received and will be reviewed with gratitude and care by the
+              ministry team.
+            </p>
+            <p>
+              May your story strengthen the faith of others as we celebrate the goodness of God
+              together.
+            </p>
+            <div className="prayer-request-success-actions">
+              <button
+                ref={confirmationButtonRef}
+                type="button"
+                className="prayer-request-success-button"
+                onClick={closeConfirmation}
+              >
+                Amen
+              </button>
+            </div>
+          </section>
+        </div>
       ) : null}
     </form>
   );
