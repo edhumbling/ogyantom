@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { createPortal } from "react-dom";
 import { ArrowRight, ShieldCheck } from "@phosphor-icons/react";
 
 type SubmitState = {
@@ -24,9 +25,14 @@ export function PrayerRequestForm() {
     message: "",
   });
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
   const confirmationTitleId = useId();
   const submitButtonRef = useRef<HTMLButtonElement | null>(null);
   const confirmationButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    setPortalTarget(document.body);
+  }, []);
 
   useEffect(() => {
     if (!isConfirmationOpen) {
@@ -235,44 +241,47 @@ export function PrayerRequestForm() {
         </p>
       ) : null}
 
-      {isConfirmationOpen ? (
-        <div className="prayer-request-success-layer" role="presentation">
-          <button
-            type="button"
-            className="prayer-request-success-backdrop"
-            onClick={closeConfirmation}
-            aria-label="Close prayer request confirmation"
-          />
-          <section
-            className="prayer-request-success-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={`${confirmationTitleId}-title`}
-            aria-describedby={`${confirmationTitleId}-description`}
-          >
-            <p className="prayer-request-success-kicker">Prayer Request Received</p>
-            <h2 id={`${confirmationTitleId}-title`}>Your prayer is worthy before the Lord.</h2>
-            <p id={`${confirmationTitleId}-description`}>
-              We have received your request, and it will be swiftly attended and brought before the
-              Lord with care and faith.
-            </p>
-            <p>
-              Take heart: the Lord sees you, values your prayer, and will answer with mercy,
-              wisdom, and a way through this burden.
-            </p>
-            <div className="prayer-request-success-actions">
+      {isConfirmationOpen && portalTarget
+        ? createPortal(
+            <div className="prayer-request-success-layer" role="presentation">
               <button
-                ref={confirmationButtonRef}
                 type="button"
-                className="prayer-request-success-button"
+                className="prayer-request-success-backdrop"
                 onClick={closeConfirmation}
+                aria-label="Close prayer request confirmation"
+              />
+              <section
+                className="prayer-request-success-modal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby={`${confirmationTitleId}-title`}
+                aria-describedby={`${confirmationTitleId}-description`}
               >
-                Amen
-              </button>
-            </div>
-          </section>
-        </div>
-      ) : null}
+                <p className="prayer-request-success-kicker">Prayer Request Received</p>
+                <h2 id={`${confirmationTitleId}-title`}>Your prayer is worthy before the Lord.</h2>
+                <p id={`${confirmationTitleId}-description`}>
+                  We have received your request, and it will be swiftly attended and brought before the
+                  Lord with care and faith.
+                </p>
+                <p>
+                  Take heart: the Lord sees you, values your prayer, and will answer with mercy,
+                  wisdom, and a way through this burden.
+                </p>
+                <div className="prayer-request-success-actions">
+                  <button
+                    ref={confirmationButtonRef}
+                    type="button"
+                    className="prayer-request-success-button"
+                    onClick={closeConfirmation}
+                  >
+                    Amen
+                  </button>
+                </div>
+              </section>
+            </div>,
+            portalTarget,
+          )
+        : null}
     </form>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { createPortal } from "react-dom";
 import { ArrowRight } from "@phosphor-icons/react";
 
 type SubmitState = {
@@ -14,9 +15,14 @@ export function TestimonyForm() {
     message: "",
   });
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
   const confirmationTitleId = useId();
   const submitButtonRef = useRef<HTMLButtonElement | null>(null);
   const confirmationButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    setPortalTarget(document.body);
+  }, []);
 
   useEffect(() => {
     if (!isConfirmationOpen) {
@@ -172,44 +178,47 @@ export function TestimonyForm() {
         </p>
       ) : null}
 
-      {isConfirmationOpen ? (
-        <div className="prayer-request-success-layer" role="presentation">
-          <button
-            type="button"
-            className="prayer-request-success-backdrop"
-            onClick={closeConfirmation}
-            aria-label="Close testimony confirmation"
-          />
-          <section
-            className="prayer-request-success-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={`${confirmationTitleId}-title`}
-            aria-describedby={`${confirmationTitleId}-description`}
-          >
-            <p className="prayer-request-success-kicker">Testimony Received</p>
-            <h2 id={`${confirmationTitleId}-title`}>Thank you for sharing what God has done.</h2>
-            <p id={`${confirmationTitleId}-description`}>
-              Your testimony has been received and will be reviewed with gratitude and care by the
-              ministry team.
-            </p>
-            <p>
-              May your story strengthen the faith of others as we celebrate the goodness of God
-              together.
-            </p>
-            <div className="prayer-request-success-actions">
+      {isConfirmationOpen && portalTarget
+        ? createPortal(
+            <div className="prayer-request-success-layer" role="presentation">
               <button
-                ref={confirmationButtonRef}
                 type="button"
-                className="prayer-request-success-button"
+                className="prayer-request-success-backdrop"
                 onClick={closeConfirmation}
+                aria-label="Close testimony confirmation"
+              />
+              <section
+                className="prayer-request-success-modal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby={`${confirmationTitleId}-title`}
+                aria-describedby={`${confirmationTitleId}-description`}
               >
-                Amen
-              </button>
-            </div>
-          </section>
-        </div>
-      ) : null}
+                <p className="prayer-request-success-kicker">Testimony Received</p>
+                <h2 id={`${confirmationTitleId}-title`}>Thank you for sharing what God has done.</h2>
+                <p id={`${confirmationTitleId}-description`}>
+                  Your testimony has been received and will be reviewed with gratitude and care by the
+                  ministry team.
+                </p>
+                <p>
+                  May your story strengthen the faith of others as we celebrate the goodness of God
+                  together.
+                </p>
+                <div className="prayer-request-success-actions">
+                  <button
+                    ref={confirmationButtonRef}
+                    type="button"
+                    className="prayer-request-success-button"
+                    onClick={closeConfirmation}
+                  >
+                    Amen
+                  </button>
+                </div>
+              </section>
+            </div>,
+            portalTarget,
+          )
+        : null}
     </form>
   );
 }
