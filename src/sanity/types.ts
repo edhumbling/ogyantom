@@ -103,6 +103,9 @@ export type Testimony = {
   highlight?: string;
   name: string;
   content: string;
+  testimonyFormat?: "written" | "video";
+  videoTestimonyUrl?: string;
+  testimonyImages?: SanityImage[];
   publishedAt?: string;
   submittedAt?: string;
 };

@@ -4,7 +4,7 @@ import {
   Play,
 } from "@phosphor-icons/react/dist/ssr";
 import { TestimonyBrowser, type TestimonyEntry } from "@/components/TestimonyBrowser";
-import { TestimonyForm } from "@/components/TestimonyForm";
+import { TestimonySubmissionSwitcher } from "@/components/TestimonySubmissionSwitcher";
 import { sanityFetch } from "@/sanity/client";
 import { publishedTestimoniesQuery } from "@/sanity/queries";
 import type { Testimony } from "@/sanity/types";
@@ -66,6 +66,8 @@ export default async function TestimoniesPage() {
         .split(/\n{2,}/)
         .map((paragraph) => paragraph.trim())
         .filter(Boolean),
+      images: item.testimonyImages ?? [],
+      videoUrl: item.videoTestimonyUrl,
     })),
   ];
   return (
@@ -131,7 +133,7 @@ export default async function TestimoniesPage() {
           </div>
 
           <div className="testimony-form-panel">
-            <TestimonyForm />
+            <TestimonySubmissionSwitcher />
           </div>
         </div>
       </section>

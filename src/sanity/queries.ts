@@ -178,6 +178,9 @@ export const publishedTestimoniesQuery = `*[_type == "testimony" && reviewStatus
   highlight,
   name,
   content,
+  testimonyFormat,
+  videoTestimonyUrl,
+  testimonyImages,
   publishedAt,
   submittedAt
 }`;

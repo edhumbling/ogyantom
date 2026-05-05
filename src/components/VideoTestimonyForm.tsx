@@ -2,30 +2,21 @@
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { createPortal } from "react-dom";
-import { ArrowRight, ShieldCheck } from "@phosphor-icons/react";
+import { ArrowRight, PlayCircle } from "@phosphor-icons/react";
 
 type SubmitState = {
   status: "idle" | "submitting" | "success" | "error";
   message: string;
 };
 
-const categories = [
-  "Family",
-  "Healing",
-  "Deliverance",
-  "Direction",
-  "Provision",
-  "Thanksgiving",
-  "Other",
-];
-
-export function PrayerRequestForm() {
+export function VideoTestimonyForm() {
   const [state, setState] = useState<SubmitState>({
     status: "idle",
     message: "",
   });
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const confirmationTitleId = useId();
+  const videoHelpId = useId();
   const submitButtonRef = useRef<HTMLButtonElement | null>(null);
   const confirmationButtonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -70,25 +61,12 @@ export function PrayerRequestForm() {
     const formData = new FormData(form);
 
     setIsConfirmationOpen(false);
-    setState({ status: "submitting", message: "Sending your prayer request…" });
-
-    const payload = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      phone: formData.get("phone"),
-      category: formData.get("category"),
-      request: formData.get("request"),
-      urgency: formData.get("urgency"),
-      contactPreference: formData.get("contactPreference"),
-      confidential: formData.get("confidential") === "on",
-      website: formData.get("website"),
-    };
+    setState({ status: "submitting", message: "Sending your video testimony..." });
 
     try {
-      const response = await fetch("/api/prayer-requests", {
+      const response = await fetch("/api/testimonies", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: formData,
       });
       let result: { message?: string } = {};
 
@@ -99,28 +77,26 @@ export function PrayerRequestForm() {
       }
 
       if (!response.ok) {
-        throw new Error(result.message || "Could not submit prayer request.");
+        throw new Error(result.message || "Could not submit video testimony.");
       }
 
       form.reset();
       setState({
         status: "success",
-        message: result.message || "Your prayer request has been received.",
+        message: result.message || "Thank you. Your video testimony has been received.",
       });
       setIsConfirmationOpen(true);
     } catch (error) {
       setState({
         status: "error",
-        message:
-          error instanceof Error
-            ? error.message
-            : "Could not submit prayer request.",
+        message: error instanceof Error ? error.message : "Could not submit video testimony.",
       });
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="testimony-form prayer-request-form">
+    <form onSubmit={handleSubmit} className="testimony-form video-testimony-form">
+      <input type="hidden" name="submissionKind" value="video" />
       <input
         className="hidden"
         type="text"
@@ -133,87 +109,58 @@ export function PrayerRequestForm() {
       <div className="testimony-form-grid">
         <label className="testimony-field">
           <span>Name</span>
-          <input
-            name="name"
-            type="text"
-            required
-            maxLength={90}
-            autoComplete="name"
-            placeholder="Your name…"
-          />
+          <input name="name" type="text" required maxLength={90} autoComplete="name" placeholder="Your name" />
         </label>
         <label className="testimony-field">
           <span>Email</span>
-          <input
-            name="email"
-            type="email"
-            maxLength={140}
-            autoComplete="email"
-            spellCheck={false}
-            placeholder="name@example.com"
-          />
+          <input name="email" type="email" maxLength={140} autoComplete="email" placeholder="name@example.com" />
         </label>
       </div>
 
       <div className="testimony-form-grid">
         <label className="testimony-field">
           <span>Phone or WhatsApp</span>
-          <input
-            name="phone"
-            type="tel"
-            maxLength={40}
-            autoComplete="tel"
-            placeholder="+233 24 000 0000…"
-          />
+          <input name="phone" type="tel" maxLength={40} autoComplete="tel" placeholder="+233 24 000 0000..." />
         </label>
         <label className="testimony-field">
-          <span>Prayer focus</span>
-          <select name="category" defaultValue="Family">
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-
-      <div className="testimony-form-grid">
-        <label className="testimony-field">
-          <span>Urgency</span>
-          <select name="urgency" defaultValue="normal">
-            <option value="normal">Normal watch</option>
-            <option value="urgent">Urgent attention</option>
-          </select>
-        </label>
-        <label className="testimony-field">
-          <span>Preferred contact</span>
-          <select name="contactPreference" defaultValue="whatsapp">
-            <option value="whatsapp">WhatsApp</option>
-            <option value="phone">Phone call</option>
-            <option value="email">Email</option>
-            <option value="none">No follow-up needed</option>
-          </select>
+          <span>Short highlight</span>
+          <input name="highlight" type="text" maxLength={80} placeholder="Healing, restoration..." />
         </label>
       </div>
 
       <label className="testimony-field">
-        <span>Prayer request</span>
-        <textarea
-          name="request"
+        <span>Video testimony title</span>
+        <input name="title" type="text" required maxLength={120} placeholder="What did God do?" />
+      </label>
+
+      <label className="testimony-video-field">
+        <span>
+          <PlayCircle size={18} weight="bold" aria-hidden="true" />
+          Video testimony link
+        </span>
+        <p id={videoHelpId}>
+          Paste the public TikTok, YouTube, Instagram, Facebook, Vimeo, or social video link.
+        </p>
+        <input
+          name="videoTestimonyUrl"
+          type="url"
           required
-          rows={8}
-          maxLength={4000}
-          placeholder="Share what you would like Watchman Opanin Thomas to pray about…"
+          maxLength={500}
+          autoComplete="url"
+          aria-describedby={videoHelpId}
+          placeholder="https://www.tiktok.com/@name/video/..."
         />
       </label>
 
-      <label className="prayer-confidential-check">
-        <input name="confidential" type="checkbox" />
-        <span>
-          <ShieldCheck size={18} weight="bold" />
-          Keep this request private for Watchman Opanin Thomas and the ministry team.
-        </span>
+      <label className="testimony-field">
+        <span>Short context</span>
+        <textarea
+          name="content"
+          required
+          rows={5}
+          maxLength={1400}
+          placeholder="Briefly tell us what the video testimony is about."
+        />
       </label>
 
       <div className="testimony-form-footer">
@@ -223,7 +170,7 @@ export function PrayerRequestForm() {
           disabled={state.status === "submitting"}
           className="testimony-submit-button"
         >
-          {state.status === "submitting" ? "Sending prayer request…" : "Send Prayer Request"}
+          {state.status === "submitting" ? "Sending video..." : "Submit Video Testimony"}
           <ArrowRight size={20} weight="bold" />
         </button>
       </div>
@@ -243,7 +190,7 @@ export function PrayerRequestForm() {
                 type="button"
                 className="prayer-request-success-backdrop"
                 onClick={closeConfirmation}
-                aria-label="Close prayer request confirmation"
+                aria-label="Close video testimony confirmation"
               />
               <section
                 className="prayer-request-success-modal"
@@ -252,15 +199,15 @@ export function PrayerRequestForm() {
                 aria-labelledby={`${confirmationTitleId}-title`}
                 aria-describedby={`${confirmationTitleId}-description`}
               >
-                <p className="prayer-request-success-kicker">Prayer Request Received</p>
-                <h2 id={`${confirmationTitleId}-title`}>Your prayer is worthy before the Lord.</h2>
+                <p className="prayer-request-success-kicker">Video Testimony Received</p>
+                <h2 id={`${confirmationTitleId}-title`}>Thank you for sharing your video testimony.</h2>
                 <p id={`${confirmationTitleId}-description`}>
-                  We have received your request, and it will be swiftly attended and brought before the
-                  Lord with care and faith.
+                  Your video link has been received and will be reviewed with care before it appears
+                  publicly.
                 </p>
                 <p>
-                  Take heart: the Lord sees you, values your prayer, and will answer with mercy,
-                  wisdom, and a way through this burden.
+                  Once approved, the testimony can appear with a preview and open in the browser or
+                  original platform.
                 </p>
                 <div className="prayer-request-success-actions">
                   <button
