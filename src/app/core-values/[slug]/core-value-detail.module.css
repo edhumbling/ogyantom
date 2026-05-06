@@ -1,0 +1,532 @@
+.page {
+  overflow-x: clip;
+  background:
+    linear-gradient(180deg, #07120d 0%, #07120d 28rem, #f4f1eb 28rem, #eee8dc 100%);
+  color: #10251d;
+}
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(34rem, 78svh, 48rem);
+  overflow: hidden;
+  background:
+    radial-gradient(34rem 24rem at 76% 10%, rgba(109, 18, 55, 0.42), transparent 68%),
+    radial-gradient(28rem 20rem at 8% 16%, rgba(207, 180, 95, 0.2), transparent 70%),
+    linear-gradient(140deg, #030604 0%, #07120d 56%, #170710 100%);
+}
+
+.heroMedia {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.heroMedia img {
+  opacity: 0.42;
+  filter: saturate(1.08) contrast(1.08);
+}
+
+.heroMedia::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(3, 6, 4, 0.96) 0%, rgba(3, 6, 4, 0.84) 42%, rgba(3, 6, 4, 0.28) 78%, rgba(3, 6, 4, 0.74) 100%),
+    linear-gradient(180deg, rgba(3, 6, 4, 0.1), rgba(3, 6, 4, 0.86));
+  content: "";
+}
+
+.heroInner {
+  display: grid;
+  width: min(100%, 80rem);
+  min-height: inherit;
+  align-items: end;
+  gap: 1rem;
+  margin: 0 auto;
+  padding: clamp(6rem, 12vh, 9rem) 1.25rem 2.5rem;
+}
+
+.heroCopy,
+.heroPanel,
+.whyCard,
+.resonanceCard,
+.practiceShell {
+  animation: rise 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.heroCopy {
+  max-width: 56rem;
+  min-width: 0;
+}
+
+.kicker,
+.sectionKicker {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  border: 1px solid rgba(207, 180, 95, 0.48);
+  background: rgba(7, 18, 13, 0.48);
+  padding: 0 0.7rem;
+  color: #f5dfa0;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.hero h1,
+.whyCard h2,
+.resonanceCard h2,
+.practiceShell h2 {
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  font-weight: 300;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.hero h1 {
+  max-width: 13ch;
+  margin-top: 1.1rem;
+  color: #fffdf8;
+  font-size: clamp(3.2rem, 8vw, 6.8rem);
+  line-height: 0.84;
+  overflow-wrap: break-word;
+}
+
+.heroLede {
+  max-width: 45rem;
+  margin-top: 1.25rem;
+  color: rgba(255, 248, 232, 0.84);
+  font-size: clamp(1rem, 1.7vw, 1.16rem);
+  line-height: 1.78;
+}
+
+.scriptureLine {
+  width: min(100%, 42rem);
+  margin-top: 1rem;
+  border-left: 3px solid #cfb45f;
+  background: rgba(255, 248, 232, 0.08);
+  padding: 0.95rem 1rem;
+  color: #fff8e8;
+  font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.actions,
+.practiceActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.55rem;
+}
+
+.primaryAction,
+.secondaryAction {
+  display: inline-flex;
+  min-height: 3.1rem;
+  min-width: 10.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0 1.05rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  transition:
+    transform 160ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease;
+}
+
+.primaryAction {
+  border-color: rgba(245, 223, 160, 0.72);
+  background: #cfb45f;
+  color: #07120d;
+  box-shadow: 0 18px 44px rgba(207, 180, 95, 0.2);
+}
+
+.primaryAction:hover,
+.primaryAction:focus-visible {
+  background: #f5dfa0;
+  color: #030604;
+  box-shadow: 0 22px 56px rgba(207, 180, 95, 0.3);
+  transform: translateY(-2px);
+}
+
+.secondaryAction {
+  border-color: rgba(16, 37, 29, 0.26);
+  background: rgba(255, 253, 248, 0.82);
+  color: #10251d;
+}
+
+.hero .secondaryAction {
+  border-color: rgba(255, 248, 232, 0.2);
+  background: rgba(255, 248, 232, 0.08);
+  color: #fff8e8;
+}
+
+.secondaryAction:hover,
+.secondaryAction:focus-visible {
+  border-color: rgba(109, 18, 55, 0.36);
+  background: #ffffff;
+  color: #6d1237;
+  transform: translateY(-2px);
+}
+
+.hero .secondaryAction:hover,
+.hero .secondaryAction:focus-visible {
+  border-color: rgba(245, 223, 160, 0.54);
+  background: rgba(255, 248, 232, 0.16);
+  color: #fff8e8;
+}
+
+.primaryAction:active,
+.secondaryAction:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.primaryAction:focus-visible,
+.secondaryAction:focus-visible {
+  outline: 2px solid #fff8e8;
+  outline-offset: 4px;
+}
+
+.detailBand {
+  position: relative;
+  padding: 4.5rem 1.25rem;
+  background:
+    radial-gradient(34rem 22rem at 8% 0%, rgba(207, 180, 95, 0.15), transparent 68%),
+    linear-gradient(180deg, #f4f1eb 0%, #eee8dc 100%);
+}
+
+.detailGrid {
+  display: grid;
+  width: min(100%, 80rem);
+  gap: 1rem;
+  margin: 0 auto;
+}
+
+.whyCard,
+.resonanceCard,
+.practiceShell,
+.heroPanel {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(16, 37, 29, 0.13);
+  clip-path: polygon(0 0, calc(100% - 1.4rem) 0, 100% 1.4rem, 100% 100%, 1rem 100%, 0 calc(100% - 1rem));
+}
+
+.heroPanel {
+  width: min(100%, 22rem);
+  justify-self: start;
+  border-color: rgba(245, 223, 160, 0.24);
+  background: rgba(255, 248, 232, 0.08);
+  padding: 1.15rem;
+  color: #fff8e8;
+  backdrop-filter: blur(12px);
+}
+
+.heroPanel span {
+  color: #f5dfa0;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.heroPanel p {
+  margin-top: 0.8rem;
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  font-size: clamp(1.9rem, 3vw, 3rem);
+  font-weight: 300;
+  line-height: 0.92;
+  overflow-wrap: normal;
+  text-wrap: balance;
+  word-break: normal;
+}
+
+.whyCard {
+  background:
+    radial-gradient(18rem 12rem at 12% 0%, rgba(207, 180, 95, 0.22), transparent 68%),
+    linear-gradient(150deg, rgba(255, 253, 248, 0.96), rgba(235, 228, 214, 0.94));
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: 0 18px 46px rgba(14, 34, 25, 0.08);
+}
+
+.resonanceCard {
+  background:
+    radial-gradient(26rem 18rem at 14% 0%, rgba(207, 180, 95, 0.18), transparent 64%),
+    radial-gradient(24rem 18rem at 100% 10%, rgba(109, 18, 55, 0.3), transparent 66%),
+    linear-gradient(145deg, #07120d 0%, #0d3a27 100%);
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  color: #fff8e8;
+  box-shadow: 0 24px 64px rgba(3, 6, 4, 0.24);
+}
+
+.icon {
+  display: inline-flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(109, 18, 55, 0.18);
+  background: rgba(109, 18, 55, 0.07);
+  color: #6d1237;
+}
+
+.whyCard .sectionKicker {
+  margin-top: 2.2rem;
+  background: rgba(109, 18, 55, 0.06);
+  color: #0d3a27;
+}
+
+.resonanceCard .sectionKicker,
+.practiceShell .sectionKicker {
+  background: rgba(7, 18, 13, 0.38);
+}
+
+.whyCard h2 {
+  margin-top: 1rem;
+  color: #10251d;
+  font-size: clamp(2.6rem, 5.5vw, 5rem);
+  line-height: 0.9;
+}
+
+.resonanceCard h2,
+.practiceShell h2 {
+  max-width: 13ch;
+  margin-top: 0.9rem;
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  line-height: 0.9;
+}
+
+.cardCopy,
+.resonanceCopy,
+.practiceShell p:not(.sectionKicker) {
+  max-width: 46rem;
+  margin-top: 1rem;
+  font-size: clamp(0.98rem, 1.4vw, 1.08rem);
+  line-height: 1.78;
+}
+
+.cardCopy {
+  color: #506157;
+  font-weight: 700;
+}
+
+.resonanceCopy,
+.practiceShell p:not(.sectionKicker) {
+  color: rgba(255, 248, 232, 0.8);
+}
+
+.principleList {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.6rem;
+  padding: 0;
+  list-style: none;
+}
+
+.principleList li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.85rem;
+  min-height: 3.3rem;
+  border: 1px solid rgba(245, 223, 160, 0.2);
+  background: rgba(255, 248, 232, 0.07);
+  padding: 0.9rem;
+}
+
+.principleList span {
+  color: #f5dfa0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1.7;
+}
+
+.principleList p {
+  color: #fff8e8;
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.practiceBand {
+  padding: 0 1.25rem 5rem;
+  background: linear-gradient(180deg, #eee8dc 0%, #e4dccd 100%);
+}
+
+.practiceShell {
+  display: grid;
+  width: min(100%, 80rem);
+  gap: 1.5rem;
+  align-items: end;
+  margin: 0 auto;
+  background:
+    radial-gradient(34rem 22rem at 82% 0%, rgba(207, 180, 95, 0.19), transparent 66%),
+    linear-gradient(135deg, #10251d 0%, #07120d 58%, #280716 100%);
+  padding: clamp(1.25rem, 4vw, 2.4rem);
+  color: #fff8e8;
+  box-shadow: 0 26px 70px rgba(14, 34, 25, 0.18);
+}
+
+.practiceActions {
+  align-content: end;
+  margin-top: 0;
+}
+
+.primaryActionDark {
+  box-shadow: 0 18px 44px rgba(207, 180, 95, 0.24);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 760px) {
+  .heroInner {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+  }
+
+  .heroPanel {
+    justify-self: end;
+  }
+
+  .detailGrid {
+    grid-template-columns: minmax(18rem, 0.78fr) minmax(0, 1.22fr);
+  }
+
+  .practiceShell {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .practiceActions {
+    justify-content: end;
+  }
+}
+
+@media (max-width: 639px) {
+  .page {
+    background:
+      linear-gradient(180deg, #07120d 0%, #07120d 24rem, #f4f1eb 24rem, #eee8dc 100%);
+  }
+
+  .hero {
+    min-height: 42rem;
+  }
+
+  .heroInner {
+    padding: 5.8rem 0.75rem 1rem;
+  }
+
+  .hero h1 {
+    max-width: 12ch;
+    font-size: clamp(2.45rem, 15vw, 3.5rem);
+    line-height: 0.88;
+  }
+
+  .heroLede {
+    font-size: 0.95rem;
+    line-height: 1.62;
+  }
+
+  .scriptureLine {
+    padding: 0.8rem 0.85rem;
+    font-size: 0.9rem;
+  }
+
+  .actions,
+  .practiceActions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .primaryAction,
+  .secondaryAction {
+    width: 100%;
+    min-height: 3rem;
+    min-width: 0;
+    padding: 0 0.85rem;
+    font-size: 0.72rem;
+    white-space: normal;
+  }
+
+  .heroPanel {
+    width: 100%;
+  }
+
+  .detailBand {
+    padding: 1rem 0.75rem;
+  }
+
+  .detailGrid {
+    gap: 0.75rem;
+  }
+
+  .whyCard,
+  .resonanceCard,
+  .practiceShell {
+    padding: 1rem;
+  }
+
+  .whyCard h2,
+  .resonanceCard h2,
+  .practiceShell h2 {
+    font-size: clamp(2rem, 13vw, 3rem);
+    line-height: 0.92;
+  }
+
+  .cardCopy,
+  .resonanceCopy,
+  .practiceShell p:not(.sectionKicker) {
+    font-size: 0.92rem;
+    line-height: 1.62;
+  }
+
+  .principleList li {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+    min-height: 0;
+  }
+
+  .practiceBand {
+    padding: 0 0.75rem 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroCopy,
+  .heroPanel,
+  .whyCard,
+  .resonanceCard,
+  .practiceShell {
+    animation: none;
+  }
+
+  .primaryAction,
+  .secondaryAction {
+    transition-duration: 1ms;
+  }
+}

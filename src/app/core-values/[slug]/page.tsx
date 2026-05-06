@@ -2,8 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, BookOpenText } from "@phosphor-icons/react/dist/ssr";
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpenText,
+} from "@phosphor-icons/react/dist/ssr";
 import { coreValues, getCoreValueBySlug, opaninFullName } from "@/lib/site";
+import styles from "./core-value-detail.module.css";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -39,10 +44,12 @@ export default async function CoreValuePage({ params }: PageProps) {
     notFound();
   }
 
+  const valueNumber = coreValues.findIndex((item) => item.slug === value.slug) + 1;
+
   return (
-    <main className="testimony-page mobile-focus-detail">
-      <section className="testimony-hero">
-        <div className="testimony-hero-media">
+    <main className={styles.page}>
+      <section className={styles.hero} aria-labelledby="core-value-title">
+        <div className={styles.heroMedia} aria-hidden="true">
           <Image
             src="/brand/watchman-opanin-thomas.png"
             alt={opaninFullName}
@@ -52,71 +59,99 @@ export default async function CoreValuePage({ params }: PageProps) {
             priority
           />
         </div>
-        <div className="testimony-hero-inner">
-          <div className="testimony-hero-copy">
-            <p className="testimony-kicker">Core Value</p>
-            <h1>{value.deepTitle}</h1>
-            <p className="mobile-flow-long">{value.text}</p>
-            <p className="mobile-flow-summary">{value.scripture}</p>
-            <div className="testimony-hero-actions">
-              <Link href="/ministry" className="testimony-secondary-cta">
-                <ArrowLeft size={17} weight="bold" />
-                Back to Ministry
+        <div className={styles.heroInner}>
+          <div className={styles.heroCopy}>
+            <p className={styles.kicker}>
+              Core Value {valueNumber} of {coreValues.length}
+            </p>
+            <h1 id="core-value-title">{value.deepTitle}</h1>
+            <p className={styles.heroLede}>{value.text}</p>
+            <p className={styles.scriptureLine}>{value.scripture}</p>
+            <div className={styles.actions} aria-label="Core value navigation">
+              <Link href="/prayer-army" className={styles.primaryAction}>
+                <span>Enter Prayer Army</span>
+                <ArrowRight size={18} weight="bold" aria-hidden="true" />
+              </Link>
+              <Link href="/ministry" className={styles.secondaryAction}>
+                <ArrowLeft size={17} weight="bold" aria-hidden="true" />
+                <span>Back to Ministry</span>
               </Link>
             </div>
           </div>
+
+          <aside className={styles.heroPanel} aria-label="Core value summary">
+            <span>Value Focus</span>
+            <p>{value.title}</p>
+          </aside>
         </div>
       </section>
 
-      <section className="ministry-detail-section px-5 py-16 sm:px-8 lg:px-10">
-        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-[0.78fr_1.22fr]">
-          <aside className="ministry-statement-card ministry-statement-card-light p-8">
-            <div className="ministry-card-icon" aria-hidden="true">
+      <section
+        className={styles.detailBand}
+        aria-labelledby="core-value-why-title"
+      >
+        <div className={styles.detailGrid}>
+          <aside className={styles.whyCard}>
+            <div className={styles.icon} aria-hidden="true">
               <BookOpenText size={32} weight="bold" />
             </div>
-            <p className="mt-8 text-sm font-bold uppercase tracking-[0.25em] text-[#0d3a27]">
-              Why It Matters
-            </p>
-            <h2 className="font-display mt-5 text-4xl font-light leading-none tracking-tighter sm:text-5xl">
-              {value.title}
-            </h2>
-            <p className="mt-5 text-lg leading-8 text-[#506157]">
+            <p className={styles.sectionKicker}>Why It Matters</p>
+            <h2 id="core-value-why-title">{value.title}</h2>
+            <p className={styles.cardCopy}>
               {value.scripture}
             </p>
           </aside>
 
-          <article className="mobile-focus-resonance ministry-statement-card ministry-statement-card-dark p-8 text-white">
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#cfb45f]">
-              Resonance With the Army
-            </p>
-            <p className="mobile-flow-long mt-5 text-xl leading-9">{value.armyResonance}</p>
+          <article
+            className={styles.resonanceCard}
+            aria-labelledby="core-value-resonance-title"
+          >
+            <p className={styles.sectionKicker}>Resonance With the Army</p>
+            <h2 id="core-value-resonance-title">
+              The conviction behind this value.
+            </h2>
+            <p className={styles.resonanceCopy}>{value.armyResonance}</p>
 
-            <div className="mt-8 grid gap-3">
-              {value.principles.map((principle) => (
-                <div key={principle} className="ministry-detail-point">
-                  {principle}
-                </div>
+            <ul
+              className={styles.principleList}
+              aria-label={`${value.title} principles`}
+            >
+              {value.principles.map((principle, index) => (
+                <li key={principle}>
+                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                  <p>{principle}</p>
+                </li>
               ))}
-            </div>
+            </ul>
           </article>
         </div>
       </section>
 
-      <section className="ministry-card-section section-rule px-5 pb-20 sm:px-8 lg:px-10">
-        <div className="ministry-community-cta-shell mx-auto max-w-7xl">
+      <section
+        className={styles.practiceBand}
+        aria-labelledby="core-value-practice-title"
+      >
+        <div className={styles.practiceShell}>
           <div>
-            <p className="ministry-community-kicker">Army Practice</p>
-            <h2 className="font-display">How this value lives in the army.</h2>
-            <p className="mobile-flow-long">{value.practice}</p>
+            <p className={styles.sectionKicker}>Army Practice</p>
+            <h2 id="core-value-practice-title">
+              How this value lives in the army.
+            </h2>
+            <p>{value.practice}</p>
           </div>
-          <Link
-            href="/prayer-army"
-            className="ministry-community-action"
-            aria-label="Open the Prayer Army page"
-          >
-            <span>Prayer Army</span>
-            <ArrowRight size={18} weight="bold" aria-hidden="true" />
-          </Link>
+          <div className={styles.practiceActions}>
+            <Link
+              href="/prayer-army"
+              className={`${styles.primaryAction} ${styles.primaryActionDark}`}
+            >
+              <span>Prayer Army</span>
+              <ArrowRight size={18} weight="bold" aria-hidden="true" />
+            </Link>
+            <Link href="/ministry" className={styles.secondaryAction}>
+              <ArrowLeft size={17} weight="bold" aria-hidden="true" />
+              <span>Ministry</span>
+            </Link>
+          </div>
         </div>
       </section>
     </main>
