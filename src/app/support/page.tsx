@@ -80,35 +80,37 @@ export default function SupportPage() {
         className="support-paystack-section support-priority-giving px-5 py-16 sm:px-8 lg:px-10"
       >
         <div className="support-paystack-shell support-paystack-shell-priority mx-auto max-w-7xl">
-          <AutoScrollRail
-            ariaLabel="Paystack giving options"
-            className="support-giving-options support-giving-rail"
-            shellClassName="support-giving-rail-shell"
-          >
+          <ul className="support-giving-options support-giving-rail" aria-label="Paystack giving options">
             {givingOptions.map((option) => (
-              <Link
-                key={option.kind}
-                href={option.href}
-                className="support-giving-card support-giving-card-priority"
-              >
-                <span className="support-giving-icon" aria-hidden="true">
-                  {option.kind === "one-time" ? (
-                    <HandHeart size={28} weight="bold" />
-                  ) : (
-                    <CurrencyCircleDollar size={28} weight="bold" />
-                  )}
-                </span>
-                <span className="support-giving-copy">
-                  <strong>{option.title}</strong>
-                  <span>{option.text}</span>
-                </span>
-                <span className="support-giving-action">
-                  {option.label}
-                  <ArrowRight size={17} weight="bold" aria-hidden="true" />
-                </span>
-              </Link>
+              <li key={option.kind}>
+                <Link
+                  href={option.href}
+                  className="support-giving-card support-giving-card-priority"
+                >
+                  <span className="support-giving-card-top">
+                    <span className="support-giving-icon" aria-hidden="true">
+                      {option.kind === "one-time" ? (
+                        <HandHeart size={28} weight="bold" />
+                      ) : (
+                        <CurrencyCircleDollar size={28} weight="bold" />
+                      )}
+                    </span>
+                    <span className="support-giving-frequency">
+                      {option.kind === "one-time" ? "Single Gift" : "Monthly Covering"}
+                    </span>
+                  </span>
+                  <span className="support-giving-copy">
+                    <strong>{option.title}</strong>
+                    <span>{option.text}</span>
+                  </span>
+                  <span className="support-giving-action">
+                    {option.label}
+                    <ArrowRight size={17} weight="bold" aria-hidden="true" />
+                  </span>
+                </Link>
+              </li>
             ))}
-          </AutoScrollRail>
+          </ul>
 
           <div className="support-priority-copy">
             <p className="ministry-community-kicker">Paystack Giving</p>
