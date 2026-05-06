@@ -6637,19 +6637,27 @@ html {
 }
 
 .testimony-story-card h3 {
+  display: -webkit-box;
+  overflow: hidden;
   margin-top: 1rem;
   color: #10251d;
   font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
   font-size: clamp(1.8rem, 4vw, 2.35rem);
   font-weight: 300;
   line-height: 1;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .testimony-story-card > p {
+  display: -webkit-box;
+  overflow: hidden;
   margin-top: 1rem;
   color: #31453c;
   font-size: 0.96rem;
   line-height: 1.75;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
 }
 
 .testimony-detail {
@@ -13412,13 +13420,14 @@ html {
     height: 2.75rem !important;
   }
 
-  .auto-scroll-shell .testimony-card-grid {
+  .testimony-browser-mobile .testimony-card-rail {
+    grid-auto-flow: column !important;
     grid-auto-columns: minmax(15.5rem, 78vw) !important;
-    grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(2, minmax(15.5rem, 78vw)) !important;
     align-items: stretch;
   }
 
-  .auto-scroll-shell .testimony-card-grid > .testimony-story-card {
+  .testimony-browser-mobile .testimony-card-rail > .testimony-story-card {
     aspect-ratio: 1 / 1;
     min-height: 0 !important;
     overflow: hidden;
