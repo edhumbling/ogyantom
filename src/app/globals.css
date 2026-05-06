@@ -9259,6 +9259,417 @@ html {
   outline-offset: 4px;
 }
 
+.sitemap-page {
+  overflow-x: hidden;
+  background: #f3efe6;
+  color: #07120d;
+}
+
+.sitemap-hero {
+  position: relative;
+  display: grid;
+  min-height: min(72svh, 44rem);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  align-content: end;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(207, 180, 95, 0.28);
+  background:
+    linear-gradient(115deg, rgba(255, 248, 232, 0.08) 0 1px, transparent 1px 48%),
+    radial-gradient(40rem 28rem at 86% 10%, rgba(109, 18, 55, 0.42), transparent 68%),
+    radial-gradient(34rem 24rem at 6% 20%, rgba(207, 180, 95, 0.22), transparent 66%),
+    linear-gradient(145deg, #030604 0%, #07120d 54%, #160711 100%);
+  padding:
+    max(7rem, calc(5.5rem + env(safe-area-inset-top)))
+    max(1rem, env(safe-area-inset-right))
+    2rem
+    max(1rem, env(safe-area-inset-left));
+  color: #fff8e8;
+}
+
+.sitemap-hero::before {
+  position: absolute;
+  inset: 1rem 1rem auto auto;
+  width: min(34rem, 50vw);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245, 223, 160, 0.82));
+  content: "";
+  pointer-events: none;
+}
+
+.sitemap-hero-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1rem;
+}
+
+.sitemap-kicker {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 2rem;
+  align-items: center;
+  border: 1px solid rgba(245, 223, 160, 0.34);
+  background: rgba(255, 248, 232, 0.08);
+  padding: 0 0.68rem;
+  color: #f5dfa0;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.sitemap-hero h1 {
+  max-width: 11ch;
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  font-size: clamp(4.25rem, 16vw, 12rem);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 0.82;
+}
+
+.sitemap-hero-copy > p:not(.sitemap-kicker) {
+  max-width: 62rem;
+  color: rgba(255, 248, 232, 0.78);
+  font-size: clamp(1rem, 2vw, 1.28rem);
+  line-height: 1.7;
+}
+
+.sitemap-hero-stats {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid rgba(245, 223, 160, 0.18);
+  background: rgba(3, 6, 4, 0.28);
+  backdrop-filter: blur(16px);
+}
+
+.sitemap-hero-stats div {
+  display: grid;
+  min-height: 8rem;
+  align-content: end;
+  gap: 0.45rem;
+  border-right: 1px solid rgba(245, 223, 160, 0.16);
+  padding: 1rem;
+}
+
+.sitemap-hero-stats div:last-child {
+  border-right: 0;
+}
+
+.sitemap-hero-stats strong {
+  color: #ffffff;
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 0.86;
+}
+
+.sitemap-hero-stats span {
+  color: #f5dfa0;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.sitemap-index {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  border-bottom: 1px solid rgba(16, 37, 29, 0.12);
+  background: #fffdf8;
+  scroll-padding-inline: max(0.75rem, env(safe-area-inset-left));
+  -webkit-overflow-scrolling: touch;
+}
+
+.sitemap-index a {
+  display: inline-flex;
+  min-width: max-content;
+  min-height: 3.75rem;
+  align-items: center;
+  gap: 0.6rem;
+  border-right: 1px solid rgba(16, 37, 29, 0.1);
+  padding: 0 1rem;
+  color: #10251d;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  outline: 2px solid transparent;
+  outline-offset: -4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 150ms ease-out, color 150ms ease-out;
+}
+
+.sitemap-index a:hover,
+.sitemap-index a:focus-visible {
+  background: #10251d;
+  color: #fff8e8;
+}
+
+.sitemap-index a:focus-visible {
+  outline-color: rgba(207, 180, 95, 0.9);
+}
+
+.sitemap-index span {
+  color: #6d1237;
+}
+
+.sitemap-index a:hover span,
+.sitemap-index a:focus-visible span {
+  color: #f5dfa0;
+}
+
+.sitemap-groups {
+  display: grid;
+}
+
+.sitemap-group {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.36fr) minmax(0, 1fr);
+  gap: 0;
+  border-bottom: 1px solid rgba(16, 37, 29, 0.12);
+  background: #f3efe6;
+}
+
+.sitemap-group[data-theme="dark"] {
+  border-bottom-color: rgba(245, 223, 160, 0.18);
+  background:
+    radial-gradient(30rem 20rem at 90% 0%, rgba(109, 18, 55, 0.22), transparent 66%),
+    linear-gradient(145deg, #07120d 0%, #10251d 100%);
+  color: #fff8e8;
+}
+
+.sitemap-group-head {
+  display: grid;
+  min-height: 20rem;
+  align-content: start;
+  gap: 1rem;
+  border-right: 1px solid rgba(16, 37, 29, 0.12);
+  padding: clamp(1.1rem, 3vw, 2rem);
+}
+
+.sitemap-group[data-theme="dark"] .sitemap-group-head {
+  border-right-color: rgba(245, 223, 160, 0.18);
+}
+
+.sitemap-group-head p {
+  color: #6d1237;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.sitemap-group[data-theme="dark"] .sitemap-group-head p {
+  color: #f5dfa0;
+}
+
+.sitemap-group-head h2 {
+  max-width: 10ch;
+  color: currentColor;
+  font-family: "Amazon Ember Display", "Amazon Ember", Arial, Helvetica, sans-serif;
+  font-size: clamp(2.4rem, 6vw, 5.2rem);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 0.9;
+}
+
+.sitemap-group-head span {
+  max-width: 30rem;
+  color: #53635a;
+  line-height: 1.7;
+}
+
+.sitemap-group[data-theme="dark"] .sitemap-group-head span {
+  color: rgba(255, 248, 232, 0.72);
+}
+
+.sitemap-link-list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sitemap-link-list li {
+  min-width: 0;
+}
+
+.sitemap-route-link {
+  display: grid;
+  min-height: 6.25rem;
+  grid-template-columns: minmax(10rem, 0.32fr) minmax(0, 1fr) minmax(8rem, auto);
+  gap: 1rem;
+  align-items: center;
+  border-bottom: 1px solid rgba(16, 37, 29, 0.1);
+  padding: 1rem clamp(1rem, 3vw, 2rem);
+  color: inherit;
+  outline: 2px solid transparent;
+  outline-offset: -5px;
+  text-decoration: none;
+  transition: background-color 150ms ease-out, color 150ms ease-out;
+}
+
+.sitemap-group[data-theme="dark"] .sitemap-route-link {
+  border-bottom-color: rgba(245, 223, 160, 0.12);
+}
+
+.sitemap-route-link:hover,
+.sitemap-route-link:focus-visible {
+  background: rgba(207, 180, 95, 0.12);
+}
+
+.sitemap-route-link:focus-visible {
+  outline-color: rgba(207, 180, 95, 0.9);
+}
+
+.sitemap-route-label {
+  color: #6d1237;
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.sitemap-group[data-theme="dark"] .sitemap-route-label {
+  color: #f5dfa0;
+}
+
+.sitemap-route-text {
+  color: #53635a;
+  line-height: 1.65;
+}
+
+.sitemap-group[data-theme="dark"] .sitemap-route-text {
+  color: rgba(255, 248, 232, 0.72);
+}
+
+.sitemap-route-path {
+  justify-self: end;
+  max-width: 18rem;
+  overflow-wrap: anywhere;
+  border: 1px solid rgba(109, 18, 55, 0.18);
+  background: rgba(255, 253, 248, 0.62);
+  padding: 0.42rem 0.55rem;
+  color: #10251d;
+  font-family: "Amazon Ember Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.sitemap-group[data-theme="dark"] .sitemap-route-path {
+  border-color: rgba(245, 223, 160, 0.2);
+  background: rgba(255, 248, 232, 0.08);
+  color: #fff8e8;
+}
+
+@media (min-width: 1024px) {
+  .sitemap-hero {
+    grid-template-columns: minmax(0, 0.68fr) minmax(22rem, 0.32fr);
+    align-items: end;
+  }
+
+  .sitemap-hero-stats {
+    align-self: end;
+  }
+}
+
+@media (max-width: 767px) {
+  .sitemap-hero {
+    min-height: 100svh;
+    gap: 1.2rem;
+    padding:
+      max(4.75rem, calc(4rem + env(safe-area-inset-top)))
+      max(0.75rem, env(safe-area-inset-right))
+      1rem
+      max(0.75rem, env(safe-area-inset-left));
+  }
+
+  .sitemap-hero h1 {
+    font-size: clamp(3.1rem, 18vw, 5rem);
+    line-height: 0.86;
+  }
+
+  .sitemap-hero-copy > p:not(.sitemap-kicker) {
+    font-size: 0.92rem;
+    line-height: 1.62;
+  }
+
+  .sitemap-hero-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .sitemap-hero-stats div {
+    min-height: 4.8rem;
+    border-right: 0;
+    border-bottom: 1px solid rgba(245, 223, 160, 0.16);
+  }
+
+  .sitemap-hero-stats div:last-child {
+    border-bottom: 0;
+  }
+
+  .sitemap-hero-stats strong {
+    font-size: 2.2rem;
+  }
+
+  .sitemap-index a {
+    min-height: 3.35rem;
+    padding: 0 0.85rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+  }
+
+  .sitemap-group {
+    grid-template-columns: 1fr;
+  }
+
+  .sitemap-group-head {
+    min-height: auto;
+    border-right: 0;
+    border-bottom: 1px solid rgba(16, 37, 29, 0.12);
+    padding: 1rem max(0.85rem, env(safe-area-inset-right)) 1rem max(0.85rem, env(safe-area-inset-left));
+  }
+
+  .sitemap-group[data-theme="dark"] .sitemap-group-head {
+    border-bottom-color: rgba(245, 223, 160, 0.16);
+  }
+
+  .sitemap-group-head h2 {
+    max-width: 12ch;
+    font-size: clamp(2rem, 12vw, 3.2rem);
+  }
+
+  .sitemap-group-head span {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .sitemap-route-link {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0.9rem max(0.85rem, env(safe-area-inset-right)) 0.95rem max(0.85rem, env(safe-area-inset-left));
+  }
+
+  .sitemap-route-label {
+    font-size: 1.08rem;
+  }
+
+  .sitemap-route-text {
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  .sitemap-route-path {
+    justify-self: start;
+    max-width: 100%;
+    font-size: 0.7rem;
+  }
+}
+
 @media (min-width: 768px) {
   .footer-made-label {
     order: 2;
@@ -14390,5 +14801,100 @@ html {
   .home-hero-video-mobile,
   .home-hero-video-desktop {
     display: none !important;
+  }
+}
+
+/* Final sitemap responsive overrides: full-width route atlas on phones. */
+@media (max-width: 767px) {
+  .sitemap-page .sitemap-hero {
+    min-height: 100svh !important;
+    gap: 1.2rem !important;
+    padding:
+      max(4.75rem, calc(4rem + env(safe-area-inset-top)))
+      max(0.75rem, env(safe-area-inset-right))
+      1rem
+      max(0.75rem, env(safe-area-inset-left)) !important;
+  }
+
+  .sitemap-page .sitemap-hero h1 {
+    font-size: clamp(3.1rem, 18vw, 5rem) !important;
+    line-height: 0.86 !important;
+  }
+
+  .sitemap-page .sitemap-hero-copy > p:not(.sitemap-kicker) {
+    font-size: 0.92rem !important;
+    line-height: 1.62 !important;
+  }
+
+  .sitemap-page .sitemap-hero-stats {
+    grid-template-columns: 1fr !important;
+  }
+
+  .sitemap-page .sitemap-hero-stats div {
+    min-height: 4.8rem !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(245, 223, 160, 0.16) !important;
+  }
+
+  .sitemap-page .sitemap-hero-stats div:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .sitemap-page .sitemap-hero-stats strong {
+    font-size: 2.2rem !important;
+  }
+
+  .sitemap-page .sitemap-index a {
+    min-height: 3.35rem !important;
+    padding: 0 0.85rem !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  .sitemap-page .sitemap-group {
+    grid-template-columns: 1fr !important;
+  }
+
+  .sitemap-page .sitemap-group-head {
+    min-height: auto !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(16, 37, 29, 0.12) !important;
+    padding: 1rem max(0.85rem, env(safe-area-inset-right)) 1rem max(0.85rem, env(safe-area-inset-left)) !important;
+  }
+
+  .sitemap-page .sitemap-group[data-theme="dark"] .sitemap-group-head {
+    border-bottom-color: rgba(245, 223, 160, 0.16) !important;
+  }
+
+  .sitemap-page .sitemap-group-head h2 {
+    max-width: 12ch !important;
+    font-size: clamp(2rem, 12vw, 3.2rem) !important;
+  }
+
+  .sitemap-page .sitemap-group-head span {
+    font-size: 0.9rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .sitemap-page .sitemap-route-link {
+    min-height: 0 !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+    padding: 0.9rem max(0.85rem, env(safe-area-inset-right)) 0.95rem max(0.85rem, env(safe-area-inset-left)) !important;
+  }
+
+  .sitemap-page .sitemap-route-label {
+    font-size: 1.08rem !important;
+  }
+
+  .sitemap-page .sitemap-route-text {
+    font-size: 0.86rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .sitemap-page .sitemap-route-path {
+    justify-self: start !important;
+    max-width: 100% !important;
+    font-size: 0.7rem !important;
   }
 }

@@ -35,6 +35,10 @@ type SitemapGroup = {
   links: SitemapLink[];
 };
 
+function groupId(title: string) {
+  return `sitemap-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+}
+
 const mainRoutes: SitemapLink[] = [
   {
     href: "/",
@@ -153,32 +157,30 @@ function formatDate(value?: string) {
   }).format(new Date(value));
 }
 
-function renderGroup(group: SitemapGroup) {
+function renderGroup(group: SitemapGroup, index: number) {
+  const id = groupId(group.title);
+
   return (
     <section
       key={group.title}
-      className="border border-[#10251d]/12 bg-[#fffdf8]/80 p-5 shadow-[0_18px_42px_rgba(14,34,25,0.06)] sm:p-6"
-      aria-labelledby={`sitemap-${group.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+      className="sitemap-group"
+      data-theme={index % 2 === 0 ? "paper" : "dark"}
+      aria-labelledby={id}
     >
-      <h2
-        id={`sitemap-${group.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-        className="font-display text-3xl font-bold leading-none text-[#10251d]"
-      >
-        {group.title}
-      </h2>
-      <p className="mt-3 text-sm leading-6 text-[#53635a]">{group.description}</p>
-      <ul className="mt-5 grid gap-3">
+      <div className="sitemap-group-head">
+        <p>{String(index + 1).padStart(2, "0")}</p>
+        <h2 id={id}>{group.title}</h2>
+        <span>{group.description}</span>
+      </div>
+
+      <ul className="sitemap-link-list">
         {group.links.map((item) => (
-          <li key={item.href} className="min-w-0 border-t border-[#10251d]/10 pt-3">
-            <Link
-              href={item.href}
-              className="inline-flex min-h-10 items-center break-words text-base font-bold text-[#6d1237] underline decoration-[#cfb45f]/70 underline-offset-[0.22em] transition-colors duration-[150ms] ease-out hover:text-[#10251d] focus-visible:text-[#10251d]"
-            >
-              {item.label}
+          <li key={item.href}>
+            <Link href={item.href} className="sitemap-route-link">
+              <span className="sitemap-route-label">{item.label}</span>
+              {item.text ? <span className="sitemap-route-text">{item.text}</span> : null}
+              <span className="sitemap-route-path">{item.href}</span>
             </Link>
-            {item.text ? (
-              <p className="mt-1 text-sm leading-6 text-[#53635a]">{item.text}</p>
-            ) : null}
           </li>
         ))}
       </ul>
@@ -266,47 +268,66 @@ export default async function HtmlSitemapPage() {
         })),
     },
   ];
+  const normalizedGroups = groups.map((group) =>
+    group.links.length > 0
+      ? group
+      : {
+          ...group,
+          links: [
+            {
+              href:
+                group.title === "Prayer Teachings"
+                  ? "/blog"
+                  : group.title === "Events"
+                    ? "/events"
+                    : "/philanthropy",
+              label: `${group.title} Index`,
+              text: "No published detail pages are available yet. The index route is available for updates.",
+            },
+          ],
+        },
+  );
+  const totalRoutes = normalizedGroups.reduce((count, group) => count + group.links.length, 0);
 
   return (
-    <main className="bg-[#e6ebe7] text-[#07120d]">
-      <section className="bg-[#030604] px-5 pb-12 pt-28 text-white sm:px-8 lg:px-10 lg:pb-16 lg:pt-36">
-        <div className="mx-auto max-w-7xl">
-          <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#cfb45f]">
-            Crawlable Route Index
-          </p>
-          <h1 className="font-display mt-4 max-w-4xl text-5xl font-bold leading-none tracking-normal sm:text-6xl lg:text-7xl">
-            HTML Sitemap
-          </h1>
-          <p className="mt-5 max-w-3xl text-base leading-8 text-[#c7d0ca] sm:text-lg">
+    <main className="sitemap-page">
+      <section className="sitemap-hero">
+        <div className="sitemap-hero-copy">
+          <p className="sitemap-kicker">Crawlable Route Index</p>
+          <h1>HTML Sitemap</h1>
+          <p>
             All public Ogya Ntom Prayer Army routes are grouped here so visitors,
             search engines, and AI crawlers can reach the full site from a single
             plain HTML page.
           </p>
         </div>
+        <div className="sitemap-hero-stats" aria-label="Sitemap summary">
+          <div>
+            <strong>{normalizedGroups.length}</strong>
+            <span>Route groups</span>
+          </div>
+          <div>
+            <strong>{totalRoutes}</strong>
+            <span>Public links</span>
+          </div>
+          <div>
+            <strong>HTML</strong>
+            <span>Readable index</span>
+          </div>
+        </div>
       </section>
 
-      <section className="px-5 py-12 sm:px-8 lg:px-10 lg:py-16" aria-label="Sitemap route groups">
-        <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {groups.map((group) =>
-            group.links.length > 0
-              ? renderGroup(group)
-              : renderGroup({
-                  ...group,
-                  links: [
-                    {
-                      href:
-                        group.title === "Prayer Teachings"
-                          ? "/blog"
-                          : group.title === "Events"
-                            ? "/events"
-                            : "/philanthropy",
-                      label: `${group.title} Index`,
-                      text: "No published detail pages are available yet. The index route is available for updates.",
-                    },
-                  ],
-                }),
-          )}
-        </div>
+      <nav className="sitemap-index" aria-label="Sitemap groups">
+        {normalizedGroups.map((group, index) => (
+          <a key={group.title} href={`#${groupId(group.title)}`}>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            {group.title}
+          </a>
+        ))}
+      </nav>
+
+      <section className="sitemap-groups" aria-label="Sitemap route groups">
+        {normalizedGroups.map((group, index) => renderGroup(group, index))}
       </section>
     </main>
   );
