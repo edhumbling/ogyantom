@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { ArrowSquareOut, CaretDown, CaretLeft, CaretRight, PlayCircle } from "@phosphor-icons/react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ArrowSquareOut, CaretLeft, CaretRight, PlayCircle, X } from "@phosphor-icons/react";
 import { AutoScrollRail } from "@/components/AutoScrollRail";
 import { SanityImage } from "@/components/SanityImage";
 import type { SanityImage as SanityImageType } from "@/sanity/types";
@@ -19,8 +19,8 @@ type TestimonyBrowserProps = {
   testimonies: TestimonyEntry[];
 };
 
-const desktopPageSize = 12;
-const mobilePageSize = 6;
+const desktopPageSize = 10;
+const mobilePageSize = 10;
 
 function initials(name: string) {
   return name
@@ -35,8 +35,15 @@ type TestimonySetProps = TestimonyBrowserProps & {
   pageSize: number;
 };
 
+type ActiveTestimony = {
+  item: TestimonyEntry;
+  number: number;
+};
+
 function TestimonySet({ carousel = false, testimonies, pageSize }: TestimonySetProps) {
   const [page, setPage] = useState(0);
+  const [activeTestimony, setActiveTestimony] = useState<ActiveTestimony | null>(null);
+  const closeActiveTestimony = useCallback(() => setActiveTestimony(null), []);
   const pageCount = Math.max(1, Math.ceil(testimonies.length / pageSize));
   const safePage = Math.min(page, pageCount - 1);
   const pagedItems = useMemo(
@@ -56,6 +63,33 @@ function TestimonySet({ carousel = false, testimonies, pageSize }: TestimonySetP
 
   return (
     <>
+      {carousel ? (
+        <AutoScrollRail
+          ariaLabel="testimonies"
+          className="testimony-card-grid testimony-card-rail"
+        >
+          {pagedItems.map((item, index) => (
+            <TestimonyCard
+              item={item}
+              key={`${item.name}-${item.title}`}
+              number={safePage * pageSize + index + 1}
+              onOpen={() => setActiveTestimony({ item, number: safePage * pageSize + index + 1 })}
+            />
+          ))}
+        </AutoScrollRail>
+      ) : (
+        <div className="testimony-card-grid">
+          {pagedItems.map((item, index) => (
+            <TestimonyCard
+              item={item}
+              key={`${item.name}-${item.title}`}
+              number={safePage * pageSize + index + 1}
+              onOpen={() => setActiveTestimony({ item, number: safePage * pageSize + index + 1 })}
+            />
+          ))}
+        </div>
+      )}
+
       {showPagination ? (
         <div className="testimony-pagination-bar">
           <span>
@@ -72,30 +106,13 @@ function TestimonySet({ carousel = false, testimonies, pageSize }: TestimonySetP
         </div>
       ) : null}
 
-      {carousel ? (
-        <AutoScrollRail
-          ariaLabel="testimonies"
-          className="testimony-card-grid testimony-card-rail"
-        >
-          {pagedItems.map((item, index) => (
-            <TestimonyCard
-              item={item}
-              key={`${item.name}-${item.title}`}
-              number={safePage * pageSize + index + 1}
-            />
-          ))}
-        </AutoScrollRail>
-      ) : (
-        <div className="testimony-card-grid">
-          {pagedItems.map((item, index) => (
-            <TestimonyCard
-              item={item}
-              key={`${item.name}-${item.title}`}
-              number={safePage * pageSize + index + 1}
-            />
-          ))}
-        </div>
-      )}
+      {activeTestimony ? (
+        <TestimonyModal
+          item={activeTestimony.item}
+          number={activeTestimony.number}
+          onClose={closeActiveTestimony}
+        />
+      ) : null}
     </>
   );
 }
@@ -103,13 +120,13 @@ function TestimonySet({ carousel = false, testimonies, pageSize }: TestimonySetP
 function TestimonyCard({
   item,
   number,
+  onOpen,
 }: {
   item: TestimonyEntry;
   number: number;
+  onOpen: () => void;
 }) {
-  const hasImages = Boolean(item.images?.length);
   const hasVideo = Boolean(item.videoUrl);
-  const hasMedia = hasImages || hasVideo;
   const detailLabel = hasVideo ? "Watch testimony" : "Read full testimony";
 
   return (
@@ -122,43 +139,152 @@ function TestimonyCard({
       </div>
       <h3>{item.title}</h3>
       <p>&quot;{item.content[0]}&quot;</p>
-      <details className="testimony-detail">
-        <summary>
+      <div className="testimony-detail">
+        <button type="button" className="testimony-detail-trigger" onClick={onOpen}>
           <span>{detailLabel}</span>
-          <CaretDown size={16} weight="bold" aria-hidden="true" />
-        </summary>
-        <div className={hasMedia ? "testimony-detail-body testimony-detail-body-with-media" : "testimony-detail-body"}>
-          {item.videoUrl ? <VideoTestimonyPreview url={item.videoUrl} title={item.title} /> : null}
-          {hasImages ? (
-            <div
-              className="testimony-image-gallery"
-              data-count={item.images?.length}
-              aria-label={`${item.title} testimony pictures`}
-            >
-              {item.images?.map((image, index) => (
-                <figure className="testimony-image-frame" key={image.asset?._ref || index}>
-                  <SanityImage
-                    image={image}
-                    altFallback={`${item.title} testimony picture ${index + 1}`}
-                    width={520}
-                    height={390}
-                  />
-                </figure>
-              ))}
-            </div>
-          ) : null}
-          <div className="testimony-detail-copy">
-            {item.content.map((paragraph, index) => (
-              <p key={`${item.title}-${index}`}>{paragraph}</p>
-            ))}
-          </div>
-        </div>
-      </details>
+          <CaretRight size={16} weight="bold" aria-hidden="true" />
+        </button>
+      </div>
       <footer>
         <span>{initials(item.name)}</span>
         <strong>{item.name}</strong>
       </footer>
     </article>
+  );
+}
+
+function TestimonyMediaAndCopy({ item }: { item: TestimonyEntry }) {
+  const hasImages = Boolean(item.images?.length);
+  const hasMedia = hasImages || Boolean(item.videoUrl);
+
+  return (
+    <div className={hasMedia ? "testimony-detail-body testimony-detail-body-with-media" : "testimony-detail-body"}>
+      {item.videoUrl ? <VideoTestimonyPreview url={item.videoUrl} title={item.title} /> : null}
+      {hasImages ? (
+        <div
+          className="testimony-image-gallery"
+          data-count={item.images?.length}
+          aria-label={`${item.title} testimony pictures`}
+        >
+          {item.images?.map((image, index) => (
+            <figure className="testimony-image-frame" key={image.asset?._ref || index}>
+              <SanityImage
+                image={image}
+                altFallback={`${item.title} testimony picture ${index + 1}`}
+                width={520}
+                height={390}
+              />
+            </figure>
+          ))}
+        </div>
+      ) : null}
+      <div className="testimony-detail-copy">
+        {item.content.map((paragraph, index) => (
+          <p key={`${item.title}-${index}`}>{paragraph}</p>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TestimonyModal({
+  item,
+  number,
+  onClose,
+}: {
+  item: TestimonyEntry;
+  number: number;
+  onClose: () => void;
+}) {
+  const modalRef = useRef<HTMLElement>(null);
+  const titleId = `testimony-modal-title-${number}`;
+
+  useEffect(() => {
+    const previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    modalRef.current?.focus();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+
+      if (event.key !== "Tab" || !modalRef.current) {
+        return;
+      }
+
+      const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])',
+      );
+      const firstFocusable = focusable[0];
+      const lastFocusable = focusable[focusable.length - 1];
+
+      if (!firstFocusable || !lastFocusable) {
+        event.preventDefault();
+        modalRef.current.focus();
+        return;
+      }
+
+      if (document.activeElement === modalRef.current) {
+        event.preventDefault();
+        (event.shiftKey ? lastFocusable : firstFocusable).focus();
+      } else if (event.shiftKey && document.activeElement === firstFocusable) {
+        event.preventDefault();
+        lastFocusable.focus();
+      } else if (!event.shiftKey && document.activeElement === lastFocusable) {
+        event.preventDefault();
+        firstFocusable.focus();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+      previouslyFocused?.focus();
+    };
+  }, [onClose]);
+
+  return (
+    <div className="testimony-modal-layer">
+      <button
+        type="button"
+        className="testimony-modal-backdrop"
+        aria-label="Close testimony"
+        onClick={onClose}
+        tabIndex={-1}
+      />
+      <section
+        ref={modalRef}
+        className="testimony-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        tabIndex={-1}
+      >
+        <header className="testimony-modal-head">
+          <div>
+            <p className="testimony-kicker testimony-kicker-dark">
+              Testimony {String(number).padStart(2, "0")}
+            </p>
+            <h2 id={titleId}>{item.title}</h2>
+            <p>{item.highlight}</p>
+          </div>
+          <button type="button" className="testimony-modal-close" onClick={onClose} aria-label="Close testimony">
+            <X size={20} weight="bold" aria-hidden="true" />
+          </button>
+        </header>
+
+        <TestimonyMediaAndCopy item={item} />
+
+        <footer className="testimony-modal-footer">
+          <span>{initials(item.name)}</span>
+          <strong>{item.name}</strong>
+        </footer>
+      </section>
+    </div>
   );
 }
 
