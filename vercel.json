@@ -5,5 +5,31 @@
       "path": "/api/cron/daily-devotional",
       "schedule": "0 0 * * *"
     }
+  ],
+  "services": {
+    "app": {
+      "root": ".",
+      "framework": "nextjs",
+      "bindings": [
+        {
+          "type": "service",
+          "service": "studio",
+          "format": "url",
+          "env": "STUDIO_URL"
+        }
+      ]
+    },
+    "studio": {
+      "root": "studio-ogya-ntom-prayer-army",
+      "framework": "sanity"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "app"
+      }
+    }
   ]
 }

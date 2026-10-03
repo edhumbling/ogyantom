@@ -19,3 +19,4 @@ export const sanityConfig = {
 };
 
 export const hasSanityConfig = Boolean(sanityProjectId && sanityDataset);
+export const studioUrl = process.env.STUDIO_URL ?? "";
